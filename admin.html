@@ -1144,8 +1144,9 @@ window.deleteEnquiry = function(id) {
 window.openEnqDrawer = function(id) {
   const e = allEnquiries.find(x=>x.id===id);
   if(!e) return;
-  const waNumber = siteSettings.whatsappNumber||'919552778778';
-  const waMsg = encodeURIComponent((siteSettings.whatsappMessage||'Hi')+'\n\nRef: Enquiry from '+e.name);
+  const waNumberRaw = e.phone ? e.phone.replace(/\D/g,'') : '';
+  const waNumber = waNumberRaw.length === 10 ? '91' + waNumberRaw : waNumberRaw;
+  const waMsg = encodeURIComponent('Hi '+(e.name||'there')+',\n\nThis is regarding your recent enquiry with Pukhraj Builders.');
   document.getElementById('enqDrawerBody').innerHTML = `
     <div style="margin-bottom:20px">
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
