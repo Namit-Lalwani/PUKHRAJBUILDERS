@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pukharaj Builders &amp; Developers — Chh. Sambhajinagar</title>
+<!-- Google tag (gtag.js) initialization wrapped in a helper -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  // Default configuration
+  const DEFAULT_GA_ID = 'G-7N17HMJK0N';
+  gtag('config', DEFAULT_GA_ID);
+
+  // We will re-config if a new ID is found in Firestore in the Firebase script below
+</script>
+<link href="assets/style.css" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#16293D;--navy-deep:#0D1B2A;--navy-mid:#1A2F45;--navy-light:#234060;
+  --gold:#C8A032;--gold-bright:#DDB84A;--gold-pale:#EDD07A;
+  --cream:#F4EFE6;--white:#FFF;--muted:#6E8FA8;--light:#B0C8D8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy-deep);color:var(--white);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:2px}::-webkit-scrollbar-track{background:var(--navy-deep)}::-webkit-scrollbar-thumb{background:var(--gold)}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:screen}
+#cur2{position:fixed;width:36px;height:36px;border:1px solid rgba(200,160,50,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:20px;height:20px;background:var(--gold-pale)}
+body:has(a:hover) #cur2,body:has(button:hover) #cur2{width:58px;height:58px;opacity:.35}
+
+/* LOGO */
+.logo-wrap{display:flex;align-items:center;text-decoration:none}
+.logo-script{height:1.9rem;width:auto;object-fit:contain}
+.logo-rule{width:1px;height:34px;background:rgba(200,160,50,.45);margin:0 13px}
+.logo-bd{display:flex;flex-direction:column;gap:1px}
+.logo-b{font-family:'Cormorant SC',serif;font-size:.7rem;font-weight:500;letter-spacing:.28em;color:var(--white);line-height:1.2}
+.logo-d{font-family:'Jost',sans-serif;font-size:.5rem;font-weight:300;letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:22px 60px;display:flex;justify-content:space-between;align-items:center;transition:all .5s}
+nav::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,27,42,.97),transparent);z-index:-1}
+nav.sc{padding:14px 60px;border-bottom:1px solid rgba(200,160,50,.1)}
+nav.sc::after{background:rgba(10,20,32,.97);backdrop-filter:blur(18px)}
+.nl{display:flex;gap:36px;list-style:none}
+.nl a{color:var(--light);text-decoration:none;font-size:.61rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;transition:color .3s;position:relative;padding-bottom:4px}
+.nl a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s}
+.nl a:hover{color:var(--gold-bright)}.nl a:hover::after{width:100%}
+.btn-nav{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 24px;font-family:'Jost',sans-serif;font-size:.59rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:none;text-decoration:none;transition:all .35s;position:relative;overflow:hidden}
+.btn-nav::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.btn-nav:hover::before{transform:translateX(0)}
+.btn-nav span{position:relative;z-index:1;transition:color .35s}
+.btn-nav:hover span{color:var(--navy-deep)}
+
+/* HERO */
+.hero{height:100vh;min-height:680px;position:relative;display:flex;align-items:center;overflow:hidden}
+#particles{position:absolute;inset:0;z-index:1;opacity:.55}
+.hbg{position:absolute;inset:0;z-index:0;
+  background:linear-gradient(108deg,rgba(10,19,30,.96) 26%,rgba(10,19,30,.52) 58%,rgba(10,19,30,.88) 100%),
+  url('assets/photo-1545324418-cc1a3fa10c00.jpg') center/cover no-repeat;
+  animation:hzoom 26s ease-out forwards}
+@keyframes hzoom{from{transform:scale(1.07)}to{transform:scale(1.01)}}
+.hc{position:relative;z-index:3;padding:0 60px;max-width:800px}
+.htag{display:inline-flex;align-items:center;gap:12px;font-size:.57rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:34px;opacity:0;animation:fadeUp 1s ease .3s forwards}
+.htag-line{width:34px;height:1px;background:var(--gold)}
+.hero h1{font-family:'Cormorant',serif;font-size:clamp(3.2rem,6.5vw,6rem);font-weight:300;line-height:1.05;letter-spacing:.02em;margin-bottom:12px;opacity:0;animation:fadeUp 1s ease .5s forwards}
+.hero h1 em{font-style:italic;color:var(--gold-pale)}
+.hsub{font-family:'Cormorant',serif;font-style:italic;font-size:1.22rem;font-weight:300;color:var(--light);letter-spacing:.1em;margin-bottom:44px;opacity:0;animation:fadeUp 1s ease .7s forwards}
+.hbtns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp 1s ease .9s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hscroll{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);z-index:3;opacity:0;animation:fadeUp 1s ease 1.6s forwards}
+.hsl{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2.2s ease infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* BUTTONS */
+.btn-g{background:var(--gold);color:var(--navy-deep);padding:15px 42px;font-family:'Jost',sans-serif;font-size:.59rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;border:none;cursor:none;text-decoration:none;display:inline-block;transition:all .35s;position:relative;overflow:hidden}
+.btn-g::before{content:'';position:absolute;inset:0;background:var(--gold-pale);transform:translateX(-101%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.btn-g:hover::before{transform:translateX(0)}
+.btn-g span{position:relative;z-index:1}
+.btn-g:hover{box-shadow:0 12px 36px rgba(200,160,50,.3);transform:translateY(-2px)}
+.btn-o{border:1px solid rgba(255,255,255,.3);color:var(--white);padding:14px 36px;font-family:'Jost',sans-serif;font-size:.59rem;font-weight:300;letter-spacing:.22em;text-transform:uppercase;background:transparent;cursor:none;text-decoration:none;display:inline-block;transition:all .35s}
+.btn-o:hover{border-color:var(--gold);color:var(--gold-bright)}
+
+/* STATS */
+.stats{background:var(--navy-mid);border-top:1px solid rgba(200,160,50,.2);border-bottom:1px solid rgba(200,160,50,.2);padding:52px 60px;display:grid;grid-template-columns:repeat(4,1fr);position:relative;overflow:hidden}
+.stats::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.si{text-align:center;padding:0 16px;border-right:1px solid rgba(200,160,50,.1)}
+.si:last-child{border-right:none}
+.sn{font-family:'Cormorant',serif;font-size:3.3rem;font-weight:300;color:var(--gold-bright);line-height:1}
+.si:hover .sn{text-shadow:0 0 28px rgba(200,160,50,.4)}
+.sl{font-size:.57rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-top:9px}
+
+/* SHARED */
+section{padding:110px 60px}
+.ey{font-size:.55rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.ey::before{content:'';width:26px;height:1px;background:var(--gold)}
+.st{font-family:'Cormorant',serif;font-size:clamp(2rem,3.2vw,3rem);font-weight:300;line-height:1.16;letter-spacing:.03em;margin-bottom:22px}
+.st em{font-style:italic;color:var(--gold-pale)}
+.gb{width:50px;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin-bottom:28px}
+.sdiv{height:1px;background:linear-gradient(to right,transparent,rgba(200,160,50,.18),transparent)}
+
+/* ABOUT */
+.about{background:var(--navy-deep);display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center}
+.aiw{position:relative;height:540px}
+.aim{position:absolute;right:0;top:0;width:84%;height:78%;object-fit:cover;z-index:1;transition:transform .6s}
+.aiw:hover .aim{transform:scale(1.02)}
+.ais{position:absolute;bottom:0;left:0;width:52%;height:44%;object-fit:cover;z-index:2;border:4px solid var(--navy-deep);transition:transform .6s}
+.aiw:hover .ais{transform:scale(1.04) translate(3px,-3px)}
+.aif{position:absolute;top:-18px;left:-18px;right:18px;bottom:18px;border:1px solid rgba(200,160,50,.18);pointer-events:none;transition:border-color .4s}
+.aiw:hover .aif{border-color:rgba(200,160,50,.38)}
+.at p{font-size:.87rem;line-height:2.1;color:var(--light);margin-bottom:18px;font-weight:300}
+.oc{margin-top:36px;background:var(--navy-mid);border:1px solid rgba(200,160,50,.2);border-left:3px solid var(--gold);padding:22px 26px;display:flex;align-items:center;gap:18px;transition:background .3s,transform .3s}
+.oc:hover{background:var(--navy-light);transform:translateX(4px)}
+.oa{width:50px;height:50px;border-radius:50%;background: url('assets/paras-profile.jpg') center/cover no-repeat;border:2px solid rgba(200,160,50,.4)}
+.or{font-size:.53rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.on{font-family:'Cormorant SC',serif;font-size:.95rem;font-weight:500;letter-spacing:.08em}
+.op{font-size:.77rem;color:var(--light);margin-top:3px}
+
+/* SERVICES */
+.services{background:var(--navy-mid)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:58px}
+.sc2{background:var(--navy-deep);padding:52px 40px;position:relative;overflow:hidden;transition:background .4s;border-top:2px solid transparent}
+.sc2:hover{background:var(--navy-light);border-top-color:var(--gold)}
+.sborder{position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.sc2:hover .sborder{width:100%}
+.scn{font-family:'Cormorant',serif;font-size:4.5rem;font-weight:300;color:rgba(200,160,50,.06);line-height:1;margin-bottom:22px;transition:all .4s}
+.sc2:hover .scn{color:rgba(200,160,50,.15);transform:scale(1.04)}
+.sci{font-size:1.9rem;margin-bottom:18px;display:block;transition:transform .4s}
+.sc2:hover .sci{transform:scale(1.14) translateY(-3px)}
+.sct{font-family:'Cormorant SC',serif;font-size:.95rem;font-weight:500;letter-spacing:.1em;margin-bottom:13px}
+.scd{font-size:.77rem;line-height:1.95;color:var(--muted)}
+
+/* PROJECTS */
+.projects{background:var(--navy-deep)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));grid-template-rows:none;gap:3px}
+.pc{position:relative;overflow:hidden;cursor:none;min-height:288px}
+.pc img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.4,0,.2,1)}
+.pc:hover img{transform:scale(1.08)}
+.po{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,19,30,.95) 0%,rgba(10,19,30,.06) 52%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;opacity:0;transition:opacity .4s}
+.pc:hover .po{opacity:1}
+.po-inner{transform:translateY(14px);transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.pc:hover .po-inner{transform:translateY(0)}
+.pbadge{display:inline-block;background:var(--gold);color:var(--navy-deep);padding:3px 10px;font-size:.52rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;margin-bottom:9px;align-self:flex-start}
+.pname{font-family:'Cormorant',serif;font-size:1.5rem;font-weight:400;line-height:1.2}
+.ploc{font-size:.66rem;color:var(--muted);margin-top:5px;letter-spacing:.1em}
+.pstat{margin-top:10px;font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.dot{width:6px;height:6px;border-radius:50%}
+.dot.on{background:#4CAF50;box-shadow:0 0 7px #4CAF50;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.dot.up{background:var(--gold)}
+.pc-arrow{position:absolute;top:22px;right:22px;width:38px;height:38px;border:1px solid rgba(200,160,50,.4);display:flex;align-items:center;justify-content:center;opacity:0;transform:translate(5px,-5px);transition:all .4s;font-size:.9rem}
+.pc:hover .pc-arrow{opacity:1;transform:translate(0,0)}
+
+/* RESIDENCY CARD */
+.rdc{margin-top:3px;background:var(--navy-mid);padding:44px 48px;border-top:3px solid var(--gold);position:relative;overflow:hidden}
+.rdc::before{content:'';position:absolute;top:0;right:0;width:280px;height:280px;background:radial-gradient(circle,rgba(200,160,50,.05) 0%,transparent 70%);pointer-events:none}
+.rdcg{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;align-items:start}
+.rdc-title{font-family:'Cormorant',serif;font-size:1.8rem;font-style:italic;font-weight:300;margin-bottom:8px}
+.rdc-desc{font-size:.78rem;color:var(--muted);line-height:1.9}
+.rdc-row{display:flex;justify-content:space-between;font-size:.75rem;border-bottom:1px solid rgba(200,160,50,.08);padding:6px 8px}
+.rdc-row:hover{background:rgba(200,160,50,.04)}
+.rdc-row:last-child{border-bottom:none}
+.rdc-k{color:var(--muted)}
+.rdc-am{display:flex;flex-direction:column;gap:9px;font-size:.73rem;color:var(--muted)}
+.rdc-am span{transition:color .3s;padding:3px 0;display:flex;align-items:center;gap:8px}
+.rdc-am span:hover{color:var(--gold-bright)}
+.rdc-viewbtn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(200,160,50,.35);color:var(--gold);padding:10px 22px;font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:all .35s;position:relative;overflow:hidden;margin-top:4px}
+.rdc-viewbtn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.rdc-viewbtn:hover::before{transform:translateX(0)}
+.rdc-viewbtn span{position:relative;z-index:1;transition:color .35s}
+.rdc-viewbtn:hover span{color:var(--navy-deep)}
+.rdc-viewbtn .arr{transition:transform .35s}
+.rdc-viewbtn:hover .arr{transform:translateX(4px)}
+
+/* WHY */
+.why{background:var(--navy-mid);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.wpts{margin-top:34px;display:flex;flex-direction:column;gap:2px}
+.wi{background:var(--navy-deep);padding:24px 26px;display:flex;gap:16px;align-items:flex-start;transition:background .35s,border-left-color .35s,transform .35s;border-left:2px solid transparent}
+.wi:hover{background:var(--navy-light);border-left-color:var(--gold);transform:translateX(5px)}
+.wic{width:36px;height:36px;border:1px solid rgba(200,160,50,.3);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:border-color .35s,background .35s}
+.wi:hover .wic{border-color:var(--gold);background:rgba(200,160,50,.08)}
+.wit{font-family:'Cormorant SC',serif;font-size:.84rem;font-weight:500;letter-spacing:.08em;margin-bottom:4px}
+.wid{font-size:.74rem;line-height:1.85;color:var(--muted)}
+.wv{position:relative;height:490px}
+.wimg{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.wv:hover .wimg{transform:scale(1.02)}
+.wq{position:absolute;bottom:-1px;left:-1px;right:-1px;background:var(--gold);padding:24px 28px}
+.wqt{font-family:'Cormorant',serif;font-style:italic;font-size:1.08rem;font-weight:400;color:var(--navy-deep);line-height:1.55}
+.wqa{font-size:.57rem;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);margin-top:6px}
+
+/* TEAM */
+.team{background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy-mid) 100%)}
+.team-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:center;padding:0 60px}
+.team-intro{text-align:left}
+.team-title{font-family:'Cormorant',serif;font-size:clamp(2.5rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:20px;color:var(--white)}
+.team-title em{font-style:italic;color:var(--gold-pale)}
+.team-subtitle{font-size:.92rem;line-height:1.8;color:var(--light);margin-bottom:40px;max-width:500px}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.team-member{background:var(--navy-mid);border-radius:16px;padding:40px 30px;text-align:center;border:1px solid rgba(200,160,50,.08);transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:pointer}
+.team-member::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,160,50,.03) 0%,rgba(200,160,50,.08) 100%);opacity:0;transform:scale(0.95);transition:all .4s cubic-bezier(.4,0,.2,1)}
+.team-member:hover::before{opacity:1;transform:scale(1)}
+.team-member:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.3),0 0 40px rgba(200,160,50,.1)}
+.team-avatar{margin:0 auto 24px;position:relative;z-index:2}
+.team-avatar img{border-radius:50%;width:100px;height:100px;object-fit:cover;border:3px solid rgba(200,160,50,.2);transition:all .4s cubic-bezier(.4,0,.2,1)}
+.team-member:hover .team-avatar img{border-color:var(--gold);transform:scale(1.05);box-shadow:0 0 30px rgba(200,160,50,.3)}
+.team-badge{background:linear-gradient(135deg,var(--gold),var(--gold-pale));color:var(--navy-deep);padding:6px 16px;border-radius:20px;font-size:.52rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:18px;display:inline-block;transform:translateY(10px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1) .1s}
+.team-member:hover .team-badge{transform:translateY(0);opacity:1}
+.team-name{font-family:'Cormorant SC',serif;font-size:1.2rem;font-weight:500;letter-spacing:.05em;color:var(--white);margin-bottom:8px;transform:translateY(10px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1) .15s}
+.team-member:hover .team-name{transform:translateY(0);opacity:1}
+.team-role{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;transform:translateY(10px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1) .2s}
+.team-member:hover .team-role{transform:translateY(0);opacity:1}
+.team-contact{background:rgba(200,160,50,.1);border:1px solid rgba(200,160,50,.2);border-radius:12px;padding:16px 20px;margin-top:20px;transform:translateY(10px);opacity:0;transition:all .4s cubic-bezier(.4,0,.2,1) .25s}
+.team-member:hover .team-contact{transform:translateY(0);opacity:1}
+.team-contact a{color:var(--gold-bright);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:.05em;display:flex;align-items:center;gap:8px;justify-content:center;transition:color .3s}
+.team-contact a:hover{color:var(--gold-pale)}
+.team-contact a::before{content:'📞';font-size:.9rem}
+.team-stats{display:flex;justify-content:center;gap:20px;margin-top:30px}
+.team-stat{background:rgba(200,160,50,.05);border-radius:12px;padding:15px 20px;text-align:center;min-width:120px;border:1px solid rgba(200,160,50,.08)}
+.team-stat-number{font-family:'Cormorant',serif;font-size:2.2rem;font-weight:300;color:var(--gold-bright);line-height:1;margin-bottom:4px}
+.team-stat-label{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* CONTACT */
+.contact{background:var(--navy-mid);display:grid;grid-template-columns:1fr 1fr;gap:80px;position:relative;overflow:hidden}
+.contact::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.cd{margin-top:42px;display:flex;flex-direction:column;gap:22px}
+.cr{display:flex;gap:14px;align-items:flex-start;transition:transform .3s}
+.cr:hover{transform:translateX(4px)}
+.ci{width:36px;height:36px;border:1px solid rgba(200,160,50,.3);display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0;transition:border-color .3s,background .3s}
+.cr:hover .ci{border-color:var(--gold);background:rgba(200,160,50,.08)}
+.clabel{font-size:.53rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.cv{font-size:.81rem;color:var(--white);line-height:1.65;font-weight:300}
+.cf{display:flex;flex-direction:column;gap:17px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.fg{display:flex;flex-direction:column;gap:7px}
+.fl{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.fi,.fs,.ft{background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--white);padding:13px 16px;font-family:'Jost',sans-serif;font-size:.79rem;font-weight:300;outline:none;transition:border-color .3s,background .3s;width:100%;cursor:none}
+.fi::placeholder{color:rgba(255,255,255,.16)}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--gold);background:rgba(10,19,30,.9)}
+.fs option{background:var(--navy-deep)}
+.ft{resize:vertical;min-height:96px}
+
+/* FOOTER */
+footer{background:var(--navy-deep);border-top:1px solid rgba(200,160,50,.12);padding:64px 60px 36px}
+.ft-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:54px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.04)}
+.fdesc{font-size:.76rem;line-height:1.95;color:var(--muted);margin-top:18px;max-width:290px}
+.frera{margin-top:18px;padding:11px 15px;background:rgba(26,47,69,.5);border:1px solid rgba(200,160,50,.12);font-size:.57rem;color:var(--muted);line-height:1.8}
+.frera strong{color:var(--gold)}
+.fh{font-family:'Cormorant SC',serif;font-size:.7rem;letter-spacing:.2em;color:var(--gold);margin-bottom:20px;padding-bottom:11px;border-bottom:1px solid rgba(200,160,50,.15)}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:10px}
+.flinks a{font-size:.74rem;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .3s,letter-spacing .3s;display:flex;align-items:center;gap:7px;cursor:none}
+.flinks a::before{content:'—';color:var(--gold);font-size:.7rem;transition:margin-right .3s}
+.flinks a:hover{color:var(--gold-bright);letter-spacing:.07em}
+.flinks a:hover::before{margin-right:4px}
+.ft-bot{padding-top:26px;display:flex;justify-content:space-between;align-items:center;font-size:.59rem;color:var(--muted);letter-spacing:.1em;flex-wrap:wrap;gap:9px}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
+.r.v{opacity:1;transform:translateY(0)}
+.r.d1{transition-delay:.12s}.r.d2{transition-delay:.24s}.r.d3{transition-delay:.36s}
+.rl{opacity:0;transform:translateX(-24px);transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
+.rl.v{opacity:1;transform:translateX(0)}
+
+/* OVERLAY + DRAWER */
+.overlay{position:fixed;inset:0;z-index:800;background:rgba(8,16,26,.88);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .45s}
+.overlay.open{opacity:1;pointer-events:all}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:900;width:min(920px,96vw);background:var(--navy-deep);border-left:1px solid rgba(200,160,50,.15);overflow-y:auto;overflow-x:hidden;transform:translateX(100%);transition:transform .55s cubic-bezier(.4,0,.2,1);cursor:none}
+.drawer.open{transform:translateX(0)}
+.drawer::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(to bottom,var(--gold),transparent,var(--gold));opacity:.35;pointer-events:none}
+
+.drawer-close{position:sticky;top:0;z-index:10;background:rgba(13,27,42,.97);backdrop-filter:blur(12px);border:none;border-bottom:1px solid rgba(200,160,50,.1);padding:16px 28px;cursor:none;display:flex;align-items:center;gap:10px;width:100%;color:var(--muted);font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;transition:all .3s}
+.drawer-close svg{width:16px;height:16px;stroke:currentColor;transition:transform .35s}
+.drawer-close:hover{color:var(--gold)}
+.drawer-close:hover svg{transform:translateX(-4px)}
+
+.dh{position:relative;height:480px;overflow:hidden}
+.dh img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 8s ease}
+.drawer.open .dh img{transform:scale(1.04)}
+.dho{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,19,30,.97) 0%,rgba(10,19,30,.15) 55%)}
+.dhc{position:absolute;bottom:0;left:0;right:0;padding:38px 44px}
+.dhbadge{display:inline-block;background:var(--gold);color:var(--navy-deep);padding:4px 14px;font-size:.52rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;margin-bottom:13px}
+.dhtitle{font-family:'Cormorant',serif;font-size:3rem;font-style:italic;font-weight:300;line-height:1.1}
+.dhsub{font-size:.72rem;color:var(--light);margin-top:7px;letter-spacing:.1em}
+.dhrera{font-size:.57rem;color:var(--gold);letter-spacing:.15em;margin-top:9px;opacity:.85}
+
+.dtabs{display:flex;border-bottom:1px solid rgba(200,160,50,.1);position:sticky;top:52px;z-index:9;background:rgba(13,27,42,.97);backdrop-filter:blur(12px)}
+.dtab{background:transparent;border:none;color:var(--muted);padding:17px 22px;font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:none;border-bottom:2px solid transparent;transition:all .35s}
+.dtab:hover{color:var(--light)}
+.dtab.active{color:var(--gold-bright);border-bottom-color:var(--gold)}
+
+.dpanel{display:none;padding:42px 44px;animation:panelIn .4s ease forwards}
+.dpanel.active{display:block}
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* overview */
+.do-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-bottom:32px}
+.do-highlights{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.doh{background:var(--navy-mid);border:1px solid rgba(200,160,50,.12);border-left:3px solid var(--gold);padding:18px 22px;transition:background .3s}
+.doh:hover{background:var(--navy-light)}
+.doh-n{font-family:'Cormorant',serif;font-size:1.9rem;color:var(--gold-bright);line-height:1}
+.doh-l{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.do-desc p{font-size:.83rem;line-height:2.05;color:var(--light);margin-bottom:15px}
+.do-credits{background:var(--navy-mid);padding:26px 30px;border-top:2px solid var(--gold);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+.do-cred-label{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.do-cred-val{font-family:'Cormorant SC',serif;font-size:.88rem;color:var(--gold-bright)}
+
+/* gallery */
+.dg-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.dg-grid img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .6s,filter .4s}
+.dg-grid img:hover{transform:scale(1.04);filter:brightness(1.1)}
+.dg-wide{grid-column:1/3;height:360px !important}
+.dg-caption{padding:16px 0;font-size:.65rem;color:var(--muted);letter-spacing:.12em;text-align:center;border-top:1px solid rgba(200,160,50,.08);margin-top:3px}
+
+/* floor plans */
+.dfp-tabs{display:flex;gap:2px;margin-bottom:26px;flex-wrap:wrap}
+.fptab{background:var(--navy-mid);border:none;color:var(--muted);padding:10px 20px;font-family:'Jost',sans-serif;font-size:.57rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;cursor:none;transition:all .35s;position:relative;overflow:hidden}
+.fptab::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.fptab:hover::before,.fptab.active::before{transform:translateX(0)}
+.fptab span{position:relative;z-index:1;transition:color .35s}
+.fptab:hover span,.fptab.active span{color:var(--navy-deep)}
+.fp-panel{display:none;animation:panelIn .4s ease}.fp-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fp-panel.single{grid-template-columns:1fr}
+.fpcard{background:var(--navy-mid);padding:26px}
+.fpcard-title{font-family:'Cormorant SC',serif;font-size:.82rem;letter-spacing:.12em;color:var(--gold-bright);margin-bottom:16px;padding-bottom:13px;border-bottom:1px solid rgba(200,160,50,.12)}
+.team-avatar{width:100px;height:100px;min-width:100px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:1rem;color:var(--white);border:1px solid rgba(200,160,50,.3);overflow:hidden;cursor:pointer;position:relative}
+.fpinfo{display:flex;gap:18px;flex-wrap:wrap;margin-top:15px}
+.fpi{display:flex;flex-direction:column;gap:3px}
+.fpi-l{font-size:.51rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.fpi-v{font-family:'Cormorant SC',serif;font-size:.82rem;color:var(--gold-bright)}
+
+/* specs */
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.spec-item{background:var(--navy-mid);padding:22px 26px;display:flex;gap:14px;align-items:flex-start;transition:background .3s,border-left-color .3s;border-left:2px solid transparent}
+.spec-item:hover{background:var(--navy-light);border-left-color:var(--gold)}
+.spec-icon{width:36px;height:36px;border:1px solid rgba(200,160,50,.28);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;transition:border-color .3s,background .3s}
+.spec-item:hover .spec-icon{border-color:var(--gold);background:rgba(200,160,50,.08)}
+.spec-title{font-family:'Cormorant SC',serif;font-size:.77rem;font-weight:500;letter-spacing:.08em;margin-bottom:5px}
+.spec-desc{font-size:.73rem;line-height:1.78;color:var(--muted)}
+
+/* amenities */
+.amen-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.amen-card{background:var(--navy-mid);padding:30px 26px;transition:background .3s;position:relative;overflow:hidden}
+.amen-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.amen-card:hover::after{width:100%}
+.amen-card:hover{background:var(--navy-light)}
+.amen-icon{font-size:1.8rem;margin-bottom:13px;display:block;transition:transform .4s}
+.amen-card:hover .amen-icon{transform:scale(1.15) translateY(-2px)}
+.amen-title{font-family:'Cormorant SC',serif;font-size:.84rem;font-weight:500;letter-spacing:.08em;margin-bottom:9px}
+.amen-desc{font-size:.74rem;line-height:1.85;color:var(--muted)}
+
+/* location */
+.loc-map{width:100%;height:300px;overflow:hidden;border:1px solid rgba(200,160,50,.15);margin-bottom:22px}
+.loc-map iframe{width:100%;height:100%;border:none;filter:hue-rotate(190deg) saturate(.65) brightness(.72)}
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.loc-card{background:var(--navy-mid);padding:19px 22px;display:flex;gap:12px;align-items:flex-start;transition:background .3s}
+.loc-card:hover{background:var(--navy-light)}
+.loc-ic{width:34px;height:34px;border:1px solid rgba(200,160,50,.28);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.loc-lbl{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.loc-val{font-size:.79rem;color:var(--white);line-height:1.65}
+.loc-cta{margin-top:20px;background:var(--navy-mid);padding:22px 26px;border-top:2px solid var(--gold);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+
+/* WHATSAPP FLOAT */
+.wa-wrap{position:fixed;bottom:32px;right:32px;z-index:700;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.wa-bubble{
+  background:#25D366;color:#fff;
+  width:58px;height:58px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 28px rgba(37,211,102,.45);
+  cursor:none;text-decoration:none;
+  transition:transform .35s cubic-bezier(.4,0,.2,1),box-shadow .35s;
+  position:relative;
+  animation:waPop .6s cubic-bezier(.4,0,.2,1) 2.5s both
+}
+@keyframes waPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+.wa-bubble:hover{transform:scale(1.12);box-shadow:0 10px 36px rgba(37,211,102,.55)}
+.wa-bubble svg{width:28px;height:28px;fill:#fff}
+/* ping ring */
+.wa-bubble::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:2px solid rgba(37,211,102,.5);
+  animation:waPing 2.2s ease infinite
+}
+@keyframes waPing{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+/* tooltip */
+.wa-tip{
+  background:rgba(13,27,42,.96);border:1px solid rgba(37,211,102,.3);
+  color:#fff;padding:10px 16px;font-family:'Jost',sans-serif;font-size:.72rem;
+  font-weight:300;letter-spacing:.06em;white-space:nowrap;
+  pointer-events:none;
+  opacity:0;transform:translateX(8px);
+  transition:opacity .3s,transform .3s;
+  border-left:2px solid #25D366;
+}
+.wa-wrap:hover .wa-tip{opacity:1;transform:translateX(0)}
+.wa-name{font-family:'Cormorant SC',serif;font-size:.82rem;color:#25D366;display:block;margin-bottom:2px}
+
+/* MOBILE */
+@media(max-width:1060px){
+  #cur,#cur2{display:none}body{cursor:default}
+  nav,nav.sc{padding:15px 22px}.nl{display:none}
+  section,.about,.why,.contact{padding:70px 22px}
+  .stats{padding:40px 22px;grid-template-columns:1fr 1fr;gap:22px}
+  .about{grid-template-columns:1fr;gap:44px}
+  .sgrid,.tgrid{grid-template-columns:1fr 1fr}
+  .pgrid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .pc:first-child{grid-row:auto;grid-column:1/-1}
+  .rdcg{grid-template-columns:1fr 1fr;gap:24px}
+  .why,.contact{grid-template-columns:1fr;gap:44px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:36px}
+  .drawer{width:100vw}
+  .do-grid,.fp-panel{grid-template-columns:1fr}
+  .specs-grid,.amen-grid,.loc-grid{grid-template-columns:1fr}
+  .dg-wide{height:220px !important}
+  .dtab{padding:14px 12px;font-size:.52rem}
+}
+
+ /* STANDARD PROJECT CARDS + ADMIN */
+ .pgrid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));grid-template-rows:none}
+ .pc:first-child{grid-row:auto;grid-column:auto}
+ .pc{min-height:288px}
+ .admin-fab{position:fixed;bottom:32px;left:32px;z-index:950;display:none}
+ .admin-fab button{background:rgba(13,27,42,.96);border:1px solid rgba(200,160,50,.35);color:var(--gold);padding:12px 18px;font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;cursor:none}
+ .admin-panel{position:fixed;inset:0;z-index:960;background:rgba(8,16,26,.92);backdrop-filter:blur(10px);display:none}
+ .admin-panel.open{display:block}
+ .admin-card{position:absolute;top:24px;left:50%;transform:translateX(-50%);width:min(980px,96vw);max-height:calc(100vh - 48px);overflow:auto;background:var(--navy-deep);border:1px solid rgba(200,160,50,.18)}
+ .admin-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid rgba(200,160,50,.1);position:sticky;top:0;background:rgba(13,27,42,.97);backdrop-filter:blur(12px);z-index:1}
+ .admin-title{font-family:'Cormorant SC',serif;font-size:.78rem;letter-spacing:.18em;color:var(--gold)}
+ .admin-close{background:transparent;border:1px solid rgba(200,160,50,.35);color:var(--gold);padding:10px 14px;font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;cursor:none}
+ .admin-body{padding:22px}
+ .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+ .admin-grid .admin-full{grid-column:1/-1}
+ .admin-field{display:flex;flex-direction:column;gap:7px}
+ .admin-label{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+ .admin-input,.admin-textarea,.admin-select{background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--white);padding:12px 14px;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;outline:none;width:100%;cursor:none}
+ .admin-textarea{min-height:120px;resize:vertical}
+ .admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+ .admin-btn{background:transparent;border:1px solid rgba(200,160,50,.35);color:var(--gold);padding:10px 14px;font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;cursor:none}
+ .admin-btn.primary{background:var(--gold);color:var(--navy-deep);border-color:var(--gold)}
+ .tab-editor{border:1px solid rgba(200,160,50,.12);background:rgba(10,19,30,.35);padding:14px}
+ .tab-editor-row{display:grid;grid-template-columns:1.1fr 1.2fr .8fr .7fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(200,160,50,.08)}
+ .tab-editor-row:last-child{border-bottom:none}
+ .tab-mini{background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--white);padding:10px 12px;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:300;outline:none;width:100%;cursor:none}
+ .tab-mini-btn{background:transparent;border:1px solid rgba(200,160,50,.25);color:var(--gold);padding:8px 10px;font-family:'Jost',sans-serif;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;cursor:none}
+ .tab-editor-html{grid-column:1/-1;margin-top:10px}
+</style>
+</head>
+<body>
+
+<div id="cur" style="left: 611px; top: 524px;"></div>
+<div id="cur2" style="left: 611px; top: 524px;"></div>
+
+<!-- NAV -->
+<nav id="nav" class="sc">
+  <a href="#" class="logo-wrap">
+    <img src="assets/logo.png" alt="Pukharaj Logo" class="logo-script">
+    <div class="logo-rule"></div>
+    <div class="logo-bd">
+      <span class="logo-b">Builders</span>
+      <span class="logo-d">&amp; Developers</span>
+    </div>
+  </a>
+  <ul class="nl">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="btn-nav"><span>Enquire Now</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="particles" width="1280" height="722"></canvas>
+  <div class="hbg" style="transform: translateY(252.78px);"></div>
+  <div class="hc">
+    <div class="htag"><span class="htag-line"></span>Chh. Sambhajinagar, Maharashtra</div>
+    <h1>We Build<br><em>Legacies</em><br>That Last</h1>
+    <p class="hsub">Crafting Homes. Shaping Skylines. Building Trust.</p>
+    <div class="hbtns">
+      <a href="#projects" class="btn-g"><span>Our Projects</span></a>
+      <a href="#contact" class="btn-o">Start a Conversation</a>
+    </div>
+  </div>
+  <div class="hscroll">Scroll<div class="hsl"></div></div>
+</section>
+
+<!-- STATS -->
+<div class="stats v" id="stats-section">
+  <!-- Stats will be populated from settings or projects if needed, or kept static if preferred. 
+       The prompt says "Nothing hardcoded except logo and nav". 
+       I will set these up for dynamic update via Settings. -->
+  <div class="si r v"><div class="sn" id="stat-delivered" data-count="50" data-suffix="+">0</div><div class="sl">Projects Delivered</div></div>
+  <div class="si r d1 v"><div class="sn" id="stat-units" data-count="34" data-suffix="">0</div><div class="sl">Premium Units</div></div>
+  <div class="si r d2 v"><div class="sn" id="stat-rera" data-count="100" data-suffix="%">0</div><div class="sl">RERA Compliant</div></div>
+  <div class="si r d3 v"><div class="sn" id="stat-years" data-count="15" data-suffix="+">0</div><div class="sl">Years Excellence</div></div>
+</div>
+<div class="sdiv"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="aiw rl v">
+    <div class="aif"></div>
+    <img class="aim" src="assets/photo-1545324418-cc1a3fa10c00.jpg" alt="Pukharaj project">
+    <img class="ais" src="assets/photo-1503387762-592deb58ef4e.jpg" alt="Construction">
+  </div>
+  <div class="at r d1 v">
+    <div class="ey">Who We Are</div>
+    <h2 class="st">Building With<br><em>Purpose &amp; Pride</em></h2>
+    <div class="gb"></div>
+    <p>Pukharaj Builders &amp; Developers is a trusted name in real estate construction in Chh. Sambhajinagar, Maharashtra. We specialise in premium residential apartments, well-planned commercial buildings, and landmark real estate developments.</p>
+    <p>Every project reflects our commitment to quality craftsmanship, ethical practices, and full RERA compliance. We are proud CREDAI members and have delivered homes that families cherish for generations.</p>
+    <div class="oc">
+      <div class="oa" id="founder-avatar"></div>
+      <div>
+        <div class="or" id="founder-role">Founder &amp; Owner</div>
+        <div class="on" id="founder-name">Paras Lalwani</div>
+        <div class="op" id="founder-phone">+91 9552 778 778</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="sdiv"></div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="r v"><div class="ey">What We Build</div><h2 class="st">Our <em>Services</em></h2></div>
+  <div class="sgrid">
+    <div class="sc2 r v"><div class="sborder"></div><div class="scn">01</div><span class="sci">🏠</span><div class="sct">Residential Apartments</div><p class="scd">Premium 2BHK and 3BHK complexes designed for comfortable family living — thoughtful layouts, modern amenities, and quality finishes from foundation to finishing.</p></div>
+    <div class="sc2 r d1 v"><div class="sborder"></div><div class="scn">02</div><span class="sci">🏢</span><div class="sct">Commercial Buildings</div><p class="scd">Functional and aesthetically designed commercial spaces built for business success — combining structural integrity with contemporary design sensibility.</p></div>
+    <div class="sc2 r d2 v"><div class="sborder"></div><div class="scn">03</div><span class="sci">🏗️</span><div class="sct">Real Estate Development</div><p class="scd">End-to-end development from land acquisition and planning to construction and possession — transparent, RERA-compliant, and always on time.</p></div>
+  </div>
+</section>
+<div class="sdiv"></div>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="ph r v">
+    <div><div class="ey">Our Portfolio</div><h2 class="st">Current <em>Projects</em></h2></div>
+    <a href="#contact" class="btn-g"><span>Enquire About a Project</span></a>
+  </div>
+  <div class="pgrid r v" id="projectsGrid"></div>
+  <div class="rdc r v" id="spotlightCard" style="display:none">
+    <div class="rdcg">
+      <div style="grid-column:1/3">
+        <div class="ey" style="margin-bottom:10px">Featured Project Spotlight</div>
+        <div class="rdc-title" id="spotlightTitle">Loading...</div>
+        <p class="rdc-desc" id="spotlightDesc"></p>
+        <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#contact" class="btn-g" style="font-size:.57rem;padding:12px 28px"><span>Request Brochure</span></a>
+          <button id="spotlightViewBtn" class="rdc-viewbtn"><span>View Full Project Details</span><span class="arr">→</span></button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.53rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Project Details</div>
+        <div id="spotlightDetails"></div>
+      </div>
+      <div>
+        <div style="font-size:.53rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Amenities</div>
+        <div class="rdc-am" id="spotlightAmenities"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="r v">
+    <div class="ey">Why Choose Us</div>
+    <h2 class="st">The Pukharaj<br><em>Difference</em></h2>
+    <div class="gb"></div>
+    <p style="font-size:.86rem;line-height:2;color:var(--light)">We do not just build structures — we build relationships. Our commitment to quality, ethics, and delivering on our promises has made us one of Sambhajinagar's most trusted developer names.</p>
+    <div class="wpts">
+      <div class="wi"><div class="wic">🏆</div><div><div class="wit">Uncompromising Quality</div><p class="wid">ISI-marked materials, certified contractors, and rigorous quality checks at every construction stage.</p></div></div>
+      <div class="wi"><div class="wic">📋</div><div><div class="wit">Full RERA Compliance</div><p class="wid">All projects are MAHARERA registered, ensuring complete transparency, legal safety, and buyer protection.</p></div></div>
+      <div class="wi"><div class="wic">🤝</div><div><div class="wit">Transparent Dealings</div><p class="wid">Clear pricing, honest timelines, and direct access to the owner — no middlemen, no surprises.</p></div></div>
+      <div class="wi"><div class="wic">🏙️</div><div><div class="wit">Deep Local Expertise</div><p class="wid">Years of experience in Chh. Sambhajinagar's real estate landscape ensures the best location and value decisions.</p></div></div>
+    </div>
+  </div>
+  <div class="r d1 v">
+    <div class="wv">
+      <img class="wimg" src="assets/photo-1600585154340-be6161a56a0c.jpg" alt="Quality">
+      <div class="wq">
+        <div class="wqt">"Every wall we raise is a wall a family will call home."</div>
+        <div class="wqa">Paras Lalwani · Founder, Pukharaj Builders &amp; Developers</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="sdiv"></div>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="team-container r v">
+    <div class="team-intro">
+      <div class="ey">Leadership Team</div>
+      <h2 class="team-title">Meet Our <em>Experts</em></h2>
+      <p class="team-subtitle">Our experienced team of professionals brings together decades of expertise in real estate development, architecture, and client relations. We're committed to delivering exceptional results with integrity and innovation.</p>
+
+      <div class="team-stats">
+        <div class="team-stat">
+          <div class="team-stat-number">15+</div>
+          <div class="team-stat-label">Years Experience</div>
+        </div>
+        <div class="team-stat">
+          <div class="team-stat-number">50+</div>
+          <div class="team-stat-label">Projects Delivered</div>
+        </div>
+        <div class="team-stat">
+          <div class="team-stat-number">100%</div>
+          <div class="team-stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-grid" id="team-grid">
+      <div class="team-member">
+        <div class="team-avatar">
+          <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:2rem;color:var(--white)">PL</div>
+        </div>
+        <div class="team-badge">Founder</div>
+        <div class="team-name">Paras Lalwani</div>
+        <div class="team-role">Founder & CEO</div>
+        <div class="team-contact">
+          <a href="tel:9552778778">
+            📞 +91 9552778778
+          </a>
+        </div>
+      </div>
+      
+      <div class="team-member">
+        <div class="team-avatar">
+          <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:2rem;color:var(--white)">SD</div>
+        </div>
+        <div class="team-badge">Sales</div>
+        <div class="team-name">Shailesh Dahad</div>
+        <div class="team-role">Sales Manager</div>
+        <div class="team-contact">
+          <a href="tel:9876543210">
+            📞 +91 9876543210
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="sdiv"></div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="r v">
+    <div class="ey">Reach Out</div>
+    <h2 class="st">Let's Build<br><em>Together</em></h2>
+    <div class="gb"></div>
+    <p style="font-size:.84rem;color:var(--muted);line-height:1.95">Whether you're looking for your dream home, a commercial space, or want to explore investment — our team is ready to help.</p>
+    <div class="cd">
+      <div class="cr"><div class="ci">👤</div><div><div class="clabel">Owner — First Point of Contact</div><div id="contact-owner-name" style="font-family:'Cormorant SC',serif;font-size:1rem;color:var(--gold-bright);letter-spacing:.06em">Paras Lalwani</div><a id="contact-owner-link" href="tel:9552778778" style="font-size:.84rem;color:var(--white);text-decoration:none;display:block;margin-top:2px;cursor:none">+91 9552 778 778</a></div></div>
+      <div class="cr"><div class="ci">📞</div><div><div class="clabel">Sales Contact</div><div id="contact-sales-name" class="cv">Shailesh Dahad</div><a id="contact-sales-link" href="tel:8788579803" style="font-size:.8rem;color:var(--light);text-decoration:none;cursor:none">+91 8788 579 803</a></div></div>
+      <div class="cr"><div class="ci">🏢</div><div><div class="clabel">Office Address</div><div id="contact-office-addr" class="cv">Loading address...</div></div></div>
+      <div class="cr"><div class="ci">📍</div><div><div class="clabel">Site Address</div><div id="contact-site-addr" class="cv">Loading address...</div></div></div>
+    </div>
+  </div>
+  <div class="cf r d1 v">
+    <div class="frow">
+      <div class="fg"><label class="fl">Full Name</label><input type="text" id="contact_name" class="fi" placeholder="Your name"></div>
+      <div class="fg"><label class="fl">Phone Number</label><input type="tel" id="contact_phone" class="fi" placeholder="+91 XXXXX XXXXX"></div>
+    </div>
+    <div class="fg"><label class="fl">Email Address</label><input type="email" id="contact_email" class="fi" placeholder="your@email.com"></div>
+    <div class="fg"><label class="fl">Enquiry About</label><select id="contact_subject" class="fs"><option value="">Select...</option><option>Pukharaj Residency — 2 BHK</option><option>Pukharaj Residency — 3 BHK</option><option>Commercial Space</option><option>Partnership / Land Acquisition</option><option>General Enquiry</option></select></div>
+    <div class="fg"><label class="fl">Message</label><textarea id="contact_message" class="ft" placeholder="Tell us what you&#39;re looking for..."></textarea></div>
+    <button id="contact_submit" class="btn-g" style="align-self:flex-start;border:none;cursor:pointer;padding:14px 46px"><span>Send Enquiry</span></button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div>
+      <div style="display:flex;align-items:center">
+        <img src="assets/logo.png" alt="Pukharaj Logo" style="height:2.1rem;width:auto;object-fit:contain">
+        <div style="width:1px;height:38px;background:rgba(200,160,50,.42);margin:0 13px"></div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:&#39;Cormorant SC&#39;,serif;font-size:.72rem;font-weight:500;letter-spacing:.28em;color:var(--white)">Builders</span>
+          <span style="font-family:&#39;Jost&#39;,sans-serif;font-size:.5rem;font-weight:300;letter-spacing:.3em;color:var(--gold);text-transform:uppercase">&amp; Developers</span>
+        </div>
+      </div>
+      <p class="fdesc">Building homes and commercial spaces with purpose, pride and unwavering quality in Chh. Sambhajinagar, Maharashtra. CREDAI Member.</p>
+      <div class="frera"><strong>MAHARERA: P51500079269</strong> — Pukharaj Residency<br>Disclaimer: Purely conceptual. Subject to change without prior notice.</div>
+    </div>
+    <div><div class="fh">Navigate</div><ul class="flinks"><li><a href="#about">About Us</a></li><li><a href="#services">Services</a></li><li><a href="#projects">Our Projects</a></li><li><a href="#team">Our Team</a></li><li><a href="#contact">Contact Us</a></li></ul></div>
+    <div><div class="fh">Projects</div><ul class="flinks"><li><a href="#" onclick="openDrawer();return false">Pukharaj Residency</a></li><li><a href="#projects">Commercial Complex</a></li><li><a href="#projects">Premium Residences</a></li><li><a href="#projects">Upcoming Township</a></li></ul></div>
+    <div><div class="fh">Contact</div><ul class="flinks"><li><a href="tel:9552778778">Paras: 9552 778 778</a></li><li><a href="tel:8788579803">Shailesh: 8788 579 803</a></li><li><a href="#contact">Ulkanagari, Sambhajinagar</a></li><li><a href="#contact">Beed Bypass Site</a></li></ul></div>
+  </div>
+  <div class="ft-bot"><span>© 2025 Pukharaj Builders &amp; Developers. All rights reserved.</span><span>CREDAI Member · Chh. Sambhajinagar, Maharashtra</span></div>
+</footer>
+
+<div class="admin-fab" id="adminFab"><button onclick="window.PBAdmin.open()">Admin</button></div>
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-card">
+    <div class="admin-head">
+      <div class="admin-title">PROJECTS ADMIN</div>
+      <button class="admin-close" onclick="window.PBAdmin.close()">Close</button>
+    </div>
+    <div class="admin-body">
+      <div class="admin-grid">
+        <div class="admin-field admin-full">
+          <div class="admin-label">Spotlight Project (Home Featured Section)</div>
+          <select class="admin-select" id="adminSpotlightProject"></select>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Select Project</div>
+          <select class="admin-select" id="adminProjectSelect"></select>
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Project Id</div>
+          <input class="admin-input" id="adminId" placeholder="e.g. pukharaj-residency">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Project Name</div>
+          <input class="admin-input" id="adminName" placeholder="Project name">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Status Text</div>
+          <input class="admin-input" id="adminStatusText" placeholder="Under Construction / Completed">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Badge</div>
+          <input class="admin-input" id="adminBadge" placeholder="Featured · Ongoing">
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Location</div>
+          <input class="admin-input" id="adminLocation" placeholder="Beed Bypass, Chh. Sambhajinagar">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">RERA</div>
+          <input class="admin-input" id="adminRera" placeholder="P51500079269">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Status Color (hex)</div>
+          <input class="admin-input" id="adminStatusColor" placeholder="#8FD48F">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Card Image Path</div>
+          <input class="admin-input" id="adminCardImage" placeholder="./..._files/image.jpeg">
+        </div>
+        <div class="admin-field">
+          <div class="admin-label">Header Image Path</div>
+          <input class="admin-input" id="adminHeaderImage" placeholder="./..._files/image.jpeg">
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Overview (one paragraph per line)</div>
+          <textarea class="admin-textarea" id="adminOverview" placeholder="Line 1\nLine 2"></textarea>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Gallery Image Paths (one per line)</div>
+          <textarea class="admin-textarea" id="adminGallery" placeholder="./..._files/img1.jpeg\n./..._files/img2.jpeg"></textarea>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Details (key:value per line)</div>
+          <textarea class="admin-textarea" id="adminDetails" placeholder="Configuration:2 & 3 BHK\nTotal Units:34 Flats"></textarea>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Amenities (one per line)</div>
+          <textarea class="admin-textarea" id="adminAmenities" placeholder="Clubhouse\nLift with Battery Backup"></textarea>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Drawer Tabs (No-Code Builder)</div>
+          <div class="tab-editor" id="adminTabsEditor"></div>
+          <div class="admin-actions" style="margin-top:10px">
+            <button class="admin-btn" onclick="window.PBAdmin.tabsAdd()">Add Tab</button>
+            <button class="admin-btn" onclick="window.PBAdmin.tabsResetStandard()">Reset Standard Tabs</button>
+          </div>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Home Hero Images (one per line)</div>
+          <textarea class="admin-textarea" id="adminHeroImages" placeholder="https://...\n./Pukharaj Builders & Developers — Chh. Sambhajinagar_files/your-image.jpeg"></textarea>
+        </div>
+        <div class="admin-field admin-full">
+          <div class="admin-label">Extra Parameters (JSON object)</div>
+          <textarea class="admin-textarea" id="adminExtra" placeholder='{"floors":"G+7","units":"34"}'></textarea>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button class="admin-btn" onclick="window.PBAdmin.addNew()">Add New</button>
+        <button class="admin-btn" onclick="window.PBAdmin.duplicate()">Duplicate</button>
+        <button class="admin-btn" onclick="window.PBAdmin.remove()">Delete</button>
+        <button class="admin-btn primary" onclick="window.PBAdmin.save()">Save</button>
+        <button class="admin-btn" onclick="window.PBAdmin.exportJson()">Export JSON</button>
+        <button class="admin-btn" onclick="window.PBAdmin.importJson()">Import JSON</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER -->
+<!-- WHATSAPP FLOAT -->
+<div class="wa-wrap">
+  <div class="wa-tip">
+    <span class="wa-name">Paras Lalwani</span>
+    Chat with us on WhatsApp
+  </div>
+  <a class="wa-bubble" href="https://wa.me/919552778778?text=Hi%2C%20I%20am%20interested%20in%20Pukharaj%20Residency.%20Please%20share%20more%20details." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+  </a>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M19 12H5M12 5l-7 7 7 7"></path></svg>Back to Pukharaj Builders</button>
+  <div class="dh"><img src="assets/pukharaj-residency-2.jpeg" alt="Pukharaj Residency"><div class="dho"></div><div class="dhc"><div class="dhbadge">Under Construction</div><div class="dhtitle">Pukharaj Residency</div><div class="dhsub">📍 Beside Kasliwal Marvel (E), Beed Bypass, Chh. Sambhajinagar</div><div class="dhrera">MAHARERA REG. NO: P51500079269 · CREDAI Member</div></div></div>
+  <div class="dtabs">
+    <button class="dtab active" onclick="showTab('overview',this)">Overview</button>
+    <button class="dtab" onclick="showTab('gallery',this)">Gallery</button>
+    <button class="dtab" onclick="showTab('floorplans',this)">Floor Plans</button>
+    <button class="dtab" onclick="showTab('specs',this)">Specifications</button>
+    <button class="dtab" onclick="showTab('amenities',this)">Amenities</button>
+    <button class="dtab" onclick="showTab('location',this)">Location</button>
+  </div>
+
+  <div class="dpanel active" id="tab-overview">
+    <div class="do-grid">
+      <div class="do-desc">
+        <div style="font-family:&#39;Cormorant&#39;,serif;font-size:1.65rem;font-style:italic;font-weight:300;margin-bottom:18px;color:var(--gold-pale)">Where Comfort Meets Elegance</div>
+        <p>Pukharaj Residency is a luxurious 7-storey apartment complex offering 34 thoughtfully designed 2BHK and 3BHK flats with a state-of-the-art clubhouse, rooftop terrace, and a prime location on Beed Bypass Road.</p>
+        <p>Designed to provide residents with a comfortable, stylish, and convenient lifestyle — with its wealth of amenities, Pukharaj Residency is crafted to enhance the quality of life for your entire family.</p>
+        <p style="color:var(--gold);font-size:.76rem;letter-spacing:.1em;margin-top:10px;font-style:italic">Everything You Need In One Miracle</p>
+      </div>
+      <div class="do-highlights">
+        <div class="doh"><div class="doh-n">34</div><div class="doh-l">Premium Flats</div></div>
+        <div class="doh"><div class="doh-n">G+7</div><div class="doh-l">Floors + Terrace</div></div>
+        <div class="doh"><div class="doh-n">2&amp;3</div><div class="doh-l">BHK Configurations</div></div>
+        <div class="doh"><div class="doh-n">99+</div><div class="doh-l">Two-Wheeler Spaces</div></div>
+      </div>
+    </div>
+    <div class="do-credits">
+      <div><div style="font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">MAHARERA Registration</div><div style="font-family:&#39;Cormorant SC&#39;,serif;font-size:1.05rem">P51500079269 — Pukharaj Residency</div></div>
+      <div style="display:flex;gap:40px">
+        <div><div class="do-cred-label">Architect</div><div class="do-cred-val">Nikhil Chopda &amp; Associates</div></div>
+        <div><div class="do-cred-label">Structural Engineer</div><div class="do-cred-val">Er. N.G. Karkhane</div></div>
+      </div>
+      <a href="#contact" onclick="closeDrawer()" class="btn-g" style="font-size:.56rem;padding:12px 28px;border:none;cursor:none"><span>Request Brochure</span></a>
+    </div>
+  </div>
+
+  <div class="dpanel" id="tab-gallery">
+    <div class="dg-grid">
+      <img class="dg-wide" src="assets/pukharaj-residency-1.jpeg" alt="Pukharaj Residency">
+      <img src="assets/pukharaj-residency-2.jpeg" alt="Pukharaj Residency">
+      <img src="assets/pukharaj-residency-3.jpeg" alt="Pukharaj Residency">
+      <img src="assets/pukharaj-residency-4.jpeg" alt="Pukharaj Residency">
+    </div>
+    <div class="dg-caption">Images visualised by Model Minds. Actual finishes may vary from renders shown.</div>
+  </div>
+
+  <div class="dpanel" id="tab-floorplans">
+    <div style="font-family:&#39;Cormorant&#39;,serif;font-size:1.3rem;font-style:italic;margin-bottom:22px;color:var(--gold-pale)">Choose your ideal configuration</div>
+    <div class="dfp-tabs">
+      <button class="fptab active" onclick="showFP(&#39;fp3bhk&#39;,this)"><span>3 BHK Units</span></button>
+      <button class="fptab" onclick="showFP(&#39;fp2bhk&#39;,this)"><span>2 BHK Units</span></button>
+      <button class="fptab" onclick="showFP(&#39;fpground&#39;,this)"><span>Ground Floor</span></button>
+      <button class="fptab" onclick="showFP(&#39;fpbasement&#39;,this)"><span>Basement</span></button>
+    </div>
+    <div class="fp-panel active" id="fp3bhk">
+      <div class="fpcard"><div class="fpcard-title">Flat 101 – 701 · 3 BHK</div><div class="fp-placeholder">Floor Plan — 3 BHK · Flat 101–701</div><div class="fpinfo"><div class="fpi"><span class="fpi-l">Type</span><span class="fpi-v">3 BHK</span></div><div class="fpi"><span class="fpi-l">Floors</span><span class="fpi-v">1st – 7th</span></div><div class="fpi"><span class="fpi-l">Special</span><span class="fpi-v">Walk-in · 2 Balconies</span></div></div></div>
+      <div class="fpcard"><div class="fpcard-title">Flat 102 – 702 · 3 BHK</div><div class="fp-placeholder">Floor Plan — 3 BHK · Flat 102–702</div><div class="fpinfo"><div class="fpi"><span class="fpi-l">Type</span><span class="fpi-v">3 BHK</span></div><div class="fpi"><span class="fpi-l">Special</span><span class="fpi-v">Family Sitout · Balcony</span></div></div></div>
+      <div class="fpcard"><div class="fpcard-title">Flat 103 – 703 · 3 BHK</div><div class="fp-placeholder">Floor Plan — 3 BHK · Flat 103–703</div><div class="fpinfo"><div class="fpi"><span class="fpi-l">Type</span><span class="fpi-v">3 BHK</span></div><div class="fpi"><span class="fpi-l">Special</span><span class="fpi-v">Family Sitout · Walk-in</span></div></div></div>
+      <div class="fpcard"><div class="fpcard-title">Flat 104 · 3 BHK (1st Floor Only)</div><div class="fp-placeholder">Floor Plan — 3 BHK · Flat 104</div><div class="fpinfo"><div class="fpi"><span class="fpi-l">Type</span><span class="fpi-v">3 BHK Corner</span></div><div class="fpi"><span class="fpi-l">Special</span><span class="fpi-v">Clubhouse Level</span></div></div></div>
+    </div>
+    <div class="fp-panel" id="fp2bhk">
+      <div class="fpcard"><div class="fpcard-title">Flat 204 – 704 · 2 BHK</div><div class="fp-placeholder">Floor Plan — 2 BHK · Flat 204–704</div><div class="fpinfo"><div class="fpi"><span class="fpi-l">Type</span><span class="fpi-v">2 BHK</span></div><div class="fpi"><span class="fpi-l">Floors</span><span class="fpi-v">2nd – 7th</span></div><div class="fpi"><span class="fpi-l">Living</span><span class="fpi-v">~5.88 × 3.20M</span></div></div></div>
+      <div class="fpcard"><div class="fpcard-title">Flat 205 – 705 · 2 BHK</div><div class="fp-placeholder">Floor Plan — 2 BHK · Flat 205–705</div><div class="fpinfo"><div class="fpi"><span class="fpi-l">Type</span><span class="fpi-v">2 BHK</span></div><div class="fpi"><span class="fpi-l">Floors</span><span class="fpi-v">2nd – 7th</span></div><div class="fpi"><span class="fpi-l">Special</span><span class="fpi-v">Balcony · View</span></div></div></div>
+    </div>
+    <div class="fp-panel single" id="fpground"><div class="fpcard"><div class="fpcard-title">Ground Floor Plan</div><div class="fp-placeholder" style="height:240px">Ground Floor Layout</div><div class="fpinfo" style="flex-wrap:wrap;gap:22px;margin-top:18px"><div class="fpi"><span class="fpi-l">Car Parking</span><span class="fpi-v">16 + 2 Visitor</span></div><div class="fpi"><span class="fpi-l">Two Wheeler</span><span class="fpi-v">45 Spaces</span></div><div class="fpi"><span class="fpi-l">Facilities</span><span class="fpi-v">Society Office · Watchman · Waiting · Lift</span></div></div></div></div>
+    <div class="fp-panel single" id="fpbasement"><div class="fpcard"><div class="fpcard-title">Basement Plan</div><div class="fp-placeholder" style="height:240px">Basement Layout</div><div class="fpinfo" style="flex-wrap:wrap;gap:22px;margin-top:18px"><div class="fpi"><span class="fpi-l">Car Parking</span><span class="fpi-v">18 Spaces</span></div><div class="fpi"><span class="fpi-l">Two Wheeler</span><span class="fpi-v">54 Spaces</span></div><div class="fpi"><span class="fpi-l">Access</span><span class="fpi-v">Lift Access</span></div></div></div></div>
+    <div style="margin-top:18px;padding:14px 18px;background:var(--navy-mid);border:1px solid rgba(200,160,50,.1);font-size:.67rem;color:var(--muted);line-height:1.85">* Floor plans are conceptual. Contact us for detailed architectural drawings.</div>
+  </div>
+
+  <div class="dpanel" id="tab-specs">
+    <div class="specs-grid">
+      <div class="spec-item"><div class="spec-icon">🏗️</div><div><div class="spec-title">Structure</div><div class="spec-desc">Standard RCC Frame Structure of high quality with ISI mark.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🧱</div><div><div class="spec-title">Masonry</div><div class="spec-desc">Red brick masonry walls throughout.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🏠</div><div><div class="spec-title">Plaster</div><div class="spec-desc">External: sand faced plaster. Internal: sanla plaster finish.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🔲</div><div><div class="spec-title">Flooring</div><div class="spec-desc">Vitrified tiles 2×4 in all rooms throughout.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🍳</div><div><div class="spec-title">Kitchen</div><div class="spec-desc">Granite top with stainless steel sink and glazed tile dado upto lintel level.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🚿</div><div><div class="spec-title">Toilet &amp; Bathroom</div><div class="spec-desc">Glazed tile dado upto lintel level with premium quality fittings.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">⚡</div><div><div class="spec-title">Electrification</div><div class="spec-desc">Concealed electrification with ISI certified modular switches.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🪟</div><div><div class="spec-title">Windows</div><div class="spec-desc">3-track aluminium sliding windows with mosquito net &amp; safety grills.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🚪</div><div><div class="spec-title">Doors</div><div class="spec-desc">Decorative main door, granite frame; waterproof toilet door.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🎨</div><div><div class="spec-title">Paint</div><div class="spec-desc">Internal: Luster paint. External: Waterproof APEX finish.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">🔧</div><div><div class="spec-title">Plumbing</div><div class="spec-desc">Concealed plumbing with chromium plated sanitary fittings.</div></div></div>
+      <div class="spec-item"><div class="spec-icon">☀️</div><div><div class="spec-title">Solar + Lift</div><div class="spec-desc">Solar panels for common areas; lift with battery backup.</div></div></div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="tab-amenities">
+    <div style="font-family:&#39;Cormorant&#39;,serif;font-size:1.35rem;font-style:italic;margin-bottom:26px;color:var(--gold-pale)">Your personal playground awaits</div>
+    <div class="amen-grid">
+      <div class="amen-card"><div class="amen-icon">🏓</div><div class="amen-title">Clubhouse</div><div class="amen-desc">State-of-the-art clubhouse with billiards, table tennis, foosball and lounge. Your personal playground.</div></div>
+      <div class="amen-card"><div class="amen-icon">🏃</div><div class="amen-title">Terrace Amenities</div><div class="amen-desc">Rooftop jogging track, open-air gym, and serene gazebo — nature and convenience in perfect harmony.</div></div>
+      <div class="amen-card"><div class="amen-icon">🅿️</div><div class="amen-title">Ample Parking</div><div class="amen-desc">Basement: 18 cars + 54 two-wheelers. Ground: 16 cars + 2 visitor + 45 two-wheelers. Total 34 car spaces.</div></div>
+      <div class="amen-card"><div class="amen-icon">🛗</div><div class="amen-title">Lift with Battery Backup</div><div class="amen-desc">High-speed elevator with dedicated battery backup ensuring uninterrupted access across all 7 floors.</div></div>
+      <div class="amen-card"><div class="amen-icon">☀️</div><div class="amen-title">Solar Energy</div><div class="amen-desc">Solar panels powering common areas and lift — sustainable, green living built in from day one.</div></div>
+      <div class="amen-card"><div class="amen-icon">🏛️</div><div class="amen-title">Society Office</div><div class="amen-desc">Dedicated society office, watchman room, and waiting area for smooth community management.</div></div>
+      <div class="amen-card"><div class="amen-icon">🌿</div><div class="amen-title">Landscaped Gardens</div><div class="amen-desc">Professionally landscaped green spaces promoting wellness, calm, and natural beauty every day.</div></div>
+      <div class="amen-card"><div class="amen-icon">🔒</div><div class="amen-title">24/7 Security</div><div class="amen-desc">Round-the-clock security with dedicated watchman and surveillance for complete peace of mind.</div></div>
+    </div>
+  </div>
+
+  <div class="dpanel" id="tab-location">
+    <div class="loc-map"><iframe src="assets/embed.html" allowfullscreen="" loading="lazy"></iframe></div>
+    <div class="loc-grid">
+      <div class="loc-card"><div class="loc-ic">📍</div><div><div class="loc-lbl">Project Site</div><div class="loc-val">Beside Kasliwal Marvel (E),<br>Beed Bypass, Chh. Sambhajinagar</div></div></div>
+      <div class="loc-card"><div class="loc-ic">🏢</div><div><div class="loc-lbl">Developer Office</div><div class="loc-val">Shriniwas Apartment, Ulkanagari,<br>Chh. Sambhajinagar</div></div></div>
+      <div class="loc-card"><div class="loc-ic">🏫</div><div><div class="loc-lbl">Nearby Landmarks</div><div class="loc-val">MIT · Chaitanya School<br>Kasliwal Marvel · Petrol Pump</div></div></div>
+      <div class="loc-card"><div class="loc-ic">🛣️</div><div><div class="loc-lbl">Road Access</div><div class="loc-val">36M Wide Road · Beed Bypass<br>Dargah Rd · Paithan Rd</div></div></div>
+    </div>
+    <div class="loc-cta">
+      <div><div style="font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Schedule a Site Visit</div><div style="font-size:.82rem;color:var(--light)">Contact us for site visits, pricing, and availability</div></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="tel:9552778778" class="btn-g" style="font-size:.56rem;padding:11px 24px;border:none;cursor:none"><span>📞 9552 778 778</span></a>
+        <a href="tel:8788579803" class="btn-o" style="font-size:.56rem;padding:10px 20px;cursor:none">8788 579 803</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(loop)})();
+
+// NAV
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>60));
+
+// REVEAL
+const ob=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');ob.unobserve(e.target)}})},{threshold:.07});
+document.querySelectorAll('.r,.rl').forEach(el=>ob.observe(el));
+
+// COUNTERS
+function animCount(el){
+  const target=+el.dataset.count,suffix=el.dataset.suffix||'',dur=1800,step=16;
+  let v=0;const inc=target/(dur/step);
+  const t=setInterval(()=>{v=Math.min(v+inc,target);el.textContent=Math.floor(v)+suffix;if(v>=target)clearInterval(t)},step);
+}
+const cob=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){animCount(e.target);cob.unobserve(e.target)}})},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cob.observe(el));
+
+// PARTICLES
+(function(){
+  const c=document.getElementById('particles');if(!c)return;
+  const ctx=c.getContext('2d');let W,H,pts=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<55;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.5+.4,a:Math.random()*.45+.1});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(200,160,50,${p.a})`;ctx.fill()});
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<115){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(200,160,50,${.07*(1-d/115)})`;ctx.lineWidth=.5;ctx.stroke()}}
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// PARALLAX
+window.addEventListener('scroll',()=>{const h=document.querySelector('.hbg');if(h)h.style.transform=`translateY(${scrollY*.22}px)`});
+
+// DRAWER
+let __pbCurrentProjectId=null;
+function openDrawer(projectId){
+  if(projectId) __pbCurrentProjectId=projectId;
+  if(!__pbCurrentProjectId && window.PBDataState && Array.isArray(window.PBDataState.projects) && window.PBDataState.projects[0]) __pbCurrentProjectId=window.PBDataState.projects[0].id;
+  if(__pbCurrentProjectId) window.PBRender.populateDrawer(__pbCurrentProjectId);
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  showTab('overview',document.querySelector('.dtab'));
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+
+function showTab(id,btn){
+  document.querySelectorAll('.dpanel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.dtab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function showFP(id,btn){
+  document.querySelectorAll('.fp-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.fptab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+window.PBData=(function(){
+  const LS_KEY='pb_projects_v2';
+  const defaultSite={
+    spotlightProjectId:'pukharaj-residency',
+    heroImages:[
+      'assets/photo-1545324418-cc1a3fa10c00.jpg',
+      'assets/photo-1497366216548-37526070297c.jpg',
+      'assets/photo-1503387762-592deb58ef4e.jpg',
+      'assets/photo-1600585154340-be6161a56a0c.jpg'
+    ],
+    heroIntervalMs:6000
+  };
+  const defaults=[{
+    id:'pukharaj-residency',
+    name:'Pukharaj Residency',
+    badge:'Featured · Ongoing',
+    status:{text:'Under Construction',color:'#8FD48F'},
+    location:'Beed Bypass, Chh. Sambhajinagar',
+    rera:'P51500079269',
+    cardImage:'assets/pukharaj-residency-1.jpeg',
+    headerImage:'assets/pukharaj-residency-2.jpeg',
+    overview:[
+      'Pukharaj Residency is a luxurious 7-storey apartment complex offering 34 thoughtfully designed 2BHK and 3BHK flats with a state-of-the-art clubhouse, rooftop terrace, and a prime location on Beed Bypass Road.',
+      'Designed to provide residents with a comfortable, stylish, and convenient lifestyle — with its wealth of amenities, Pukharaj Residency is crafted to enhance the quality of life for your entire family.'
+    ],
+    gallery:[
+      'assets/pukharaj-residency-1.jpeg',
+      'assets/pukharaj-residency-2.jpeg',
+      'assets/pukharaj-residency-3.jpeg',
+      'assets/pukharaj-residency-4.jpeg'
+    ],
+    details:{
+      'Configuration':'2 & 3 BHK',
+      'Total Units':'34 Flats',
+      'Floors':'Ground + 7',
+      'Parking':'34 Cars + 99 Two-Wheeler',
+      'Status':'Under Construction'
+    },
+    amenities:[
+      '🏓 Clubhouse & Indoor Games',
+      '🏃 Rooftop Terrace Gym',
+      '🛗 Lift with Battery Backup',
+      '☀️ Solar Panels',
+      '🌿 Landscaped Gardens',
+      '🔒 24/7 Security'
+    ],
+    tabs:[
+      {id:'overview',label:'Overview',enabled:true},
+      {id:'gallery',label:'Gallery',enabled:true},
+      {id:'floorplans',label:'Floor Plans',enabled:true},
+      {id:'specs',label:'Specifications',enabled:true},
+      {id:'amenities',label:'Amenities',enabled:true},
+      {id:'location',label:'Location',enabled:true}
+    ],
+    extra:{"floors":"G+7","units":"34"}
+  }];
+  function load(){
+    try{
+      const raw=localStorage.getItem(LS_KEY);
+      if(!raw) return {site:defaultSite,projects:defaults};
+      const parsed=JSON.parse(raw);
+      if(!parsed || !Array.isArray(parsed.projects)) return {site:defaultSite,projects:defaults};
+      if(!parsed.site) parsed.site=defaultSite;
+      if(!Array.isArray(parsed.site.heroImages) || !parsed.site.heroImages.length) parsed.site.heroImages=defaultSite.heroImages;
+      if(!parsed.site.heroIntervalMs) parsed.site.heroIntervalMs=defaultSite.heroIntervalMs;
+      if(!parsed.site.spotlightProjectId) parsed.site.spotlightProjectId=defaultSite.spotlightProjectId;
+      parsed.projects.forEach(p=>{
+        if(!Array.isArray(p.tabs) || !p.tabs.length){
+          p.tabs=[
+            {id:'overview',label:'Overview',enabled:true},
+            {id:'gallery',label:'Gallery',enabled:true},
+            {id:'floorplans',label:'Floor Plans',enabled:true},
+            {id:'specs',label:'Specifications',enabled:true},
+            {id:'amenities',label:'Amenities',enabled:true},
+            {id:'location',label:'Location',enabled:true}
+          ];
+        }
+      });
+      return parsed;
+    }catch(_){
+      return {site:defaultSite,projects:defaults};
+    }
+  }
+  function save(data){
+    localStorage.setItem(LS_KEY,JSON.stringify(data));
+  }
+  return {LS_KEY,defaults,defaultSite,load,save};
+})();
+
+window.PBRender=(function(){
+  function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+  function getProject(id){return (window.PBDataState.projects||[]).find(p=>p.id===id)||null;}
+  function stdTabLabel(id){
+    const m={overview:'Overview',gallery:'Gallery',details:'Details',amenities:'Amenities',location:'Location',floorplans:'Floor Plans',specs:'Specifications'};
+    return m[id]||id;
+  }
+  function normalizeTabs(tabs){
+    const base=[
+      {id:'overview',label:'Overview',enabled:true},
+      {id:'gallery',label:'Gallery',enabled:true},
+      {id:'floorplans',label:'Floor Plans',enabled:true},
+      {id:'specs',label:'Specifications',enabled:true},
+      {id:'amenities',label:'Amenities',enabled:true},
+      {id:'location',label:'Location',enabled:true}
+    ];
+    const seen=new Set();
+    const out=[];
+    (Array.isArray(tabs)?tabs:base).forEach(t=>{
+      if(!t || !t.id) return;
+      const id=String(t.id).trim();
+      if(!id || seen.has(id)) return;
+      seen.add(id);
+      out.push({
+        id,
+        label:('label' in t)?String(t.label||'').trim():(base.find(b=>b.id===id)?.label||id),
+        enabled:('enabled' in t)?!!t.enabled:true,
+        type:(t.type?String(t.type):null),
+        contentHtml:(t.contentHtml?String(t.contentHtml):'')
+      });
+    });
+    if(!out.length) return base;
+    return out;
+  }
+  function renderProjects(){
+    const grid=document.getElementById('projectsGrid');
+    if(!grid) return;
+    grid.innerHTML='';
+    const ps=window.PBDataState.projects||[];
+    ps.forEach(p=>{
+      const badge=esc(p.badge||'');
+      const st=esc(p.status?.text||'');
+      const stColor=p.status?.color||'#8FD48F';
+      const loc=esc(p.location||'');
+      const img=esc(p.cardImage||p.headerImage||'');
+      const info=Object.entries(p.extra||{}).map(([k,v])=>`${esc(v)}`).filter(Boolean).join(' · ');
+      const infoSpan=info?`<span style="margin-left:8px;font-size:.57rem;color:var(--muted)">· ${info}</span>`:'';
+      const card=document.createElement('div');
+      card.className='pc';
+      card.setAttribute('role','button');
+      card.onclick=()=>openDrawer(p.id);
+      card.innerHTML=`<img src="${img}" alt="${esc(p.name)}"><div class="pc-arrow">→</div><div class="po"><div class="po-inner"><span class="pbadge">${badge}</span><div class="pname">${esc(p.name)}</div><div class="ploc">📍 ${loc}</div><div class="pstat"><span class="dot on"></span><span style="font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:${esc(stColor)}">${st}</span>${infoSpan}</div></div></div></div>`;
+      grid.appendChild(card);
+    });
+    const spotlightId=window.PBDataState.site?.spotlightProjectId;
+    const spotlight=getProject(spotlightId)||ps[0]||null;
+    window.__pbSpotlightId=spotlight?.id||null;
+    renderSpotlight(spotlight);
+  }
+  function renderSpotlight(p){
+    const title=document.getElementById('spotlightTitle');
+    const rera=document.getElementById('spotlightRera');
+    const details=document.getElementById('spotlightDetails');
+    const am=document.getElementById('spotlightAmenities');
+    if(title) title.textContent=p?.name||'';
+    if(rera) rera.textContent=p?.rera||'';
+    if(details){
+      details.innerHTML='';
+      const d=p?.details||{};
+      Object.entries(d).forEach(([k,v])=>{
+        const row=document.createElement('div');
+        row.className='rdc-row';
+        row.innerHTML=`<span class="rdc-k">${esc(k)}</span><span>${esc(v)}</span>`;
+        details.appendChild(row);
+      });
+    }
+    if(am){
+      am.innerHTML='';
+      (p?.amenities||[]).forEach(x=>{
+        const sp=document.createElement('span');
+        sp.textContent=x;
+        am.appendChild(sp);
+      });
+    }
+  }
+  function populateDrawer(id){
+    const p=getProject(id);
+    if(!p) return;
+    renderDrawerTabs(p);
+    const dh=document.querySelector('.dh img');
+    if(dh) dh.setAttribute('src',p.headerImage||p.cardImage||'');
+    const dht=document.querySelector('.dhtitle');
+    if(dht) dht.textContent=p.name||'';
+    const dhb=document.querySelector('.dhbadge');
+    if(dhb){
+      const status=p.status?.text||'';
+      const color=p.status?.color||'#8FD48F';
+      dhb.textContent=status;
+      dhb.style.color=color;
+    }
+    const dhs=document.querySelector('.dhsub');
+    if(dhs) dhs.innerHTML=`📍 ${esc(p.location||'')}`;
+    const dhr=document.querySelector('.dhrera');
+    if(dhr) dhr.innerHTML=`MAHARERA REG. NO: ${esc(p.rera||'')} · CREDAI Member`;
+
+    renderStandardPanels(p);
+  }
+  function ensurePanel(id){
+    let panel=document.getElementById('tab-'+id);
+    if(panel) return panel;
+    const drawer=document.getElementById('drawer');
+    if(!drawer) return null;
+    panel=document.createElement('div');
+    panel.className='dpanel';
+    panel.id='tab-'+id;
+    panel.setAttribute('data-pb-custom','1');
+    drawer.appendChild(panel);
+    return panel;
+  }
+  function renderStandardPanels(p){
+    const overview=ensurePanel('overview');
+    if(overview){
+      const lines=(p.overview||[]).filter(Boolean);
+      const headline=esc(p.extra?.overviewHeadline||'');
+      const lead=esc(p.extra?.overviewLead||'');
+      const tail=esc(p.extra?.overviewTagline||'');
+      const headlineHtml=headline?`<div style="font-family:'Cormorant',serif;font-size:1.65rem;font-style:italic;font-weight:300;margin-bottom:18px;color:var(--gold-pale)">${headline}</div>`:'';
+      const leadHtml=lead?`<p>${lead}</p>`:'';
+      const paras=lines.map(t=>`<p>${esc(t)}</p>`).join('');
+      const tailHtml=tail?`<p style="color:var(--gold);font-size:.76rem;letter-spacing:.1em;margin-top:10px;font-style:italic">${tail}</p>`:'';
+      overview.innerHTML=`<div class="do-grid"><div class="do-desc">${headlineHtml}${leadHtml}${paras}${tailHtml}</div></div>`;
+    }
+
+    const gallery=ensurePanel('gallery');
+    if(gallery){
+      const imgs=(p.gallery||[]).filter(Boolean);
+      const items=imgs.map((src,idx)=>`<img ${idx===0?'class="dg-wide"':''} src="${esc(src)}" alt="${esc(p.name||'Project')}">`).join('');
+      gallery.innerHTML=`<div class="dg-grid">${items}</div><div class="dg-caption">Images visualised by Model Minds. Actual finishes may vary from renders shown.</div>`;
+    }
+
+    const details=ensurePanel('details');
+    if(details){
+      const d=p.details||{};
+      const rows=Object.entries(d).map(([k,v])=>`<div class="rdc-row"><span class="rdc-k">${esc(k)}</span><span>${esc(v)}</span></div>`).join('');
+      details.innerHTML=`<div style="font-size:.53rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Project Details</div>${rows}`;
+    }
+
+    const amenities=ensurePanel('amenities');
+    if(amenities){
+      const am=(p.amenities||[]).filter(Boolean);
+      const items=am.map(x=>`<div class="amen-card"><div class="amen-title">${esc(x)}</div></div>`).join('');
+      amenities.innerHTML=items?`<div class="amen-grid">${items}</div>`:'';
+    }
+
+    const location=ensurePanel('location');
+    if(location){
+      const iframeSrc=p.extra?.mapIframeSrc||p.extra?.mapEmbed||'';
+      const addr=esc(p.location||'');
+      const map=iframeSrc?`<div class="loc-map"><iframe src="${esc(iframeSrc)}" allowfullscreen="" loading="lazy"></iframe></div>`:'';
+      const card=`<div class="loc-grid"><div class="loc-card"><div class="loc-ic">📍</div><div><div class="loc-lbl">Project Site</div><div class="loc-val">${addr}</div></div></div></div>`;
+      location.innerHTML=`${map}${card}`;
+    }
+  }
+  function renderDrawerTabs(project){
+    const tabsWrap=document.querySelector('.dtabs');
+    if(!tabsWrap) return;
+    const allPanels=document.querySelectorAll('.dpanel');
+    const customPanels=[...document.querySelectorAll('.dpanel[data-pb-custom="1"]')];
+    customPanels.forEach(n=>n.remove());
+
+    const tabs=normalizeTabs(project?.tabs);
+    const enabled=tabs.filter(t=>t.enabled!==false);
+    tabsWrap.innerHTML='';
+    enabled.forEach((t,idx)=>{
+      const b=document.createElement('button');
+      b.className='dtab'+(idx===0?' active':'');
+      b.textContent=t.label||stdTabLabel(t.id);
+      b.onclick=()=>showTab(t.id,b);
+      tabsWrap.appendChild(b);
+
+      const builtin=document.getElementById('tab-'+t.id);
+      if(!builtin && (t.type==='html' || ['overview','gallery','details','amenities','location'].includes(t.id))){
+        const panel=document.createElement('div');
+        panel.className='dpanel';
+        panel.id='tab-'+t.id;
+        panel.setAttribute('data-pb-custom','1');
+        panel.innerHTML=t.type==='html'?(t.contentHtml||''):'';
+        const drawer=document.getElementById('drawer');
+        if(drawer) drawer.appendChild(panel);
+      }
+    });
+
+    allPanels.forEach(p=>p.classList.remove('active'));
+    const firstId=enabled[0]?.id;
+    const firstPanel=firstId?document.getElementById('tab-'+firstId):null;
+    if(firstPanel) firstPanel.classList.add('active');
+  }
+  return {renderProjects,populateDrawer,renderDrawerTabs,normalizeTabs};
+})();
+
+window.PBAdmin=(function(){
+  function isAdmin(){return new URLSearchParams(location.search).get('admin')==='1';}
+  function open(){document.getElementById('adminPanel')?.classList.add('open');}
+  function close(){document.getElementById('adminPanel')?.classList.remove('open');}
+  function el(id){return document.getElementById(id);}
+  function parseLines(v){return String(v||'').split(/\r?\n/).map(s=>s.trim()).filter(Boolean);}
+  function parseKV(v){
+    const out={};
+    parseLines(v).forEach(line=>{
+      const i=line.indexOf(':');
+      if(i<0) return;
+      const k=line.slice(0,i).trim();
+      const val=line.slice(i+1).trim();
+      if(k) out[k]=val;
+    });
+    return out;
+  }
+  function toKV(obj){
+    return Object.entries(obj||{}).map(([k,v])=>`${k}:${v}`).join('\n');
+  }
+  function uuid(){return 't'+Math.random().toString(16).slice(2,10);}
+  function stdTabs(){
+    return [
+      {id:'overview',label:'Overview',enabled:true},
+      {id:'gallery',label:'Gallery',enabled:true},
+      {id:'details',label:'Details',enabled:true},
+      {id:'amenities',label:'Amenities',enabled:true},
+      {id:'location',label:'Location',enabled:true}
+    ];
+  }
+  function getTabsFromState(){
+    const sel=el('adminProjectSelect');
+    const id=sel?.value;
+    const p=(window.PBDataState.projects||[]).find(x=>x.id===id);
+    return p?.tabs||[];
+  }
+  function setTabsToState(tabs){
+    const sel=el('adminProjectSelect');
+    const id=sel?.value;
+    const idx=(window.PBDataState.projects||[]).findIndex(x=>x.id===id);
+    if(idx<0) return;
+    window.PBDataState.projects[idx].tabs=window.PBRender.normalizeTabs(tabs);
+  }
+  function renderTabsEditor(tabs){
+    const wrap=el('adminTabsEditor');
+    if(!wrap) return;
+    const list=window.PBRender.normalizeTabs(Array.isArray(tabs)?tabs:[]);
+    wrap.innerHTML='';
+    list.forEach((t,idx)=>{
+      const row=document.createElement('div');
+      row.className='tab-editor-row';
+      const isStd=['overview','gallery','details','amenities','location','floorplans','specs'].includes(t.id);
+      row.innerHTML=`
+        <input class="tab-mini" data-tab-field="label" data-tab-idx="${idx}" placeholder="Tab Name" value="${t.label||t.id}">
+        <input class="tab-mini" data-tab-field="id" data-tab-idx="${idx}" placeholder="tab-id" value="${t.id}" ${isStd?'disabled':''}>
+        <select class="tab-mini" data-tab-field="type" data-tab-idx="${idx}">
+          <option value="standard" ${t.type==='html'?'':'selected'}>Standard</option>
+          <option value="html" ${t.type==='html'?'selected':''}>Custom HTML</option>
+        </select>
+        <label style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase"><input type="checkbox" data-tab-field="enabled" data-tab-idx="${idx}" ${t.enabled!==false?'checked':''}>Enabled</label>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="tab-mini-btn" data-tab-act="up" data-tab-idx="${idx}">Up</button>
+          <button class="tab-mini-btn" data-tab-act="down" data-tab-idx="${idx}">Down</button>
+          <button class="tab-mini-btn" data-tab-act="del" data-tab-idx="${idx}">Del</button>
+        </div>
+        <div class="tab-editor-html" style="display:${t.type==='html'?'block':'none'}">
+          <div class="admin-label" style="margin-bottom:7px">Custom HTML Content</div>
+          <textarea class="admin-textarea" data-tab-field="html" data-tab-idx="${idx}" placeholder="<div>...</div>">${t.contentHtml||''}</textarea>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+
+    wrap.querySelectorAll('button[data-tab-act]').forEach(btn=>{
+      btn.onclick=(e)=>{
+        e.preventDefault();
+        const act=btn.getAttribute('data-tab-act');
+        const i=parseInt(btn.getAttribute('data-tab-idx'),10);
+        const current=readTabsEditor();
+        if(act==='up' && i>0){const tmp=current[i-1];current[i-1]=current[i];current[i]=tmp;}
+        if(act==='down' && i<current.length-1){const tmp=current[i+1];current[i+1]=current[i];current[i]=tmp;}
+        if(act==='del'){current.splice(i,1);}
+        renderTabsEditor(current);
+      };
+    });
+    wrap.querySelectorAll('select[data-tab-field="type"]').forEach(sel=>{
+      sel.onchange=()=>{renderTabsEditor(readTabsEditor());};
+    });
+  }
+  function readTabsEditor(){
+    const wrap=el('adminTabsEditor');
+    if(!wrap) return [];
+    const rows=[...wrap.querySelectorAll('.tab-editor-row')];
+    return rows.map((row,idx)=>{
+      const label=row.querySelector('[data-tab-field="label"]')?.value?.trim()||'';
+      const id=row.querySelector('[data-tab-field="id"]')?.value?.trim()||uuid();
+      const enabled=!!row.querySelector('[data-tab-field="enabled"]')?.checked;
+      const type=row.querySelector('[data-tab-field="type"]')?.value==='html'?'html':null;
+      const html=row.querySelector('[data-tab-field="html"]')?.value||'';
+      return {id,label:label||id,enabled,type,contentHtml:type==='html'?html:''};
+    });
+  }
+  function tabsAdd(){
+    const current=readTabsEditor();
+    current.push({id:'custom-'+uuid(),label:'New Tab',enabled:true,type:'html',contentHtml:'<div style="padding:18px;border:1px solid rgba(200,160,50,.12)">New content</div>'});
+    renderTabsEditor(current);
+  }
+  function tabsResetStandard(){
+    renderTabsEditor(stdTabs());
+  }
+  function fillSelect(){
+    const sel=el('adminProjectSelect');
+    if(!sel) return;
+    sel.innerHTML='';
+    (window.PBDataState.projects||[]).forEach(p=>{
+      const o=document.createElement('option');
+      o.value=p.id;
+      o.textContent=`${p.name} (${p.id})`;
+      sel.appendChild(o);
+    });
+    sel.onchange=()=>loadToForm(sel.value);
+  }
+  function fillSpotlightSelect(){
+    const sel=el('adminSpotlightProject');
+    if(!sel) return;
+    sel.innerHTML='';
+    (window.PBDataState.projects||[]).forEach(p=>{
+      const o=document.createElement('option');
+      o.value=p.id;
+      o.textContent=`${p.name} (${p.id})`;
+      sel.appendChild(o);
+    });
+    sel.value=window.PBDataState.site?.spotlightProjectId||'';
+    sel.onchange=()=>{window.PBDataState.site.spotlightProjectId=sel.value;window.PBData.save(window.PBDataState);window.PBRender.renderProjects();};
+  }
+  function loadToForm(id){
+    const p=(window.PBDataState.projects||[]).find(x=>x.id===id);
+    if(!p) return;
+    el('adminId').value=p.id||'';
+    el('adminName').value=p.name||'';
+    el('adminStatusText').value=p.status?.text||'';
+    el('adminStatusColor').value=p.status?.color||'';
+    el('adminBadge').value=p.badge||'';
+    el('adminLocation').value=p.location||'';
+    el('adminRera').value=p.rera||'';
+    el('adminCardImage').value=p.cardImage||'';
+    el('adminHeaderImage').value=p.headerImage||'';
+    el('adminOverview').value=(p.overview||[]).join('\n');
+    el('adminGallery').value=(p.gallery||[]).join('\n');
+    el('adminDetails').value=toKV(p.details||{});
+    el('adminAmenities').value=(p.amenities||[]).join('\n');
+    renderTabsEditor(p.tabs||stdTabs());
+    el('adminHeroImages').value=(window.PBDataState.site?.heroImages||[]).join('\n');
+    el('adminExtra').value=JSON.stringify(p.extra||{},null,2);
+  }
+  function readFromForm(){
+    let extra={};
+    try{extra=JSON.parse(el('adminExtra').value||'{}');}catch(_){extra={};}
+    const tabs=readTabsEditor();
+    return {
+      id:el('adminId').value.trim(),
+      name:el('adminName').value.trim(),
+      badge:el('adminBadge').value.trim(),
+      status:{text:el('adminStatusText').value.trim(),color:el('adminStatusColor').value.trim()||'#8FD48F'},
+      location:el('adminLocation').value.trim(),
+      rera:el('adminRera').value.trim(),
+      cardImage:el('adminCardImage').value.trim(),
+      headerImage:el('adminHeaderImage').value.trim(),
+      overview:parseLines(el('adminOverview').value),
+      gallery:parseLines(el('adminGallery').value),
+      details:parseKV(el('adminDetails').value),
+      amenities:parseLines(el('adminAmenities').value),
+      tabs:window.PBRender.normalizeTabs(tabs),
+      extra
+    };
+  }
+  function save(){
+    const sel=el('adminProjectSelect');
+    const currentId=sel?.value;
+    const p=readFromForm();
+    if(!p.id || !p.name){alert('Project Id and Project Name are required.');return;}
+    if(!window.PBDataState.site) window.PBDataState.site=window.PBData.defaultSite;
+    const hero=parseLines(el('adminHeroImages').value);
+    if(hero.length) window.PBDataState.site.heroImages=hero;
+    const idx=(window.PBDataState.projects||[]).findIndex(x=>x.id===currentId);
+    if(idx>=0){
+      const idChanged=currentId!==p.id;
+      if(idChanged && window.PBDataState.projects.some(x=>x.id===p.id)) {alert('Project Id already exists.');return;}
+      window.PBDataState.projects[idx]=p;
+    }else{
+      if(window.PBDataState.projects.some(x=>x.id===p.id)) {alert('Project Id already exists.');return;}
+      window.PBDataState.projects.push(p);
+    }
+    window.PBData.save(window.PBDataState);
+    window.PBRender.renderProjects();
+    fillSelect();
+    fillSpotlightSelect();
+    sel.value=p.id;
+  }
+  function addNew(){
+    el('adminId').value='';
+    el('adminName').value='';
+    el('adminStatusText').value='';
+    el('adminStatusColor').value='#8FD48F';
+    el('adminBadge').value='';
+    el('adminLocation').value='';
+    el('adminRera').value='';
+    el('adminCardImage').value='';
+    el('adminHeaderImage').value='';
+    el('adminOverview').value='';
+    el('adminGallery').value='';
+    el('adminDetails').value='';
+    el('adminAmenities').value='';
+    renderTabsEditor(stdTabs());
+    el('adminHeroImages').value=(window.PBDataState.site?.heroImages||[]).join('\n');
+    el('adminExtra').value='{}';
+  }
+  function duplicate(){
+    const sel=el('adminProjectSelect');
+    const srcId=sel?.value;
+    const p=(window.PBDataState.projects||[]).find(x=>x.id===srcId);
+    if(!p) return;
+    const np=JSON.parse(JSON.stringify(p));
+    np.id=np.id+'-copy';
+    np.name=np.name+' Copy';
+    window.PBDataState.projects.push(np);
+    window.PBData.save(window.PBDataState);
+    window.PBRender.renderProjects();
+    fillSelect();
+    sel.value=np.id;
+    loadToForm(np.id);
+  }
+  function remove(){
+    const sel=el('adminProjectSelect');
+    const id=sel?.value;
+    if(!id) return;
+    if(!confirm('Delete this project?')) return;
+    window.PBDataState.projects=window.PBDataState.projects.filter(p=>p.id!==id);
+    window.PBData.save(window.PBDataState);
+    window.PBRender.renderProjects();
+    fillSelect();
+    if(window.PBDataState.projects[0]){sel.value=window.PBDataState.projects[0].id;loadToForm(sel.value);}else{addNew();}
+  }
+  function exportJson(){
+    const txt=JSON.stringify(window.PBDataState,null,2);
+    prompt('Copy JSON:',txt);
+  }
+  function importJson(){
+    const txt=prompt('Paste JSON:');
+    if(!txt) return;
+    try{
+      const parsed=JSON.parse(txt);
+      if(!parsed || !Array.isArray(parsed.projects)) throw new Error('Invalid');
+      window.PBDataState=parsed;
+      window.PBData.save(window.PBDataState);
+      window.PBRender.renderProjects();
+      fillSelect();
+      if(window.PBDataState.projects[0]){el('adminProjectSelect').value=window.PBDataState.projects[0].id;loadToForm(window.PBDataState.projects[0].id);}else{addNew();}
+    }catch(_){
+      alert('Invalid JSON');
+    }
+  }
+  function init(){
+    if(!isAdmin()) return;
+    const pwd=prompt('Enter Admin Password:');
+    if(pwd!=='PARAS123'){alert('Incorrect password.');return;}
+    const fab=el('adminFab');
+    if(fab) fab.style.display='block';
+    fillSelect();
+    fillSpotlightSelect();
+    const sel=el('adminProjectSelect');
+    if(sel && sel.options && sel.options.length){
+      if(!sel.value) sel.value=sel.options[0].value;
+      loadToForm(sel.value);
+    }else{
+      addNew();
+    }
+  }
+  return {isAdmin,open,close,save,addNew,duplicate,remove,exportJson,importJson,init,tabsAdd,tabsResetStandard};
+})();
+
+window.PBHero=(function(){
+  let t=null;
+  function apply(url){
+    const h=document.querySelector('.hbg');
+    if(!h) return;
+    h.style.backgroundImage=`linear-gradient(108deg,rgba(10,19,30,.96) 26%,rgba(10,19,30,.52) 58%,rgba(10,19,30,.88) 100%), url('${url}')`;
+    h.style.backgroundPosition='center';
+    h.style.backgroundSize='cover';
+    h.style.backgroundRepeat='no-repeat';
+  }
+  function start(){
+    const imgs=(window.PBDataState.site?.heroImages||[]).filter(Boolean);
+    if(!imgs.length) return;
+    const interval=window.PBDataState.site?.heroIntervalMs||6000;
+    let i=0;
+    apply(imgs[i]);
+    if(t) clearInterval(t);
+    t=setInterval(()=>{i=(i+1)%imgs.length;apply(imgs[i]);},interval);
+  }
+  return {start};
+})();
+
+window.PBDataState=window.PBData.load();
+window.PBRender.renderProjects();
+window.PBAdmin.init();
+window.PBHero.start();
+</script>
+
+
+<!-- FIREBASE INTEGRATION -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+  import { getFirestore, collection, onSnapshot, query, where, orderBy, addDoc, serverTimestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCEloivzzDVOQqRmzo1eLRv9ClRT3p4K5Q",
+    authDomain: "pukhraj-builders-3a908.firebaseapp.com",
+    projectId: "pukhraj-builders-3a908",
+    storageBucket: "pukhraj-builders-3a908.firebasestorage.app",
+    messagingSenderId: "55973067998",
+    appId: "1:55973067998:web:d894eb01e6ad084e01964f",
+    measurementId: "G-0TCXD05S78"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // STANDARDIZED TOASTS
+  function showToast(msg, type='success') {
+    const t = document.createElement('div');
+    t.style.cssText = `position:fixed;bottom:24px;left:24px;background:#1A2F45;color:#fff;padding:14px 24px;border-left:4px solid ${type==='success'?'#C8A032':'#e74c3c'};z-index:99999;font-size:.76rem;letter-spacing:.05em;box-shadow:0 8px 32px rgba(0,0,0,.4);transform:translateX(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1)`;
+    t.innerText = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.style.transform = 'translateX(0)', 10);
+    setTimeout(() => { t.style.transform = 'translateX(-120%)'; setTimeout(() => t.remove(), 400); }, 3000);
+  }
+
+  // ANALYTICS TRACKER
+  async function track(event, data={}) {
+    try {
+      await addDoc(collection(db, 'analytics'), {
+        event, ...data, timestamp: serverTimestamp(), page: window.location.pathname
+      });
+    } catch(e) {}
+  }
+
+  // OFFLINE BANNER
+  const offlineBanner = document.createElement('div');
+  offlineBanner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#2c3e50;color:#bdc3c7;text-align:center;font-size:10px;padding:4px;z-index:9999;display:none;letter-spacing:1px;text-transform:uppercase';
+  offlineBanner.innerText = 'Offline Mode - Viewing Cached Content';
+  document.body.appendChild(offlineBanner);
+
+  onSnapshot(doc(db, ".info", "connected"), (snap) => {
+    offlineBanner.style.display = snap.data() === true ? 'none' : 'block';
+  });
+
+  // MAPPING FIRESTORE TO LOCAL UI STATE
+  function mapProject(id, d) {
+    return {
+      id: id,
+      name: d.name || 'Unnamed Project',
+      badge: d.badge || '',
+      status: { text: d.status || 'Under Construction', color: d.status === 'Completed' ? '#8FD48F' : (d.status === 'Upcoming' ? '#3498db' : '#C8A032') },
+      location: d.location?.siteAddress || d.location || '',
+      rera: d.rera || '',
+      cardImage: d.heroImage || d.galleryImages?.[0] || '',
+      headerImage: d.heroImage || d.galleryImages?.[0] || '',
+      overview: [d.overview?.description || ''].filter(Boolean),
+      gallery: d.galleryImages || [],
+      details: {
+        'Configuration': d.overview?.highlights?.find(h=>h.label.includes('BHK'))?.value || '—',
+        'Total Units': d.overview?.highlights?.[0]?.value || '—',
+        'Floors': d.overview?.highlights?.[1]?.value || '—',
+        'Status': d.status || 'Under Construction'
+      },
+      amenities: (d.amenities || []).map(a => a.title),
+      extra: {
+        overviewHeadline: d.overview?.tagline || '',
+        mapEmbed: d.location?.mapsUrl || '',
+        highlights: d.overview?.highlights || []
+      },
+      tabs: [
+        {id:'overview',label:'Overview',enabled:true},
+        {id:'gallery',label:'Gallery',enabled:!!d.galleryImages?.length},
+        {id:'floorplans',label:'Floor Plans',enabled:!!d.floorPlans?.length},
+        {id:'specs',label:'Specifications',enabled:!!d.specs?.length},
+        {id:'amenities',label:'Amenities',enabled:!!d.amenities?.length},
+        {id:'location',label:'Location',enabled:true}
+      ]
+    };
+  }
+
+  // MODIFIED DRAWER - FETCH FULL DATA BY ID
+  window.openDrawer = async function(id) {
+    if(!id) return;
+    track('drawer_open', { projectId: id });
+    const drawer = document.getElementById('drawer');
+    drawer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    
+    try {
+      const snap = await getDoc(doc(db, 'projects', id));
+      if(snap.exists()) {
+        const p = mapProject(snap.id, snap.data());
+        // Populate full UI from 'p' (assuming PBDataState/PBRender handles internal rendering)
+        window.PBDataState.currentProject = p;
+        // The existing PBRender functions will take it from here
+        // But let's ensure spotlight/drawer sync if needed
+        if(window.PBRender && window.PBRender.fillDrawer) {
+          window.PBRender.fillDrawer(p);
+        }
+      }
+    } catch(e) {
+      showToast('Failed to load project details.', 'error');
+    }
+  };
+
+  // SYNC PROJECTS
+  onSnapshot(query(collection(db, "projects"), where("published", "==", true)), (snap) => {
+    let projects = [];
+    snap.forEach(doc => projects.push({...mapProject(doc.id, doc.data()), order: doc.data().order || 0}));
+    
+    // Sort locally to avoid Firebase composite index requirement
+    projects.sort((a,b) => a.order - b.order);
+    
+    window.PBDataState.projects = projects;
+    
+    // Grid Rendering
+    const grid = document.getElementById('projectsGrid');
+    if(grid) {
+      grid.innerHTML = '';
+      const featured = projects.find(p => p.featured === true) || projects[0];
+      
+      // Spotlight logic
+      const spotlight = document.getElementById('spotlightCard');
+      if(featured) {
+        spotlight.style.display = 'block';
+        document.getElementById('spotlightTitle').textContent = featured.name;
+        document.getElementById('spotlightDesc').innerHTML = (featured.overview?.[0] || '') + (featured.rera ? `<br><br>MAHARERA Reg. No: <span style="color:var(--gold)">${featured.rera}</span>` : '');
+        document.getElementById('spotlightViewBtn').onclick = () => window.openDrawer(featured.id);
+        
+        const details = document.getElementById('spotlightDetails');
+        if(details) details.innerHTML = Object.entries(featured.details).map(([k,v]) => `<div class="rdc-row"><span>${k}</span><span>${v}</span></div>`).join('');
+        
+        const amGrid = document.getElementById('spotlightAmenities');
+        if(amGrid) amGrid.innerHTML = featured.amenities.slice(0,6).map(a => `<div>${a}</div>`).join('');
+      } else {
+        spotlight.style.display = 'none';
+      }
+
+      // Remaining Grid
+      projects.filter(p => p.id !== (featured?.id || '')).forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'pc r v';
+        card.onclick = () => { track('card_click', { projectId: p.id }); window.openDrawer(p.id); };
+        card.innerHTML = `<img src="${p.cardImage}" alt="${p.name}"><div class="pc-arrow">→</div><div class="po"><div class="po-inner"><span class="pbadge">${p.badge}</span><div class="pname">${p.name}</div><div class="ploc">📍 ${p.location}</div><div class="pstat"><span class="dot on"></span><span style="font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:${p.status.color}">${p.status.text}</span></div></div></div>`;
+        grid.appendChild(card);
+      });
+    }
+  });
+
+  // SYNC SETTINGS
+  onSnapshot(doc(db, "settings", "main"), (snap) => {
+    if(snap.exists()) {
+      const s = snap.data();
+      // Hero
+      if(s.heroTagline) {
+        const h1 = document.querySelector('.hero h1');
+        if(h1) h1.innerHTML = s.heroTagline.replace(/ (.*?)$/, ' <em>$1</em>');
+      }
+      // WhatsApp
+      const waBtn = document.querySelector('.btn-nav[href*="wa.me"]');
+      if(waBtn && s.whatsappNumber) {
+        waBtn.href = `https://wa.me/${s.whatsappNumber}?text=${encodeURIComponent(s.whatsappMessage || '')}`;
+        waBtn.onclick = () => track('whatsapp_click');
+      }
+      // Contact Section
+      if(s.ownerName) document.getElementById('contact-owner-name').textContent = s.ownerName;
+      if(s.ownerPhone) {
+        const link = document.getElementById('contact-owner-link');
+        link.textContent = '+91 ' + s.ownerPhone;
+        link.href = 'tel:' + s.ownerPhone;
+      }
+      if(s.salesName) document.getElementById('contact-sales-name').textContent = s.salesName;
+      if(s.salesPhone) {
+        const link = document.getElementById('contact-sales-link');
+        link.textContent = '+91 ' + s.salesPhone;
+        link.href = 'tel:' + s.salesPhone;
+      }
+      if(s.officeAddress) document.getElementById('contact-office-addr').innerHTML = s.officeAddress.replace(/\n/g, '<br>');
+      if(s.siteAddress) document.getElementById('contact-site-addr').innerHTML = s.siteAddress.replace(/\n/g, '<br>');
+    }
+  });
+
+  // Team loading and rendering
+  let allTeam = [];
+  let teamRefreshInterval;
+
+  async function loadTeam(){
+    try{
+      console.log('Loading team from Firebase...');
+      const snap = await getDocs(query(collection(db,'team'),orderBy('order','asc')));
+      allTeam = []; 
+      snap.forEach(d=>allTeam.push({id:d.id,...d.data()}));
+      console.log('Team loaded:', allTeam.length, 'members');
+      renderTeam();
+    }catch(e){
+      console.error('Team load failed:',e);
+      const grid=document.getElementById('team-grid');
+      if(grid) grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">Unable to load team members.</div>';
+    }
+  }
+
+  function renderTeam(){
+    const grid=document.getElementById('team-grid');
+    if(!grid) return;
+    
+    if(!allTeam.length){
+      grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">No team members added yet.</div>';
+      return;
+    }
+    
+    grid.innerHTML=allTeam.map(m=>`
+      <div class="team-member" style="background:var(--navy-mid);padding:44px 36px;border-top:2px solid ${m===allTeam[0]?'var(--gold)':'transparent'};transition:all .4s;text-align:center">
+        <div class="team-avatar" style="margin-bottom:15px;display:flex;justify-content:center">
+          ${m.photoUrl?`<img src="${m.photoUrl}" alt="${m.name}" style="width:100px;height:100px;border-radius:50%;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:none;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:2rem;color:var(--white)">${initials(m.name)}</div>`:`<div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:2rem;color:var(--white)">${initials(m.name)}</div>`}
+        </div>
+        <div class="team-badge" style="display:inline-block;background:var(--gold);color:var(--navy-deep);padding:3px 12px;font-size:.49rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;margin-bottom:11px">${m.badge||'Team'}</div>
+        <div class="team-name" style="font-family:'Cormorant SC',serif;font-size:1.05rem;font-weight:500;letter-spacing:.08em;margin-bottom:5px">${m.name||'Name'}</div>
+        <div class="team-role" style="font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">${m.role||'Role'}</div>
+        <div class="team-contact">
+          <a href="tel:${m.phone||''}" style="font-family:'Cormorant SC',serif;font-size:.95rem;color:var(--gold-bright);text-decoration:none;display:block">
+            📞 ${m.phone||'Phone'}
+          </a>
+        </div>
+      </div>
+    `).join('');
+
+    // Founder Avatar Sync
+    const founder = allTeam[0];
+    if(founder) {
+      const fn = document.getElementById('founder-name');
+      const fr = document.getElementById('founder-role');
+      const fp = document.getElementById('founder-phone');
+      if(fn) fn.textContent = founder.name || '';
+      if(fr) fr.textContent = founder.role || '';
+      if(fp) fp.textContent = '+91 ' + (founder.phone || '');
+      if(founder.photoUrl) {
+        const avatar = document.getElementById('founder-avatar');
+        if(avatar) avatar.style.background = `url('${founder.photoUrl}') center/cover no-repeat`;
+      }
+    }
+  }
+
+  function initials(name){
+    if(!name) return '?';
+    return name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  }
+
+  // Initialize team loading
+  document.addEventListener('DOMContentLoaded', function(){
+    console.log('DOM loaded - initializing team...');
+    loadTeam();
+    // Refresh team every 30 seconds to sync with admin changes
+    teamRefreshInterval = setInterval(loadTeam, 30000);
+    
+    // Initialize contact form
+    const subBtn = document.getElementById('contact_submit');
+    if(subBtn) {
+      subBtn.addEventListener('click', async () => {
+        const name = document.getElementById('contact_name').value;
+        const phone = document.getElementById('contact_phone').value;
+        const email = document.getElementById('contact_email').value;
+        const subject = document.getElementById('contact_subject').value;
+        const message = document.getElementById('contact_message').value;
+
+        if(!name || !phone) { showToast('Please provide name and phone number.', 'error'); return; }
+
+        subBtn.disabled = true;
+        const span = subBtn.querySelector('span');
+        const originalText = span.innerText;
+        span.innerText = 'Sending...';
+
+        try {
+          await addDoc(collection(db, "enquiries"), {
+            name, phone, email, enquiryAbout: subject, message,
+            status: 'New',
+            timestamp: serverTimestamp(),
+            source: 'Website Form'
+          });
+          track('form_submit_success', { subject });
+          showToast('Enquiry sent! We will contact you shortly.');
+          
+          // Reset form
+          ['contact_name','contact_phone','contact_email','contact_subject','contact_message'].forEach(i => document.getElementById(i).value='');
+          span.innerText = 'Enquiry Sent!';
+          setTimeout(() => { subBtn.disabled = false; span.innerText = originalText; }, 3000);
+        } catch (e) {
+          track('form_submit_fail', { error: e.message });
+          showToast('Failed to send. Call us at 9552778778', 'error');
+          span.innerText = 'Failed. Try Again.';
+          setTimeout(() => { subBtn.disabled = false; span.innerText = originalText; }, 3000);
+        }
+      });
+    }
+  });
+</script>
+</body></html>

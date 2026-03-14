@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<title>Seed Demo Data — Pukharaj Admin</title>
+<style>
+  body{font-family:monospace;background:#0D1B2A;color:#B0C8D8;padding:40px;max-width:700px;margin:0 auto}
+  h2{color:#C8A032;font-size:1.2rem;margin-bottom:20px}
+  button{background:#C8A032;color:#0D1B2A;border:none;padding:14px 32px;font-size:.9rem;font-weight:700;cursor:pointer;margin-bottom:20px;width:100%}
+  button:hover{background:#DDB84A}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  #log{background:#1A2F45;padding:20px;white-space:pre-wrap;font-size:.78rem;line-height:1.7;max-height:500px;overflow-y:auto;border:1px solid rgba(200,160,50,.2)}
+  .ok{color:#2ecc71} .err{color:#e74c3c} .info{color:#C8A032}
+</style>
+</head><body>
+<h2>🌱 Pukharaj Admin — Seed Demo Data</h2>
+<button id="seedBtn" onclick="runSeed()">Seed All Demo Data to Firebase</button>
+<div id="log">Awaiting...</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, setDoc, doc, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyCEloivzzDVOQqRmzo1eLRv9ClRT3p4K5Q",
+  authDomain:"pukhraj-builders-3a908.firebaseapp.com",
+  projectId:"pukhraj-builders-3a908",
+  storageBucket:"pukhraj-builders-3a908.firebasestorage.app",
+  messagingSenderId:"55973067998",
+  appId:"1:55973067998:web:d894eb01e6ad084e01964f"
+});
+const db = getFirestore(app);
+const logEl = document.getElementById('log');
+
+function log(msg, cls='') {
+  logEl.innerHTML += `<span class="${cls}">${msg}</span>\n`;
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function daysAgo(n) {
+  const d = new Date(); d.setDate(d.getDate()-n);
+  return Timestamp.fromDate(d);
+}
+
+window.runSeed = async function() {
+  document.getElementById('seedBtn').disabled = true;
+  logEl.innerHTML = '';
+  log('Starting seed...', 'info');
+
+  // ── ENQUIRIES ──────────────────────────────────────────────────
+  log('\n── Seeding Enquiries ──', 'info');
+  const enquiries = [
+    { name:'Rajesh Sharma', phone:'9876543210', email:'rajesh.sharma@gmail.com', enquiryAbout:'Pukharaj Residency — 3 BHK', message:'I am interested in a 3 BHK flat. Please share floor plan and pricing details.', status:'new', source:'Website Form', notes:'' },
+    { name:'Priya Mehta', phone:'9823456780', email:'priya.mehta@yahoo.com', enquiryAbout:'Pukharaj Residency — 2 BHK', message:'Looking for a 2BHK for investment. What is the expected possession date?', status:'contacted', source:'Website Form', notes:'Called on March 12. Interested in floor 4. Will visit site on Sunday.' },
+    { name:'Sunil Patil', phone:'9765432101', email:'sunil.patil@hotmail.com', enquiryAbout:'Commercial Space', message:'Need commercial space for my showroom. What sizes are available?', status:'new', source:'WhatsApp', notes:'' },
+    { name:'Anil Deshmukh', phone:'9934567812', email:'anil.d@gmail.com', enquiryAbout:'Pukharaj Residency — 2 BHK', message:'My brother referred me. I want to book a 2BHK on a higher floor with good ventilation.', status:'closed', source:'Referral', notes:'Booking done. Cheque collected on 10 March.' },
+    { name:'Neha Kulkarni', phone:'9012345678', email:'neha.k@rediffmail.com', enquiryAbout:'Pukharaj Residency — 3 BHK', message:'Want to know about home loan tie-ups and EMI options available.', status:'contacted', source:'Website Form', notes:'Shared SBI & HDFC bank contacts. Follow up next week.' },
+    { name:'Vikram Naik', phone:'9119876543', email:'vikram.naik@gmail.com', enquiryAbout:'General Enquiry', message:'Interested to know about upcoming projects in 2025. Any new launches?', status:'new', source:'Google', notes:'' },
+    { name:'Sunita Joshi', phone:'9456781230', email:'sunita.joshi@gmail.com', enquiryAbout:'Pukharaj Residency — 2 BHK', message:'What is the carpet area for 2BHK units? Kindly share the complete brochure.', status:'new', source:'Website Form', notes:'' },
+    { name:'Mahesh Bawane', phone:'9988776655', email:'mahesh.bawane@gmail.com', enquiryAbout:'Partnership / Land Acquisition', message:'I own a 5000 sq ft plot near Cidco. Want to discuss JV possibilities.', status:'contacted', source:'Direct', notes:'Meeting scheduled for March 18 at office.' },
+    { name:'Kavita Thorat', phone:'9821234567', email:'kavita.t@gmail.com', enquiryAbout:'Pukharaj Residency — 3 BHK', message:'Looking for spacious 3BHK for joint family. Need extra storage and 2 car parking.', status:'new', source:'Website Form', notes:'' },
+    { name:'Deepak Rathod', phone:'9765000111', email:'deepak.rathod@gmail.com', enquiryAbout:'Pukharaj Residency — 2 BHK', message:'Current rent is ₹12,000. Want to stop renting and buy. What is the EMI on 2BHK?', status:'closed', source:'Website Form', notes:'Booking confirmed. Token amount paid.' },
+    { name:'Ramesh Ghuge', phone:'9100223344', email:'ramesh.ghuge@gmail.com', enquiryAbout:'Pukharaj Residency — 3 BHK', message:'Site visit done. Impressed with the quality. Please share final pricing.', status:'contacted', source:'Walk-in', notes:'Very interested. Waiting on bank approval.' },
+    { name:'Pooja Shinde', phone:'9987654321', email:'pooja.shinde@gmail.com', enquiryAbout:'Commercial Space', message:'Want to open a clinic. Need ground floor commercial space of around 400 sq ft.', status:'new', source:'Google', notes:'' },
+  ];
+
+  const daysMap = [1,1,2,3,4,5,6,7,8,10,12,15];
+  for(let i=0; i<enquiries.length; i++) {
+    try {
+      await addDoc(collection(db,'enquiries'), { ...enquiries[i], timestamp: daysAgo(daysMap[i]) });
+      log(`  ✓ Added enquiry: ${enquiries[i].name}`, 'ok');
+    } catch(e) { log(`  ✗ Failed: ${enquiries[i].name} — ${e.message}`, 'err'); }
+  }
+
+  // ── PROJECTS ───────────────────────────────────────────────────
+  log('\n── Seeding Projects ──', 'info');
+  const projects = [
+    {
+      name:'Pukharaj Residency', location:'Beed Bypass, Chh. Sambhajinagar', status:'Under Construction',
+      badge:'Featured · Ongoing', shortDesc:'A luxurious 7-storey apartment complex with 34 premium 2BHK & 3BHK flats.',
+      rera:'P51500079269', heroImage:'assets/pukharaj-residency-2.jpeg',
+      galleryImages:['assets/pukharaj-residency-1.jpeg','assets/pukharaj-residency-2.jpeg','assets/pukharaj-residency-3.jpeg','assets/pukharaj-residency-4.jpeg'],
+      overview:{ tagline:'Where Comfort Meets Elegance', description:'Pukharaj Residency is a luxurious 7-storey apartment complex offering 34 thoughtfully designed 2BHK and 3BHK flats with state-of-the-art amenities and prime location on Beed Bypass Road, Chh. Sambhajinagar.\n\nDesigned to provide residents with a comfortable, stylish, and convenient lifestyle — crafted to enhance quality of life for your entire family.', highlights:[{label:'Premium Flats',value:'34'},{label:'Floors + Terrace',value:'G+7'},{label:'BHK Configurations',value:'2 & 3'},{label:'Two-Wheeler Spaces',value:'99+'}], architect:'Nikhil Chopda & Associates', engineer:'Er. N.G. Karkhane' },
+      specs:[{icon:'🧱',title:'Structure',desc:'RCC framed structure with ISI marked cement and TMT steel'},{icon:'🪟',title:'Windows',desc:'UPVC sliding windows with mosquito mesh and toughened glass'},{icon:'🔑',title:'Doors',desc:'Teak wood main door with premium quality internal doors'},{icon:'🚿',title:'Bathrooms',desc:'Designer tiles, premium fittings, anti-skid flooring'},{icon:'⚡',title:'Electrical',desc:'Concealed copper wiring, MCB protection, power points in all rooms'},{icon:'🎨',title:'Flooring',desc:'Vitrified tiles in living & bedrooms, anti-skid in bathrooms'}],
+      amenities:[{icon:'🏊',title:'Clubhouse',desc:'Modern clubhouse with residents lounge and recreation area'},{icon:'🏋️',title:'Gymnasium',desc:'Fully equipped fitness center with modern equipment'},{icon:'🌳',title:'Landscaped Garden',desc:'Beautifully landscaped garden with jogging track'},{icon:'👶',title:'Children Play Area',desc:'Safe and modern children play equipment'},{icon:'🚗',title:'Covered Parking',desc:'Dedicated covered parking space for all units'},{icon:'🔒',title:'24/7 Security',desc:'CCTV surveillance, security guard and intercom facility'},{icon:'💡',title:'Power Backup',desc:'Lift with battery backup, DG for common areas'},{icon:'🌊',title:'Water Supply',desc:'24-hour water supply with overhead tank and borewell'}],
+      location:{ mapsUrl:'', siteAddress:'Beside Kasliwal Marvel (E), Beed Bypass Road, Chh. Sambhajinagar, Maharashtra 431001', officeAddress:'Shriniwas Apartment, Ulkanagari, Chh. Sambhajinagar, Maharashtra', landmarks:'Kasliwal Marvel (E)\nMGM Medical College\nBeed Bypass Road\nCIDCO Colony' },
+      published:true, order:1, floorPlans:[{tabName:'3 BHK Units',image:'',flats:[{number:'101-701',type:'3 BHK',floors:'1st – 7th',special:'Walk-in closet, 2 balconies'},{number:'102-702',type:'3 BHK',floors:'1st – 7th',special:'Corner unit, extra ventilation'}]},{tabName:'2 BHK Units',image:'',flats:[{number:'201-701',type:'2 BHK',floors:'2nd – 7th',special:'Attached balcony'}]}],
+      createdAt: daysAgo(30), updatedAt: daysAgo(2)
+    },
+    {
+      name:'Pukharaj Heights', location:'N-12 CIDCO, Chh. Sambhajinagar', status:'Upcoming',
+      badge:'Upcoming · 2025', shortDesc:'Premium residential towers with modern architecture and smart home features.',
+      rera:'', heroImage:'assets/photo-1545324418-cc1a3fa10c00.jpg', galleryImages:[],
+      overview:{ tagline:'Rise Above the Ordinary', description:'Pukharaj Heights will be our most ambitious project yet — premium residential towers with contemporary architecture, smart home features, and world-class amenities in the heart of CIDCO.', highlights:[{label:'Planned Flats',value:'60+'},{label:'Towers',value:'2'},{label:'BHK Options',value:'2 & 3'},{label:'Launch',value:'2025'}], architect:'Nikhil Chopda & Associates', engineer:'TBD' },
+      specs:[], amenities:[], location:{ mapsUrl:'', siteAddress:'N-12 CIDCO, Chh. Sambhajinagar', officeAddress:'Shriniwas Apartment, Ulkanagari', landmarks:'CIDCO Bus Stand\nGarkheda' },
+      published:true, order:2, floorPlans:[], createdAt: daysAgo(10), updatedAt: daysAgo(10)
+    }
+  ];
+
+  for(const p of projects) {
+    try {
+      await addDoc(collection(db,'projects'), p);
+      log(`  ✓ Added project: ${p.name}`, 'ok');
+    } catch(e) { log(`  ✗ Failed: ${p.name} — ${e.message}`, 'err'); }
+  }
+
+  // ── TEAM ───────────────────────────────────────────────────────
+  log('\n── Seeding Team Members ──', 'info');
+  const team = [
+    {initials:'PL',name:'Paras Lalwani',role:'Owner · Director',phone:'9552778778',badge:'Owner & Founder',order:1},
+    {initials:'SD',name:'Shailesh Dahad',role:'Sales & Client Relations',phone:'8788579803',badge:'Sales Head',order:2},
+    {initials:'NC',name:'Nikhil Chopda',role:'Principal Architect',phone:'',badge:'Architect',order:3},
+  ];
+  for(const m of team) {
+    try {
+      await addDoc(collection(db,'team'), m);
+      log(`  ✓ Added member: ${m.name}`, 'ok');
+    } catch(e) { log(`  ✗ Failed: ${m.name} — ${e.message}`, 'err'); }
+  }
+
+  // ── SETTINGS ──────────────────────────────────────────────────
+  log('\n── Seeding Settings ──', 'info');
+  try {
+    await setDoc(doc(db,'settings','main'), {
+      ownerName:'Paras Lalwani', ownerPhone:'9552778778',
+      salesName:'Shailesh Dahad', salesPhone:'8788579803',
+      whatsappNumber:'919552778778',
+      whatsappMessage:'Hi, I am interested in Pukharaj Residency. Please share more details.',
+      officeAddress:'Shriniwas Apartment, Ulkanagari, Chh. Sambhajinagar, Maharashtra',
+      siteAddress:'Beside Kasliwal Marvel (E), Beed Bypass, Chh. Sambhajinagar',
+      heroTagline:'Crafting Homes. Shaping Skylines. Building Trust.',
+      credaiMember:true, gaEmbedUrl:''
+    });
+    log('  ✓ Settings saved', 'ok');
+  } catch(e) { log('  ✗ Settings failed: '+e.message, 'err'); }
+
+  log('\n🎉 Seed complete! Go back to the admin portal and refresh.', 'info');
+  document.getElementById('seedBtn').disabled = false;
+  document.getElementById('seedBtn').textContent = '✅ Done! Re-run to add more';
+};
+</script>
+</body></html>

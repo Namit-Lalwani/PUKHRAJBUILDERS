@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pukharaj Builders — Admin Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+SC:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy-deep:#0D1B2A;--navy-mid:#1A2F45;--navy-light:#234060;
+  --gold:#C8A032;--gold-bright:#DDB84A;--gold-pale:#EDD07A;
+  --cream:#F4EFE6;--white:#FFF;--muted:#6E8FA8;--light:#B0C8D8;
+  --green:#2ecc71;--red:#e74c3c;--blue:#3498db;
+  --sidebar-w:260px;
+}
+html{height:100%}
+body{background:var(--navy-deep);color:var(--white);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;height:100%}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--navy-deep)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* ===LOGIN=== */
+#loginScreen{position:fixed;inset:0;z-index:9999;background:var(--navy-deep);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0}
+#loginScreen.hidden{display:none}
+.login-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(200,160,50,.06) 0%,transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(200,160,50,.04) 0%,transparent 60%)}
+.login-box{position:relative;z-index:1;width:min(440px,92vw);background:var(--navy-mid);border:1px solid rgba(200,160,50,.2);border-top:3px solid var(--gold);padding:52px 48px;animation:fadeUp .7s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.login-logo{text-align:center;margin-bottom:38px}
+.login-logo-text{font-family:'Cormorant',serif;font-style:italic;font-size:2.4rem;font-weight:300;color:var(--gold-bright);letter-spacing:.05em}
+.login-logo-sub{font-size:.52rem;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.login-eyebrow{font-size:.54rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:30px}
+.login-field{margin-bottom:18px}
+.login-label{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:7px}
+.login-input{width:100%;background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--white);padding:13px 16px;font-family:'Jost',sans-serif;font-size:.85rem;font-weight:300;outline:none;transition:border-color .3s,background .3s}
+.login-input:focus{border-color:var(--gold);background:rgba(10,19,30,.9)}
+.login-input::placeholder{color:rgba(255,255,255,.18)}
+.login-btn{width:100%;background:var(--gold);color:var(--navy-deep);border:none;padding:15px;font-family:'Jost',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;margin-top:8px}
+.login-btn::before{content:'';position:absolute;inset:0;background:var(--gold-pale);transform:translateX(-101%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.login-btn:hover::before{transform:translateX(0)}
+.login-btn span{position:relative;z-index:1}
+.login-btn:hover{box-shadow:0 8px 28px rgba(200,160,50,.3)}
+.login-error{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.4);border-left:3px solid var(--red);padding:12px 14px;font-size:.77rem;color:#ff8f85;margin-top:14px;display:none}
+.login-error.show{display:block}
+
+/* ===LAYOUT=== */
+#appShell{display:flex;height:100vh;overflow:hidden}
+#appShell.hidden{display:none}
+
+/* ===SIDEBAR=== */
+#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--navy-mid);border-right:1px solid rgba(200,160,50,.12);display:flex;flex-direction:column;height:100vh;overflow:hidden;transition:width .35s cubic-bezier(.4,0,.2,1),min-width .35s}
+#sidebar.collapsed{width:60px;min-width:60px}
+.sb-logo{padding:26px 22px 24px;border-bottom:1px solid rgba(200,160,50,.1);display:flex;align-items:center;gap:12px;overflow:hidden;white-space:nowrap}
+.sb-logo-icon{width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,var(--gold),var(--gold-pale));display:flex;align-items:center;justify-content:center;font-family:'Cormorant',serif;font-style:italic;font-size:1.2rem;font-weight:300;color:var(--navy-deep)}
+.sb-logo-text{font-family:'Cormorant',serif;font-style:italic;font-size:1.35rem;font-weight:300;color:var(--gold-bright);letter-spacing:.04em;line-height:1.1}
+.sb-logo-sub{font-size:.44rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.sb-nav{flex:1;overflow-y:auto;padding:18px 0}
+.sb-item{display:flex;align-items:center;gap:13px;padding:13px 22px;cursor:pointer;transition:all .25s;border-left:3px solid transparent;white-space:nowrap;overflow:hidden;position:relative}
+.sb-item:hover{background:rgba(200,160,50,.06);color:var(--light)}
+.sb-item.active{background:rgba(200,160,50,.1);border-left-color:var(--gold);color:var(--gold-bright)}
+.sb-icon{font-size:1.15rem;min-width:20px;text-align:center;flex-shrink:0}
+.sb-label{font-size:.64rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;transition:opacity .25s}
+#sidebar.collapsed .sb-label{opacity:0;pointer-events:none}
+.sb-badge{background:var(--gold);color:var(--navy-deep);font-size:.48rem;font-weight:600;padding:2px 6px;border-radius:999px;margin-left:auto;transition:opacity .25s;flex-shrink:0}
+#sidebar.collapsed .sb-badge{opacity:0}
+.sb-bottom{padding:16px 22px;border-top:1px solid rgba(200,160,50,.1)}
+.sb-user{display:flex;align-items:center;gap:10px;overflow:hidden}
+.sb-avatar{width:34px;height:34px;min-width:34px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:.85rem;color:var(--white);border:1px solid rgba(200,160,50,.3)}
+.sb-uname{font-size:.68rem;font-weight:400;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-logout{margin-left:auto;background:transparent;border:1px solid rgba(200,160,50,.25);color:var(--muted);padding:5px 8px;font-size:.7rem;cursor:pointer;transition:all .25s;flex-shrink:0}
+.sb-logout:hover{border-color:var(--red);color:var(--red)}
+#sidebar.collapsed .sb-uname,.sb-collapse-btn .label{transition:opacity .25s}
+#sidebar.collapsed .sb-uname{opacity:0}
+.sb-collapse-btn{width:100%;background:transparent;border:none;border-top:1px solid rgba(200,160,50,.08);color:var(--muted);padding:10px;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .25s}
+.sb-collapse-btn:hover{color:var(--gold)}
+
+/* ===MAIN=== */
+#mainContent{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:56px;min-height:56px;background:rgba(13,27,42,.97);border-bottom:1px solid rgba(200,160,50,.1);display:flex;align-items:center;padding:0 28px;gap:14px;backdrop-filter:blur(12px)}
+.topbar-title{font-family:'Cormorant SC',serif;font-size:.9rem;letter-spacing:.12em;color:var(--gold-bright)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.topbar-time{font-size:.62rem;color:var(--muted);letter-spacing:.08em}
+.pages{flex:1;overflow-y:auto;overflow-x:hidden}
+.page{display:none;padding:28px;animation:fadeUp .4s ease both}
+.page.active{display:block}
+
+/* ===COMPONENTS=== */
+.page-header{margin-bottom:28px}
+.page-eyebrow{font-size:.52rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.page-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold)}
+.page-title{font-family:'Cormorant',serif;font-size:2.2rem;font-weight:300;letter-spacing:.03em}
+.page-title em{font-style:italic;color:var(--gold-pale)}
+.divider{height:1px;background:linear-gradient(to right,transparent,rgba(200,160,50,.18),transparent);margin:24px 0}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi{background:var(--navy-mid);border:1px solid rgba(200,160,50,.12);border-top:3px solid transparent;padding:22px 24px;transition:all .3s;position:relative;overflow:hidden}
+.kpi.gold{border-top-color:var(--gold)}
+.kpi.blue{border-top-color:#3498db}
+.kpi.green{border-top-color:#2ecc71}
+.kpi.red{border-top-color:#e74c3c}
+.kpi::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(200,160,50,.05) 0%,transparent 70%);pointer-events:none}
+.kpi-label{font-size:.53rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.kpi-value{font-family:'Cormorant',serif;font-size:2.8rem;font-weight:300;line-height:1;color:var(--gold-bright)}
+.kpi-sub{font-size:.62rem;color:var(--muted);margin-top:7px;letter-spacing:.06em}
+.kpi.highlight .kpi-value{color:var(--gold-bright);text-shadow:0 0 20px rgba(200,160,50,.3)}
+
+/* CARDS / PANELS */
+.card{background:var(--navy-mid);border:1px solid rgba(200,160,50,.1);padding:22px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.card-title{font-family:'Cormorant SC',serif;font-size:.78rem;letter-spacing:.14em;color:var(--gold)}
+
+/* TWO-COL LAYOUT */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border:none;transition:all .3s;position:relative;overflow:hidden}
+.btn-gold{background:var(--gold);color:var(--navy-deep)}
+.btn-gold::before{content:'';position:absolute;inset:0;background:var(--gold-pale);transform:translateX(-101%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.btn-gold:hover::before{transform:translateX(0)}
+.btn-gold span{position:relative;z-index:1}
+.btn-gold:hover{box-shadow:0 6px 22px rgba(200,160,50,.3);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid rgba(200,160,50,.35);color:var(--gold)}
+.btn-outline:hover{background:rgba(200,160,50,.08)}
+.btn-danger{background:transparent;border:1px solid rgba(231,76,60,.35);color:var(--red)}
+.btn-danger:hover{background:rgba(231,76,60,.08)}
+.btn-sm{padding:6px 12px;font-size:.52rem}
+.btn-icon{padding:7px;border:1px solid rgba(200,160,50,.2);background:transparent;color:var(--muted);cursor:pointer;font-size:.85rem;transition:all .25s}
+.btn-icon:hover{border-color:var(--gold);color:var(--gold)}
+
+/* INPUTS */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field-label{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.field-input,.field-select,.field-textarea{background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--white);padding:11px 14px;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:300;outline:none;transition:border-color .3s,background .3s;width:100%}
+.field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--gold);background:rgba(10,19,30,.9)}
+.field-input::placeholder,.field-textarea::placeholder{color:rgba(255,255,255,.18)}
+.field-select option{background:var(--navy-deep)}
+.field-textarea{resize:vertical;min-height:90px}
+
+/* TABLES */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid rgba(200,160,50,.12);text-align:left;white-space:nowrap}
+td{padding:11px 14px;font-size:.78rem;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle;color:var(--light)}
+tr:hover td{background:rgba(200,160,50,.04)}
+tr:nth-child(even) td{background:rgba(0,0,0,.15)}
+tr:nth-child(even):hover td{background:rgba(200,160,50,.05)}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 10px;font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;border-radius:999px}
+.badge-new{background:rgba(200,160,50,.15);color:var(--gold-bright);border:1px solid rgba(200,160,50,.3)}
+.badge-contacted{background:rgba(52,152,219,.15);color:#7fc8f8;border:1px solid rgba(52,152,219,.3)}
+.badge-closed{background:rgba(46,204,113,.15);color:#6ee7a8;border:1px solid rgba(46,204,113,.3)}
+.badge-construction{background:rgba(200,160,50,.15);color:var(--gold-bright);border:1px solid rgba(200,160,50,.3)}
+.badge-completed{background:rgba(46,204,113,.15);color:#6ee7a8;border:1px solid rgba(46,204,113,.3)}
+.badge-upcoming{background:rgba(52,152,219,.15);color:#7fc8f8;border:1px solid rgba(52,152,219,.3)}
+
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.search-box{background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--white);padding:9px 14px;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:300;outline:none;transition:border-color .3s;min-width:240px}
+.search-box:focus{border-color:var(--gold)}
+.search-box::placeholder{color:rgba(255,255,255,.2)}
+.filter-select{background:rgba(10,19,30,.7);border:1px solid rgba(200,160,50,.15);color:var(--muted);padding:8px 12px;font-family:'Jost',sans-serif;font-size:.72rem;outline:none;cursor:pointer;transition:border-color .3s}
+.filter-select:focus{border-color:var(--gold);color:var(--white)}
+.filter-select option{background:var(--navy-deep)}
+
+/* DRAWER */
+.drawer-overlay{position:fixed;inset:0;z-index:800;background:rgba(8,16,26,.88);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .4s}
+.drawer-overlay.open{opacity:1;pointer-events:all}
+.side-drawer{position:fixed;top:0;right:0;bottom:0;z-index:900;width:min(680px,96vw);background:var(--navy-deep);border-left:1px solid rgba(200,160,50,.15);overflow-y:auto;transform:translateX(100%);transition:transform .5s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.side-drawer.open{transform:translateX(0)}
+.side-drawer::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(to bottom,var(--gold),transparent,var(--gold));opacity:.3;pointer-events:none}
+.drawer-header{padding:18px 24px;border-bottom:1px solid rgba(200,160,50,.1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(13,27,42,.97);backdrop-filter:blur(12px);z-index:2}
+.drawer-title{font-family:'Cormorant SC',serif;font-size:.85rem;letter-spacing:.14em;color:var(--gold)}
+.drawer-close{background:transparent;border:1px solid rgba(200,160,50,.25);color:var(--muted);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:all .25s}
+.drawer-close:hover{border-color:var(--red);color:var(--red)}
+.drawer-body{padding:24px;flex:1}
+
+/* TOAST */
+#toastContainer{position:fixed;bottom:24px;left:24px;z-index:9999;display:flex;flex-direction:column;gap:10px}
+.toast{background:var(--navy-mid);border:1px solid rgba(200,160,50,.2);border-left:3px solid var(--gold);padding:13px 18px;font-size:.74rem;color:var(--light);min-width:260px;max-width:360px;animation:slideInLeft .4s ease both;transform-origin:left}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+.toast.success{border-left-color:var(--green)}
+.toast.error{border-left-color:var(--red)}
+.toast-out{animation:slideOutLeft .4s ease forwards}
+@keyframes slideOutLeft{to{opacity:0;transform:translateX(-24px)}}
+
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,rgba(200,160,50,.05) 25%,rgba(200,160,50,.12) 50%,rgba(200,160,50,.05) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:2px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.sk-row{height:42px;margin-bottom:3px}
+.sk-kpi{height:108px}
+
+/* PROJECTS PAGE */
+.proj-layout{display:grid;grid-template-columns:340px 1fr;gap:18px;height:calc(100vh - 160px);overflow:hidden}
+.proj-list{overflow-y:auto;display:flex;flex-direction:column;gap:3px}
+.proj-card{background:var(--navy-mid);border:1px solid rgba(200,160,50,.08);padding:14px;cursor:pointer;transition:all .25s;display:flex;gap:12px;align-items:center;border-left:3px solid transparent}
+.proj-card:hover{background:var(--navy-light);border-left-color:rgba(200,160,50,.4)}
+.proj-card.selected{background:rgba(200,160,50,.1);border-left-color:var(--gold)}
+.proj-thumb{width:54px;height:42px;object-fit:cover;flex-shrink:0;background:var(--navy-light)}
+.proj-thumb-placeholder{width:54px;height:42px;background:var(--navy-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.proj-card-name{font-family:'Cormorant SC',serif;font-size:.78rem;letter-spacing:.06em;margin-bottom:3px}
+.proj-card-loc{font-size:.62rem;color:var(--muted)}
+.proj-card-actions{margin-left:auto;display:flex;gap:4px;flex-shrink:0}
+.proj-editor{overflow-y:auto;background:var(--navy-mid);border:1px solid rgba(200,160,50,.1);display:flex;flex-direction:column}
+.proj-editor-empty{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;height:100%;color:var(--muted)}
+.proj-editor-empty-icon{font-size:3rem;opacity:.3}
+.editor-tabs{display:flex;border-bottom:1px solid rgba(200,160,50,.1);overflow-x:auto;flex-shrink:0;position:sticky;top:0;background:var(--navy-mid);z-index:5}
+.editor-tab{background:transparent;border:none;color:var(--muted);padding:13px 18px;font-family:'Jost',sans-serif;font-size:.55rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;transition:all .3s;white-space:nowrap}
+.editor-tab:hover{color:var(--light)}
+.editor-tab.active{color:var(--gold-bright);border-bottom-color:var(--gold)}
+.editor-panel{display:none;padding:22px;animation:fadeUp .3s ease both}
+.editor-panel.active{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-full{grid-column:1/-1}
+.editor-footer{padding:16px 22px;border-top:1px solid rgba(200,160,50,.1);display:flex;align-items:center;gap:10px;flex-shrink:0;position:sticky;bottom:0;background:var(--navy-mid);z-index:5}
+.save-ts{font-size:.6rem;color:var(--muted);margin-left:auto;letter-spacing:.06em}
+
+/* DYNAMIC LIST ITEMS */
+.dyn-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.dyn-item{background:rgba(10,19,30,.5);border:1px solid rgba(200,160,50,.1);padding:14px;position:relative}
+.dyn-item-row{display:grid;grid-template-columns:60px 1fr 1fr auto;gap:10px;align-items:center}
+.dyn-item-del{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:.85rem;padding:4px;transition:color .2s}
+.dyn-item-del:hover{color:var(--red)}
+.add-item-btn{width:100%;background:transparent;border:1px dashed rgba(200,160,50,.25);color:var(--muted);padding:10px;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
+.add-item-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* IMAGE UPLOAD ZONE */
+.upload-zone{border:2px dashed rgba(200,160,50,.25);padding:28px;text-align:center;cursor:pointer;transition:all .3s;position:relative}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--gold);background:rgba(200,160,50,.04)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-zone-icon{font-size:2rem;margin-bottom:8px;opacity:.5}
+.upload-zone-text{font-size:.65rem;color:var(--muted);letter-spacing:.12em}
+.image-preview{width:100%;height:160px;object-fit:cover;margin-top:12px;border:1px solid rgba(200,160,50,.15)}
+.gallery-grid-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.gallery-preview-item{position:relative}
+.gallery-preview-item img{width:100%;height:70px;object-fit:cover}
+.gallery-preview-del{position:absolute;top:3px;right:3px;background:rgba(231,76,60,.8);border:none;color:#fff;width:18px;height:18px;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* TEAM PAGE */
+.team-list{display:flex;flex-direction:column;gap:3px}
+.team-row{background:var(--navy-mid);border:1px solid rgba(200,160,50,.08);padding:16px 18px;display:flex;align-items:center;gap:14px;transition:background .25s}
+.team-row:hover{background:var(--navy-light)}
+.team-avatar{width:42px;height:42px;min-width:42px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:1rem;color:var(--white);border:1px solid rgba(200,160,50,.3);overflow:hidden;cursor:pointer;position:relative}
+.team-avatar img{width:100%;height:100%;object-fit:cover}
+.team-avatar:hover::after{content:'+';position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:300}
+.team-info{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr 100px;gap:10px;align-items:center}
+.team-inline-input{background:rgba(10,19,30,.5);border:1px solid rgba(200,160,50,.1);color:var(--white);padding:7px 10px;font-family:'Jost',sans-serif;font-size:.76rem;font-weight:300;outline:none;transition:border-color .3s;width:100%}
+.team-inline-input:focus{border-color:var(--gold)}
+
+/* ANALYTICS */
+.chart-card{background:var(--navy-mid);border:1px solid rgba(200,160,50,.1);padding:22px}
+.chart-wrap{position:relative;height:220px;margin-top:14px}
+
+/* SETTINGS */
+.settings-section{background:var(--navy-mid);border:1px solid rgba(200,160,50,.1);padding:24px;margin-bottom:18px}
+.settings-section-title{font-family:'Cormorant SC',serif;font-size:.78rem;letter-spacing:.14em;color:var(--gold);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(200,160,50,.1)}
+.toggle-wrap{display:flex;align-items:center;gap:12px}
+.toggle{width:42px;height:22px;background:rgba(255,255,255,.1);border-radius:999px;position:relative;cursor:pointer;transition:background .3s;border:none;flex-shrink:0}
+.toggle.on{background:var(--gold)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .3s}
+.toggle.on::after{transform:translateX(20px)}
+.toggle-label{font-size:.74rem;color:var(--light)}
+
+/* QUICK ACTIONS */
+.quick-actions{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+
+/* PAGINATION */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;padding:18px 0}
+.page-btn{background:transparent;border:1px solid rgba(200,160,50,.2);color:var(--muted);width:32px;height:32px;font-size:.72rem;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center}
+.page-btn:hover,.page-btn.active{border-color:var(--gold);color:var(--gold-bright);background:rgba(200,160,50,.08)}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-icon{font-size:3.5rem;opacity:.25;margin-bottom:16px}
+.empty-text{font-size:.8rem;letter-spacing:.1em}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(8,16,26,.9);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--navy-mid);border:1px solid rgba(200,160,50,.2);border-top:3px solid var(--gold);padding:32px;width:min(460px,92vw);animation:fadeUp .3s ease both}
+.modal-title{font-family:'Cormorant SC',serif;font-size:.9rem;letter-spacing:.14em;color:var(--gold);margin-bottom:12px}
+.modal-msg{font-size:.8rem;color:var(--light);line-height:1.85;margin-bottom:24px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+
+/* RECENT ENQ */
+.enq-recent-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.enq-recent-item:last-child{border-bottom:none}
+.enq-avatar{width:36px;height:36px;min-width:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--navy-mid));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:.78rem;color:var(--gold)}
+.enq-name{font-size:.78rem;color:var(--white);margin-bottom:2px}
+.enq-meta{font-size:.62rem;color:var(--muted)}
+.enq-time{font-size:.6rem;color:var(--muted);margin-left:auto;white-space:nowrap}
+
+/* FLOOR PLAN EDITOR */
+.fp-editor-item{background:rgba(10,19,30,.4);border:1px solid rgba(200,160,50,.1);padding:16px;margin-bottom:10px}
+.fp-flats-list{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.fp-flat-row{display:grid;grid-template-columns:100px 100px 80px 1fr auto;gap:8px;align-items:center}
+
+/* MOBILE */
+@media(max-width:840px){
+  :root{--sidebar-w:0px}
+  #sidebar{position:fixed;left:-260px;z-index:500;width:260px;min-width:260px;transition:left .35s}
+  #sidebar.mobile-open{left:0}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .two-col,.proj-layout,.form-grid{grid-template-columns:1fr}
+  .proj-layout{height:auto}
+  .team-info{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-bg"></div>
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-text">Pukharaj</div>
+      <div class="login-logo-sub">Builders &amp; Developers · Admin Portal</div>
+    </div>
+    <div class="login-eyebrow">Authorised Access Only</div>
+    <div class="login-field">
+      <label class="login-label" for="loginEmail">Email Address</label>
+      <input class="login-input" id="loginEmail" type="email" placeholder="admin@pukharajbuilders.com" autocomplete="email">
+    </div>
+    <div class="login-field">
+      <label class="login-label" for="loginPass">Password</label>
+      <input class="login-input" id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()"><span id="loginBtnText">Sign In to Dashboard</span></button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div id="appShell" class="hidden">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-icon">P</div>
+      <div>
+        <div class="sb-logo-text">Pukharaj</div>
+        <div class="sb-logo-sub">Admin Portal</div>
+      </div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-item active" onclick="showPage('dashboard',this)" title="Dashboard">
+        <span class="sb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span><span class="sb-label">Dashboard</span>
+      </div>
+      <div class="sb-item" onclick="showPage('enquiries',this)" title="Enquiries">
+        <span class="sb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><span class="sb-label">Enquiries</span>
+        <span class="sb-badge" id="newEnqBadge">0</span>
+      </div>
+      <div class="sb-item" onclick="showPage('projects',this)" title="Projects">
+        <span class="sb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/></svg></span><span class="sb-label">Projects</span>
+      </div>
+      <div class="sb-item" onclick="showPage('team',this)" title="Team">
+        <span class="sb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="sb-label">Team</span>
+      </div>
+      <div class="sb-item" onclick="showPage('analytics',this)" title="Analytics">
+        <span class="sb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span class="sb-label">Analytics</span>
+      </div>
+      <div class="sb-item" onclick="showPage('settings',this)" title="Settings">
+        <span class="sb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="sb-label">Settings</span>
+      </div>
+    </div>
+    <div class="sb-bottom">
+      <button class="sb-collapse-btn" onclick="toggleSidebar()">
+        <span id="collapseIcon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m15 18-6-6 6-6"/></svg></span>
+      </button>
+      <div class="sb-user" style="margin-top:10px">
+        <div class="sb-avatar" id="userAvatar">A</div>
+        <div class="sb-uname" id="userEmail">admin@pukharaj.com</div>
+        <button class="sb-logout" onclick="doLogout()" title="Sign Out"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:15px">
+        <button class="btn-icon" onclick="toggleSidebar()" style="border:none;font-size:1.2rem"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg></button>
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-stat" id="fbStatus" title="Firebase Status">
+          <span class="dot on"></span>
+          <span style="font-size:.65rem;color:var(--muted)">Connected</span>
+        </div>
+        <div class="topbar-time" id="topbarTime"></div>
+        <a href="index.html" target="_blank" class="btn btn-outline btn-sm" style="text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> <span>View Site</span></a>
+      </div>
+    </div>
+    <div class="pages">
+
+      <!-- ===DASHBOARD PAGE=== -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-header">
+          <div class="page-eyebrow">Overview</div>
+          <h1 class="page-title">Dashboard <em>Overview</em></h1>
+        </div>
+        <div class="quick-actions">
+          <button class="btn btn-gold" onclick="openProjectEditor(null)"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> <span>Add New Project</span></span></button>
+          <button class="btn btn-outline" onclick="showPage('enquiries',document.querySelector('[onclick*=enquiries]'))"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> View All Enquiries</span></button>
+          <button class="btn btn-outline" onclick="exportEnquiriesCSV()"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Export CSV</span></button>
+        </div>
+        <div class="kpi-grid" id="dashKpis">
+          <div class="kpi gold skeleton sk-kpi"></div>
+          <div class="kpi blue skeleton sk-kpi"></div>
+          <div class="kpi green skeleton sk-kpi"></div>
+          <div class="kpi red skeleton sk-kpi"></div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title">Recent Enquiries</div>
+              <button class="btn btn-outline btn-sm" onclick="showPage('enquiries',document.querySelector('[onclick*=enquiries]'))">View All</button>
+            </div>
+            <div id="recentEnqList"><div class="skeleton sk-row"></div><div class="skeleton sk-row" style="margin-top:4px"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">Enquiries by Project</div></div>
+            <div class="chart-wrap"><canvas id="enqByProjectChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===ENQUIRIES PAGE=== -->
+      <div class="page" id="page-enquiries">
+        <div class="page-header">
+          <div class="page-eyebrow">CRM</div>
+          <h1 class="page-title">Enquiries <em>Management</em></h1>
+        </div>
+        <div class="filter-bar">
+          <input class="search-box" id="enqSearch" placeholder="Search name, phone, email..." oninput="renderEnquiries()">
+          <select class="filter-select" id="enqStatusFilter" onchange="renderEnquiries()">
+            <option value="">All Statuses</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="closed">Closed</option>
+          </select>
+          <select class="filter-select" id="enqProjectFilter" onchange="renderEnquiries()">
+            <option value="">All Projects</option>
+          </select>
+          <input type="date" class="filter-select" id="enqDateFrom" onchange="renderEnquiries()" title="From date">
+          <input type="date" class="filter-select" id="enqDateTo" onchange="renderEnquiries()" title="To date">
+          <button class="btn btn-outline btn-sm" onclick="exportEnquiriesCSV()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Export CSV</button>
+        </div>
+        <div class="card">
+          <div class="tbl-wrap">
+            <table id="enqTable">
+              <thead><tr>
+                <th>Name</th><th>Phone</th><th>Email</th><th>Enquiry About</th>
+                <th>Message</th><th>Date &amp; Time</th><th>Status</th><th>Actions</th>
+              </tr></thead>
+              <tbody id="enqTbody">
+                <tr><td colspan="8"><div class="skeleton sk-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination" id="enqPagination"></div>
+        </div>
+      </div>
+
+      <!-- ===PROJECTS PAGE=== -->
+      <div class="page" id="page-projects">
+        <div class="page-header" style="margin-bottom:14px">
+          <div class="page-eyebrow">Portfolio</div>
+          <h1 class="page-title">Projects <em>Editor</em></h1>
+        </div>
+        <div class="proj-layout">
+          <div>
+            <button class="btn btn-gold" style="width:100%;margin-bottom:10px;justify-content:center" onclick="openProjectEditor(null)"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> <span>Add New Project</span></span></button>
+            <div class="proj-list" id="projList"><div class="skeleton sk-row"></div><div class="skeleton sk-row" style="margin-top:4px"></div></div>
+          </div>
+          <div class="proj-editor" id="projEditor">
+            <div class="proj-editor-empty" id="projEditorEmpty">
+              <div class="proj-editor-empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/></svg></div>
+              <div style="font-size:.78rem;color:var(--muted)">Select a project to edit or add a new one</div>
+            </div>
+            <div id="projEditorForm" style="display:none;flex-direction:column;height:100%">
+              <div class="editor-tabs" id="editorTabs">
+                <button class="editor-tab active" onclick="showEditorTab('basic',this)">Basic Info</button>
+                <button class="editor-tab" onclick="showEditorTab('images',this)">Images</button>
+                <button class="editor-tab" onclick="showEditorTab('overview',this)">Overview</button>
+                <button class="editor-tab" onclick="showEditorTab('floorplans',this)">Floor Plans</button>
+                <button class="editor-tab" onclick="showEditorTab('specs',this)">Specifications</button>
+                <button class="editor-tab" onclick="showEditorTab('amenities',this)">Amenities</button>
+                <button class="editor-tab" onclick="showEditorTab('location',this)">Location</button>
+              </div>
+
+              <!-- BASIC INFO -->
+              <div class="editor-panel active" id="ep-basic">
+                <div class="form-grid">
+                  <div class="field"><label class="field-label">Project Name</label><input class="field-input" id="ep-name" placeholder="e.g. Pukharaj Residency"></div>
+                  <div class="field"><label class="field-label">Location</label><input class="field-input" id="ep-location" placeholder="e.g. Beed Bypass, Chh. Sambhajinagar"></div>
+                  <div class="field"><label class="field-label">Status</label>
+                    <select class="field-select" id="ep-status">
+                      <option value="Under Construction">Under Construction</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Upcoming">Upcoming</option>
+                      <option value="Featured">Featured</option>
+                    </select>
+                  </div>
+                  <div class="field"><label class="field-label">Badge Label</label><input class="field-input" id="ep-badge" placeholder="e.g. Featured · Ongoing"></div>
+                  <div class="field form-full"><label class="field-label">Short Description (shown on card overlay)</label><textarea class="field-textarea" id="ep-shortdesc" rows="2" placeholder="Brief project description..."></textarea></div>
+                  <div class="field"><label class="field-label">MAHARERA Registration No.</label><input class="field-input" id="ep-rera" placeholder="e.g. P51500079269"></div>
+                  <div class="field"><label class="field-label">Display Order</label><input class="field-input" id="ep-order" type="number" placeholder="1" min="1"></div>
+                </div>
+              </div>
+
+              <!-- IMAGES -->
+              <div class="editor-panel" id="ep-images">
+                <div class="field">
+                  <label class="field-label">Hero Image</label>
+                  <div class="upload-zone" id="heroUploadZone" ondragover="handleDragOver(event)" ondrop="handleDrop(event,'hero')" ondragleave="this.classList.remove('drag-over')">
+                    <input type="file" accept="image/*" onchange="handleFileSelect(event,'hero')">
+                    <div class="upload-zone-icon">🖼️</div>
+                    <div class="upload-zone-text">Drag & drop or click to upload hero image</div>
+                  </div>
+                  <div class="field" style="margin-top:10px">
+                    <label class="field-label">— or paste image URL</label>
+                    <input class="field-input" id="ep-heroImage" placeholder="https://..." oninput="updateHeroPreview()">
+                  </div>
+                  <img id="heroPreview" class="image-preview" style="display:none">
+                </div>
+                <div class="field" style="margin-top:16px">
+                  <label class="field-label">Gallery Images</label>
+                  <div class="upload-zone" ondragover="handleDragOver(event)" ondrop="handleDrop(event,'gallery')" ondragleave="this.classList.remove('drag-over')">
+                    <input type="file" accept="image/*" multiple onchange="handleFileSelect(event,'gallery')">
+                    <div class="upload-zone-icon">🗂️</div>
+                    <div class="upload-zone-text">Drag & drop multiple images or click to select</div>
+                  </div>
+                  <div class="gallery-grid-preview" id="galleryPreview"></div>
+                </div>
+              </div>
+
+              <!-- OVERVIEW -->
+              <div class="editor-panel" id="ep-overview">
+                <div class="form-grid">
+                  <div class="field form-full"><label class="field-label">Tagline</label><input class="field-input" id="ep-tagline" placeholder="e.g. Where Comfort Meets Elegance"></div>
+                  <div class="field form-full"><label class="field-label">Full Description</label><textarea class="field-textarea" id="ep-description" rows="5" placeholder="Detailed project description..."></textarea></div>
+                </div>
+                <label class="field-label" style="margin-bottom:10px;display:block">Highlight Boxes (4 cards)</label>
+                <div id="highlightBoxes" class="dyn-list"></div>
+                <div class="form-grid" style="margin-top:14px">
+                  <div class="field"><label class="field-label">Architect</label><input class="field-input" id="ep-architect" placeholder="e.g. Nikhil Chopda & Associates"></div>
+                  <div class="field"><label class="field-label">Structural Engineer</label><input class="field-input" id="ep-engineer" placeholder="e.g. Er. N.G. Karkhane"></div>
+                </div>
+              </div>
+
+              <!-- FLOOR PLANS -->
+              <div class="editor-panel" id="ep-floorplans">
+                <div id="fpEditorList" class="dyn-list"></div>
+                <button class="add-item-btn" onclick="addFloorPlan()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Floor Plan Tab</button>
+              </div>
+
+              <!-- SPECIFICATIONS -->
+              <div class="editor-panel" id="ep-specs">
+                <div id="specsList" class="dyn-list"></div>
+                <button class="add-item-btn" onclick="addSpecItem('specs')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Specification</button>
+              </div>
+
+              <!-- AMENITIES -->
+              <div class="editor-panel" id="ep-amenities">
+                <div id="amenitiesList" class="dyn-list"></div>
+                <button class="add-item-btn" onclick="addSpecItem('amenities')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Amenity</button>
+              </div>
+
+              <!-- LOCATION -->
+              <div class="editor-panel" id="ep-location">
+                <div class="field"><label class="field-label">Google Maps Embed URL (paste iframe src)</label><input class="field-input" id="ep-mapsUrl" placeholder="https://www.google.com/maps/embed?..."></div>
+                <div class="form-grid">
+                  <div class="field"><label class="field-label">Site Address</label><textarea class="field-textarea" id="ep-siteAddress" rows="3" placeholder="Site address..."></textarea></div>
+                  <div class="field"><label class="field-label">Office Address</label><textarea class="field-textarea" id="ep-officeAddress" rows="3" placeholder="Office address..."></textarea></div>
+                  <div class="field form-full"><label class="field-label">Nearby Landmarks</label><textarea class="field-textarea" id="ep-landmarks" rows="3" placeholder="One per line..."></textarea></div>
+                </div>
+              </div>
+
+              <div class="editor-footer">
+                <button class="btn btn-outline" onclick="saveProject(false)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg> Save Draft</button>
+                <button class="btn btn-gold" onclick="saveProject(true)"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> Publish</span></button>
+                <button class="btn btn-danger btn-sm" onclick="deleteCurrentProject()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg> Delete</button>
+                <div class="save-ts" id="lastSavedTs"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===TEAM PAGE=== -->
+      <div class="page" id="page-team">
+        <div class="page-header">
+          <div class="page-eyebrow">People</div>
+          <h1 class="page-title">Team <em>Management</em></h1>
+        </div>
+        <button class="btn btn-gold" style="margin-bottom:16px" onclick="addTeamMember()"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> <span>Add Team Member</span></span></button>
+        <div class="card">
+          <div class="team-list" id="teamList"><div class="skeleton sk-row"></div></div>
+        </div>
+      </div>
+
+      <!-- ===ANALYTICS PAGE=== -->
+      <div class="page" id="page-analytics">
+        <div class="page-header">
+          <div class="page-eyebrow">Insights</div>
+          <h1 class="page-title">Analytics <em>&amp; Reports</em></h1>
+        </div>
+        <div class="two-col" style="margin-bottom:18px">
+          <div class="chart-card">
+            <div class="card-title">Enquiry Submissions — Last 30 Days</div>
+            <div class="chart-wrap"><canvas id="enqTrendChart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="card-title">Most Viewed Projects (Enquiry Source)</div>
+            <div class="chart-wrap"><canvas id="projectViewChart"></canvas></div>
+          </div>
+        </div>
+        <div class="three-col" style="margin-bottom:18px">
+          <div class="card" style="text-align:center">
+            <div class="card-title">WhatsApp Clicks</div>
+            <div class="kpi-value" id="waClickCount" style="margin-top:12px">—</div>
+            <div style="font-size:.6rem;color:var(--muted);margin-top:6px">All time</div>
+          </div>
+          <div class="card" style="text-align:center">
+            <div class="card-title">Form Submissions</div>
+            <div class="kpi-value" id="formSubCount" style="margin-top:12px">—</div>
+            <div style="font-size:.6rem;color:var(--muted);margin-top:6px">All time</div>
+          </div>
+          <div class="card" style="text-align:center">
+            <div class="card-title">Conversion Rate</div>
+            <div class="kpi-value" id="conversionRate" style="margin-top:12px">—</div>
+            <div style="font-size:.6rem;color:var(--muted);margin-top:6px">Enquiries closed</div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:18px">
+          <div class="card-head"><div class="card-title">Google Analytics 4 Embed</div></div>
+          <div class="field" style="margin-bottom:14px">
+            <label class="field-label">Paste GA4 Report Embed URL</label>
+            <div style="display:flex;gap:10px">
+              <input class="field-input" id="gaEmbedUrl" placeholder="https://lookerstudio.google.com/embed/...">
+              <button class="btn btn-outline" onclick="saveGAEmbed()">Save</button>
+            </div>
+          </div>
+          <div id="gaEmbedWrap" style="display:none"><iframe id="gaEmbedFrame" style="width:100%;height:360px;border:none;border:1px solid rgba(200,160,50,.15)"></iframe></div>
+          <div id="gaEmbedPlaceholder" style="background:var(--navy-deep);height:200px;display:flex;align-items:center;justify-content:center;border:1px dashed rgba(200,160,50,.2)">
+            <div style="text-align:center;color:var(--muted);font-size:.74rem">Paste a GA4 or Looker Studio embed URL above to display your analytics report here.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title">Data Export</div></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-outline" onclick="exportEnquiriesCSV()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Export All Enquiries (CSV)</button>
+            <button class="btn btn-outline" onclick="exportProjectsJSON()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg> Export Projects (JSON)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===SETTINGS PAGE=== -->
+      <div class="page" id="page-settings">
+        <div class="page-header">
+          <div class="page-eyebrow">Configuration</div>
+          <h1 class="page-title">Site <em>Settings</em></h1>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Contact Information</div>
+          <div class="form-grid">
+            <div class="field"><label class="field-label">Owner Name</label><input class="field-input" id="s-ownerName" placeholder="Paras Lalwani"></div>
+            <div class="field"><label class="field-label">Owner Phone</label><input class="field-input" id="s-ownerPhone" placeholder="9552778778"></div>
+            <div class="field"><label class="field-label">Sales Contact Name</label><input class="field-input" id="s-salesName" placeholder="Shailesh Dahad"></div>
+            <div class="field"><label class="field-label">Sales Contact Phone</label><input class="field-input" id="s-salesPhone" placeholder="8788579803"></div>
+            <div class="field"><label class="field-label">WhatsApp Number (with country code)</label><input class="field-input" id="s-waNumber" placeholder="919552778778"></div>
+            <div class="field"><label class="field-label">Pre-filled WhatsApp Message</label><input class="field-input" id="s-waMsg" placeholder="Hi, I am interested in Pukharaj Residency..."></div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Address Information</div>
+          <div class="form-grid">
+            <div class="field"><label class="field-label">Office Address</label><textarea class="field-textarea" id="s-officeAddress" rows="3" placeholder="Shriniwas Apartment, Ulkanagari..."></textarea></div>
+            <div class="field"><label class="field-label">Site Address</label><textarea class="field-textarea" id="s-siteAddress" rows="3" placeholder="Beside Kasliwal Marvel (E), Beed Bypass..."></textarea></div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Website Configuration</div>
+          <div class="form-grid">
+            <div class="field"><label class="field-label">Hero Tagline</label><input class="field-input" id="s-heroTagline" placeholder="Crafting Homes. Shaping Skylines."></div>
+            <div class="field">
+              <label class="field-label">CREDAI Member</label>
+              <div class="toggle-wrap" style="margin-top:10px">
+                <button class="toggle" id="s-credaiToggle" onclick="toggleCredai()"></button>
+                <span class="toggle-label" id="s-credaiLabel">Disabled</span>
+              </div>
+            </div>
+            <div class="field"><label class="field-label">GA Measurement ID</label><input class="field-input" id="s-gaId" placeholder="G-XXXXXXXXXX"></div>
+            <div class="field"><label class="field-label">Spotlight Project (Home Page Featured)</label><select class="field-input" id="s-spotlightProject"></select></div>
+          </div>
+        </div>
+        <button class="btn btn-gold" onclick="saveSettings()"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg> <span>Save All Settings</span></span></button>
+      </div>
+
+    </div><!-- /pages -->
+  </div><!-- /mainContent -->
+</div><!-- /appShell -->
+
+<!-- ENQUIRY DETAIL DRAWER -->
+<div class="drawer-overlay" id="enqOverlay" onclick="closeEnqDrawer()"></div>
+<div class="side-drawer" id="enqDrawer">
+  <div class="drawer-header">
+    <div class="drawer-title">Enquiry Details</div>
+    <button class="drawer-close" onclick="closeEnqDrawer()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  </div>
+  <div class="drawer-body" id="enqDrawerBody"></div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer"></div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-title" id="confirmTitle">Confirm Action</div>
+    <div class="modal-msg" id="confirmMsg">Are you sure?</div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" id="confirmOkBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCEloivzzDVOQqRmzo1eLRv9ClRT3p4K5Q",
+  authDomain: "pukhraj-builders-3a908.firebaseapp.com",
+  projectId: "pukhraj-builders-3a908",
+  storageBucket: "pukhraj-builders-3a908.firebasestorage.app",
+  messagingSenderId: "55973067998",
+  appId: "1:55973067998:web:d894eb01e6ad084e01964f",
+  measurementId: "G-0TCXD05S78"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+// ========== STATE ==========
+let allEnquiries = [];
+let allProjects = [];
+let allTeam = [];
+let siteSettings = {};
+let currentProjectId = null;
+let currentProjectData = {};
+let enqPage = 1; const ENQ_PER_PAGE = 20;
+let enqChartInst = null, trendChartInst = null, projViewChartInst = null;
+let teamDebounceTimers = {};
+let sidebarCollapsed = false;
+let credaiOn = false;
+let galleryUrls = [];
+let fpEditorData = [];
+let specsData = [];
+let amenitiesData = [];
+let pendingUploads = 0;
+
+window.specsData = specsData;
+window.amenitiesData = amenitiesData;
+
+// ========== UTILS ==========
+function toast(msg, type='success') {
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.textContent = msg;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(() => {
+    el.classList.add('toast-out');
+    setTimeout(() => el.remove(), 400);
+  }, 3000);
+}
+
+function confirm(title, msg, cb) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirmModal').classList.add('open');
+  document.getElementById('confirmOkBtn').onclick = () => { closeConfirm(); cb(); };
+}
+window.closeConfirm = () => document.getElementById('confirmModal').classList.remove('open');
+
+function timeAgo(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const diff = Math.floor((Date.now() - d) / 1000);
+  if (diff < 60) return diff + 's ago';
+  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  return Math.floor(diff/86400) + 'd ago';
+}
+
+function fmtDate(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) + ' ' + d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+
+function initials(name) {
+  if (!name) return '?';
+  return name.trim().split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+}
+
+function badgeHtml(status) {
+  const map = { new:'badge-new', contacted:'badge-contacted', closed:'badge-closed' };
+  const cls = map[status] || 'badge-new';
+  return `<span class="badge ${cls}" style="cursor:pointer" title="Click to change status">${status||'new'}</span>`;
+}
+
+function projStatusBadge(status) {
+  const map = { 'Under Construction':'badge-construction','Completed':'badge-completed','Upcoming':'badge-upcoming','Featured':'badge-new' };
+  return `<span class="badge ${map[status]||'badge-construction'}">${status||'—'}</span>`;
+}
+
+// ========== AUTH ==========
+window.doLogin = async function() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+  const btnText = document.getElementById('loginBtnText');
+  errEl.classList.remove('show');
+  if (!email || !pass) { errEl.textContent = 'Please enter email and password.'; errEl.classList.add('show'); return; }
+  btnText.textContent = 'Signing in…';
+  btn.disabled = true;
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    const msgs = { 'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password. Please try again.','auth/invalid-email':'Invalid email address.','auth/too-many-requests':'Too many attempts. Please try again later.','auth/invalid-credential':'Invalid email or password.' };
+    errEl.textContent = msgs[e.code] || e.message;
+    errEl.classList.add('show');
+    btnText.textContent = 'Sign In to Dashboard';
+    btn.disabled = false;
+  }
+};
+
+window.doLogout = async function() {
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('appShell').classList.remove('hidden');
+    document.getElementById('userEmail').textContent = user.email;
+    document.getElementById('userAvatar').textContent = (user.email||'A')[0].toUpperCase();
+    loadAllData();
+  } else {
+    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('appShell').classList.add('hidden');
+  }
+});
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') window.doLogin(); });
+
+// ========== NAVIGATION ==========
+window.showPage = function(name, el) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  const titles = {dashboard:'Dashboard',enquiries:'Enquiries',projects:'Projects',team:'Team',analytics:'Analytics',settings:'Settings'};
+  document.getElementById('topbarTitle').textContent = titles[name]||name;
+  if(name==='analytics') loadAnalytics();
+  if(name==='enquiries') renderEnquiries();
+};
+
+window.toggleSidebar = function() {
+  const sb = document.getElementById('sidebar');
+  sidebarCollapsed = !sidebarCollapsed;
+  sb.classList.toggle('collapsed', sidebarCollapsed);
+  document.getElementById('collapseIcon').textContent = sidebarCollapsed ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m15 18-6-6 6-6"/></svg>';
+};
+
+// Topbar clock
+setInterval(() => {
+  document.getElementById('topbarTime').textContent = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}, 1000);
+
+// ESC key
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape') { closeEnqDrawer(); document.getElementById('confirmModal').classList.remove('open'); }
+});
+
+// ========== DATA LOADING ==========
+async function loadAllData() {
+  await Promise.all([loadEnquiries(), loadProjects(), loadTeam(), loadSettings()]);
+}
+
+async function loadEnquiries() {
+  try {
+    const snap = await getDocs(query(collection(db,'enquiries'), orderBy('timestamp','desc')));
+    allEnquiries = []; snap.forEach(d=>allEnquiries.push({id:d.id,...d.data()}));
+    // Also legacy 'contacts' collection
+    try {
+      const snap2 = await getDocs(query(collection(db,'contacts'),orderBy('timestamp','desc')));
+      snap2.forEach(d => { if(!allEnquiries.find(e=>e.phone===d.data().phone&&e.name===d.data().name)) allEnquiries.push({id:d.id,...d.data(),_col:'contacts'}); });
+    } catch(e2){}
+    renderDashboard();
+    renderEnquiries();
+    updateEnqBadge();
+  } catch(e) { toast('Failed to load enquiries: '+e.message,'error'); }
+}
+
+async function loadProjects() {
+  try {
+    const snap = await getDocs(query(collection(db,'projects'),orderBy('order')));
+    allProjects = []; snap.forEach(d=>allProjects.push({id:d.id,...d.data()}));
+    if(!allProjects.length) seedProjects();
+    renderProjList(); populateProjectFilter(); populateSpotlightSelect();
+  } catch(e) { toast('Failed to load projects: '+e.message,'error'); }
+}
+
+function populateSpotlightSelect() {
+  const sel = document.getElementById('s-spotlightProject');
+  if(!sel) return;
+  const current = siteSettings.spotlightProjectId;
+  sel.innerHTML = '<option value="">(Auto-select first project)</option>' + 
+    allProjects.filter(p=>p.published).map(p=>`<option value="${p.id}" ${p.id===current?'selected':''}>${p.name}</option>`).join('');
+}
+
+async function loadTeam() {
+  try {
+    const snap = await getDocs(query(collection(db,'team'),orderBy('order')));
+    allTeam = []; snap.forEach(d=>allTeam.push({id:d.id,...d.data()}));
+    if(!allTeam.length) seedTeam();
+    renderTeam();
+  } catch(e) { toast('Failed to load team: '+e.message,'error'); }
+}
+
+async function loadSettings() {
+  try {
+    const d = await getDoc(doc(db,'settings','main'));
+    siteSettings = d.exists() ? d.data() : {};
+    if(!d.exists()) seedSettings();
+    applySettings();
+  } catch(e) { toast('Failed to load settings: '+e.message,'error'); }
+}
+
+// ========== SEED DATA ==========
+async function seedProjects() {
+  const p = { name:'Pukharaj Residency', location:'Beed Bypass, Chh. Sambhajinagar', status:'Under Construction', badge:'Featured · Ongoing', shortDesc:'A luxurious 7-storey apartment complex with 34 premium 2BHK & 3BHK flats.', rera:'P51500079269', heroImage:'assets/pukharaj-residency-2.jpeg', galleryImages:['assets/pukharaj-residency-1.jpeg','assets/pukharaj-residency-2.jpeg','assets/pukharaj-residency-3.jpeg','assets/pukharaj-residency-4.jpeg'], overview:{ tagline:'Where Comfort Meets Elegance', description:'Pukharaj Residency is a luxurious 7-storey apartment complex offering 34 thoughtfully designed 2BHK and 3BHK flats with a state-of-the-art clubhouse, rooftop terrace, and a prime location on Beed Bypass Road.', highlights:[{label:'Premium Flats',value:'34'},{label:'Floors + Terrace',value:'G+7'},{label:'BHK Configurations',value:'2&3'},{label:'Two-Wheeler Spaces',value:'99+'}], architect:'Nikhil Chopda & Associates', engineer:'Er. N.G. Karkhane' }, specs:[{icon:'🧱',title:'Structure',desc:'RCC framed structure with ISI marked materials'},{icon:'🪟',title:'Windows',desc:'UPVC sliding windows with mosquito mesh'},{icon:'🚿',title:'Bathrooms',desc:'Premium sanitary fittings, anti-skid tiles'},{icon:'⚡',title:'Electrical',desc:'Concealed copper wiring, MCB protection'}], amenities:[{icon:'🏊',title:'Clubhouse',desc:'Modern clubhouse with residents lounge'},{icon:'🏋️',title:'Gymnasium',desc:'Fully equipped fitness center'},{icon:'🌳',title:'Garden',desc:'Landscaped garden & children play area'},{icon:'🚗',title:'Parking',desc:'Dedicated covered parking for all units'},{icon:'🔒',title:'Security',desc:'24/7 CCTV surveillance & intercom'},{icon:'⚡',title:'Power Backup',desc:'Lift with battery backup & common area DG'}], location:{ mapsUrl:'', siteAddress:'Beside Kasliwal Marvel (E), Beed Bypass, Chh. Sambhajinagar', officeAddress:'Shriniwas Apartment, Ulkanagari, Chh. Sambhajinagar', landmarks:'Kasliwal Marvel (E)\nBeed Bypass Road\nMGM College' }, published:true, order:1, createdAt:serverTimestamp(), updatedAt:serverTimestamp() };
+  try {
+    const ref2 = await addDoc(collection(db,'projects'), p);
+    allProjects = [{id:ref2.id,...p}];
+    renderProjList(); populateProjectFilter();
+  } catch(e) {}
+}
+
+async function seedTeam() {
+  const members = [
+    {initials:'PL',name:'Paras Lalwani',role:'Owner · Director',phone:'9552778778',badge:'Owner & Founder',order:1},
+    {initials:'SD',name:'Shailesh Dahad',role:'Sales & Client Relations',phone:'8788579803',badge:'Sales Head',order:2},
+    {initials:'NC',name:'Nikhil Chopda',role:'Principal Architect',phone:'',badge:'Architect',order:3},
+  ];
+  try {
+    for(const m of members) { const r = await addDoc(collection(db,'team'),m); allTeam.push({id:r.id,...m}); }
+    renderTeam();
+  } catch(e) {}
+}
+
+async function seedSettings() {
+  siteSettings = { ownerName:'Paras Lalwani', ownerPhone:'9552778778', salesName:'Shailesh Dahad', salesPhone:'8788579803', whatsappNumber:'919552778778', whatsappMessage:'Hi, I am interested in Pukharaj Residency. Please share more details.', officeAddress:'Shriniwas Apartment, Ulkanagari, Chh. Sambhajinagar, Maharashtra', siteAddress:'Beside Kasliwal Marvel (E), Beed Bypass, Chh. Sambhajinagar', heroTagline:'Crafting Homes. Shaping Skylines. Building Trust.', credaiMember:true, gaEmbedUrl:'' };
+  try { await setDoc(doc(db,'settings','main'), siteSettings); } catch(e) {}
+  applySettings();
+}
+
+// ========== DASHBOARD ==========
+function renderDashboard() {
+  const total = allEnquiries.length;
+  const week = allEnquiries.filter(e => { const d = e.timestamp?.toDate?e.timestamp.toDate():new Date(e.timestamp||0); return (Date.now()-d)/(1000*86400)<=7; }).length;
+  const totalProj = allProjects.length;
+  const activeProj = allProjects.filter(p=>p.status==='Under Construction').length;
+
+  document.getElementById('dashKpis').innerHTML = `
+    <div class="kpi gold">
+      <div class="kpi-label">Total Enquiries</div>
+      <div class="kpi-value" id="kpiTotal">0</div>
+      <div class="kpi-sub">All time</div>
+    </div>
+    <div class="kpi blue ${week>0?'highlight':''}">
+      <div class="kpi-label">New This Week</div>
+      <div class="kpi-value" id="kpiWeek">0</div>
+      <div class="kpi-sub">Last 7 days</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Total Projects</div>
+      <div class="kpi-value" id="kpiProj">0</div>
+      <div class="kpi-sub">In portfolio</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-label">Under Construction</div>
+      <div class="kpi-value" id="kpiActive">0</div>
+      <div class="kpi-sub">Active projects</div>
+    </div>`;
+  animateCounter('kpiTotal', total);
+  animateCounter('kpiWeek', week);
+  animateCounter('kpiProj', totalProj);
+  animateCounter('kpiActive', activeProj);
+
+  // Recent enquiries
+  const rec5 = allEnquiries.slice(0,5);
+  const recHtml = rec5.length ? rec5.map(e => `
+    <div class="enq-recent-item">
+      <div class="enq-avatar">${initials(e.name)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="enq-name">${e.name||'—'}</div>
+        <div class="enq-meta">${e.phone||''} · ${e.enquiryAbout||e.subject||'General'}</div>
+      </div>
+      ${badgeHtml(e.status||'new')}
+      <div class="enq-time">${timeAgo(e.timestamp)}</div>
+    </div>`).join('') : '<div class="empty-state"><div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div><div class="empty-text">No enquiries yet</div></div>';
+  document.getElementById('recentEnqList').innerHTML = recHtml;
+
+  // Enquiries by project chart
+  const projCounts = {};
+  allEnquiries.forEach(e => { const k = e.enquiryAbout||e.subject||'General'; projCounts[k]=(projCounts[k]||0)+1; });
+  const labels = Object.keys(projCounts).slice(0,6);
+  const data = labels.map(l=>projCounts[l]);
+  if(enqChartInst) enqChartInst.destroy();
+  const ctx = document.getElementById('enqByProjectChart');
+  if(ctx) enqChartInst = new Chart(ctx, { type:'bar', data:{ labels, datasets:[{data, backgroundColor:'rgba(200,160,50,.7)', borderColor:'rgba(200,160,50,1)', borderWidth:1, borderRadius:2 }]}, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:'#6E8FA8',font:{size:10}},grid:{color:'rgba(255,255,255,.03)'}}, y:{ticks:{color:'#6E8FA8',font:{size:10},stepSize:1},grid:{color:'rgba(255,255,255,.05)'}} } }});
+}
+
+function animateCounter(id, target) {
+  const el = document.getElementById(id);
+  if(!el) return;
+  let start = 0; const dur = 1200;
+  const step = () => {
+    start = Math.min(start + Math.ceil(target/50), target);
+    el.textContent = start;
+    if(start < target) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function updateEnqBadge() {
+  const n = allEnquiries.filter(e=>(!e.status||e.status==='new')).length;
+  const badge = document.getElementById('newEnqBadge');
+  badge.textContent = n; badge.style.display = n>0?'':'none';
+}
+
+function populateProjectFilter() {
+  const sel = document.getElementById('enqProjectFilter');
+  sel.innerHTML = '<option value="">All Projects</option>';
+  allProjects.forEach(p => { const o=document.createElement('option'); o.value=p.name; o.textContent=p.name; sel.appendChild(o); });
+}
+
+// ========== ENQUIRIES ==========
+function getEnqFiltered() {
+  const search = document.getElementById('enqSearch').value.toLowerCase();
+  const status = document.getElementById('enqStatusFilter').value;
+  const project = document.getElementById('enqProjectFilter').value;
+  const from = document.getElementById('enqDateFrom').value;
+  const to = document.getElementById('enqDateTo').value;
+  return allEnquiries.filter(e => {
+    if(search && !((e.name||'').toLowerCase().includes(search)||(e.phone||'').includes(search)||(e.email||'').toLowerCase().includes(search))) return false;
+    if(status && (e.status||'new')!==status) return false;
+    if(project && (e.enquiryAbout||e.subject||'')!==project) return false;
+    if(from) { const d=e.timestamp?.toDate?e.timestamp.toDate():new Date(e.timestamp||0); if(d<new Date(from)) return false; }
+    if(to) { const d=e.timestamp?.toDate?e.timestamp.toDate():new Date(e.timestamp||0); if(d>new Date(to+'T23:59:59')) return false; }
+    return true;
+  });
+}
+
+window.renderEnquiries = function() {
+  const filtered = getEnqFiltered();
+  const total = filtered.length;
+  const pages = Math.ceil(total/ENQ_PER_PAGE);
+  enqPage = Math.min(enqPage, pages||1);
+  const items = filtered.slice((enqPage-1)*ENQ_PER_PAGE, enqPage*ENQ_PER_PAGE);
+  const tbody = document.getElementById('enqTbody');
+  if(!items.length) { tbody.innerHTML=`<tr><td colspan="8"><div class="empty-state"><div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div><div class="empty-text">No enquiries found</div></div></td></tr>`; document.getElementById('enqPagination').innerHTML=''; return; }
+  tbody.innerHTML = items.map(e=>`
+    <tr style="cursor:pointer" onclick="openEnqDrawer('${e.id}')">
+      <td><b>${e.name||'—'}</b></td>
+      <td><a href="tel:${e.phone}" onclick="event.stopPropagation()" style="color:var(--gold-bright);text-decoration:none">${e.phone||'—'}</a></td>
+      <td style="font-size:.72rem">${e.email||'—'}</td>
+      <td style="font-size:.72rem">${e.enquiryAbout||e.subject||'—'}</td>
+      <td style="font-size:.71rem;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${(e.message||'').replace(/"/g,'&quot;')}">${(e.message||'').substring(0,60)+(e.message?.length>60?'…':'')}</td>
+      <td style="font-size:.71rem;white-space:nowrap">${fmtDate(e.timestamp)}</td>
+      <td onclick="event.stopPropagation();cycleStatus(this,'${e.id}')">${badgeHtml(e.status||'new')}</td>
+      <td onclick="event.stopPropagation()">
+        <div style="display:flex;gap:4px">
+          <button class="btn-icon" title="View" onclick="openEnqDrawer('${e.id}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <button class="btn-icon" title="Delete" onclick="deleteEnquiry('${e.id}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+        </div>
+      </td>
+    </tr>`).join('');
+  // Pagination
+  let pHtml = '';
+  if(pages>1) {
+    pHtml = `<button class="page-btn" onclick="enqPage=Math.max(1,enqPage-1);renderEnquiries()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m15 18-6-6 6-6"/></svg></button>`;
+    for(let i=1;i<=pages;i++) pHtml+=`<button class="page-btn ${i===enqPage?'active':''}" onclick="enqPage=${i};renderEnquiries()">${i}</button>`;
+    pHtml += `<button class="page-btn" onclick="enqPage=Math.min(${pages},enqPage+1);renderEnquiries()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m9 18 6-6-6-6"/></svg></button>`;
+  }
+  document.getElementById('enqPagination').innerHTML=pHtml;
+};
+
+window.cycleStatus = async function(cell, id) {
+  const order = ['new','contacted','closed'];
+  const e = allEnquiries.find(x=>x.id===id);
+  if(!e) return;
+  const cur = e.status||'new';
+  const next = order[(order.indexOf(cur)+1)%order.length];
+  e.status = next;
+  cell.innerHTML = badgeHtml(next);
+  try {
+    const col = e._col||'enquiries';
+    await updateDoc(doc(db,col,id),{status:next});
+    updateEnqBadge();
+    toast('Status updated to "'+next+'"');
+  } catch(err) { toast('Failed to update status','error'); }
+};
+
+window.deleteEnquiry = function(id) {
+  confirm('Delete Enquiry','This will permanently delete this enquiry. Are you sure?', async()=>{
+    const e = allEnquiries.find(x=>x.id===id);
+    try {
+      await deleteDoc(doc(db,(e?._col||'enquiries'),id));
+      allEnquiries = allEnquiries.filter(x=>x.id!==id);
+      renderEnquiries(); updateEnqBadge(); renderDashboard();
+      toast('Enquiry deleted');
+    } catch(err) { toast('Failed to delete','error'); }
+  });
+};
+
+window.openEnqDrawer = function(id) {
+  const e = allEnquiries.find(x=>x.id===id);
+  if(!e) return;
+  const waNumber = siteSettings.whatsappNumber||'919552778778';
+  const waMsg = encodeURIComponent((siteSettings.whatsappMessage||'Hi')+'\n\nRef: Enquiry from '+e.name);
+  document.getElementById('enqDrawerBody').innerHTML = `
+    <div style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant SC',serif;font-size:1.4rem;color:var(--white)">${initials(e.name)}</div>
+        <div><div style="font-family:'Cormorant SC',serif;font-size:1.1rem">${e.name||'—'}</div><div style="font-size:.68rem;color:var(--muted);margin-top:2px">${fmtDate(e.timestamp)}</div></div>
+        <div style="margin-left:auto">${badgeHtml(e.status||'new')}</div>
+      </div>
+      <div class="settings-section" style="padding:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.78rem">
+          <div><div style="font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Phone</div><div>${e.phone||'—'}</div></div>
+          <div><div style="font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Email</div><div>${e.email||'—'}</div></div>
+          <div><div style="font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Enquiry About</div><div>${e.enquiryAbout||e.subject||'—'}</div></div>
+          <div><div style="font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Source</div><div>${e.source||'Website Form'}</div></div>
+        </div>
+        <div style="margin-top:14px"><div style="font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Message</div><div style="font-size:.8rem;color:var(--light);line-height:1.85;background:rgba(10,19,30,.4);padding:12px;border-left:2px solid var(--gold)">${e.message||'No message provided.'}</div></div>
+      </div>
+      <div style="margin:16px 0">
+        <label class="field-label" style="display:block;margin-bottom:8px">Status (Click badge to cycle, or change here)</label>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div onclick="cycleStatus('${id}')" style="cursor:pointer">${badgeHtml(e.status||'New')}</div>
+          <select class="field-select" style="flex:1" onchange="updateEnqField('${id}','status',this.value)">
+            <option ${(e.status||'New')==='New'?'selected':''} value="New">New</option>
+            <option ${e.status==='Contacted'?'selected':''} value="Contacted">Contacted</option>
+            <option ${e.status==='Closed'?'selected':''} value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <div class="field-label" style="margin-bottom:6px">Internal Notes</div>
+        <textarea class="field-textarea" id="enq-notes-${id}" rows="4" placeholder="Private notes about this enquiry..." onchange="updateEnqField('${id}','notes',this.value)">${e.notes||''}</textarea>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="tel:${e.phone}" class="btn btn-outline" style="text-decoration:none"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</a>
+        <a href="https://wa.me/${waNumber}?text=${waMsg}" target="_blank" class="btn btn-outline" style="text-decoration:none;border-color:#25D366;color:#25D366"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> WhatsApp</a>
+        <button class="btn btn-danger btn-sm" onclick="deleteEnquiry('${id}');closeEnqDrawer()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg> Delete</button>
+      </div>
+    </div>`;
+  document.getElementById('enqOverlay').classList.add('open');
+  document.getElementById('enqDrawer').classList.add('open');
+};
+
+window.closeEnqDrawer = function() {
+  document.getElementById('enqOverlay').classList.remove('open');
+  document.getElementById('enqDrawer').classList.remove('open');
+};
+
+window.updateEnqField = async function(id, field, value) {
+  const e = allEnquiries.find(x=>x.id===id);
+  if(!e) return;
+  e[field] = value;
+  try { await updateDoc(doc(db,(e._col||'enquiries'),id),{[field]:value}); toast('Saved'); updateEnqBadge(); }
+  catch(err) { toast('Save failed','error'); }
+};
+
+window.exportEnquiriesCSV = function() {
+  const rows = [['Name','Phone','Email','Enquiry About','Message','Date','Status','Notes']];
+  getEnqFiltered().forEach(e => rows.push([e.name||'',e.phone||'',e.email||'',e.enquiryAbout||e.subject||'',e.message||'',fmtDate(e.timestamp),e.status||'new',e.notes||'']));
+  const csv = rows.map(r=>r.map(f=>'"'+(f+'').replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download='pukharaj-enquiries-'+Date.now()+'.csv'; a.click();
+  toast('CSV downloaded');
+};
+
+
+// ========== PROJECTS ==========
+function renderProjList() {
+  const el = document.getElementById('projList');
+  if(!allProjects.length) { el.innerHTML=`<div class="empty-state"><div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/></svg></div><div class="empty-text">No projects yet</div></div>`; return; }
+  el.innerHTML = allProjects.map(p=>`
+    <div class="proj-card ${p.id===currentProjectId?'selected':''}" onclick="openProjectEditor('${p.id}')">
+      ${p.heroImage?`<img class="proj-thumb" src="${p.heroImage}" onerror="this.style.display='none'">`:
+        `<div class="proj-thumb-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/></svg></div>`}
+      <div style="flex:1;min-width:0">
+        <div class="proj-card-name">${p.name||'Unnamed'}</div>
+        <div class="proj-card-loc">${p.location||''}</div>
+        <div style="margin-top:4px">${projStatusBadge(p.status)}</div>
+      </div>
+      <div class="proj-card-actions">
+        <button class="btn-icon" title="Delete" onclick="event.stopPropagation();deleteProject('${p.id}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+      </div>
+    </div>`).join('');
+}
+
+window.openProjectEditor = function(id) {
+  currentProjectId = id;
+  const p = id ? allProjects.find(x=>x.id===id)||{} : {};
+  currentProjectData = JSON.parse(JSON.stringify(p));
+  galleryUrls = [...(p.galleryImages||[])];
+  fpEditorData = JSON.parse(JSON.stringify(p.floorPlans||[]));
+  specsData = JSON.parse(JSON.stringify(p.specs||[]));
+  amenitiesData = JSON.parse(JSON.stringify(p.amenities||[]));
+
+  document.getElementById('projEditorEmpty').style.display='none';
+  document.getElementById('projEditorForm').style.display='flex';
+  renderProjList();
+
+  // Basic
+  document.getElementById('ep-name').value = p.name||'';
+  document.getElementById('ep-location').value = p.location||'';
+  document.getElementById('ep-status').value = p.status||'Under Construction';
+  document.getElementById('ep-badge').value = p.badge||'';
+  document.getElementById('ep-shortdesc').value = p.shortDesc||'';
+  document.getElementById('ep-rera').value = p.rera||'';
+  document.getElementById('ep-order').value = p.order||'';
+  // Images
+  document.getElementById('ep-heroImage').value = p.heroImage||'';
+  updateHeroPreview();
+  renderGalleryPreview();
+  // Overview
+  document.getElementById('ep-tagline').value = p.overview?.tagline||'';
+  document.getElementById('ep-description').value = p.overview?.description||'';
+  document.getElementById('ep-architect').value = p.overview?.architect||'';
+  document.getElementById('ep-engineer').value = p.overview?.engineer||'';
+  renderHighlightBoxes(p.overview?.highlights||[{label:'',value:''},{label:'',value:''},{label:'',value:''},{label:'',value:''}]);
+  // Floor plans, specs, amenities
+  renderFPEditor();
+  renderSpecsList('specs');
+  renderSpecsList('amenities');
+  // Location
+  document.getElementById('ep-mapsUrl').value = p.location?.mapsUrl||'';
+  document.getElementById('ep-siteAddress').value = p.location?.siteAddress||'';
+  document.getElementById('ep-officeAddress').value = p.location?.officeAddress||'';
+  document.getElementById('ep-landmarks').value = p.location?.landmarks||'';
+  // Last saved
+  document.getElementById('lastSavedTs').textContent = p.updatedAt ? 'Last saved: '+fmtDate(p.updatedAt) : (id?'':'New project — not saved yet');
+  // Reset to first tab
+  showEditorTab('basic', document.querySelector('.editor-tab'));
+};
+
+window.showEditorTab = function(name, btn) {
+  document.querySelectorAll('.editor-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.editor-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('ep-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+};
+
+function renderHighlightBoxes(data) {
+  // Ensure always 4 rows
+  while(data.length < 4) data.push({label:'', value:''});
+  const el = document.getElementById('highlightBoxes');
+  el.innerHTML = data.map((h,i)=>`
+    <div class="dyn-item" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <input class="field-input highlight-label" placeholder="Label (e.g. Premium Flats)" value="${(h.label||'').replace(/"/g,'&quot;')}" oninput="this.closest('#highlightBoxes').querySelectorAll('.dyn-item')[${i}].querySelector('.highlight-label').dataset.val=this.value">
+      <input class="field-input highlight-value" placeholder="Value (e.g. 34)" value="${(h.value||'').replace(/"/g,'&quot;')}" oninput="this.closest('#highlightBoxes').querySelectorAll('.dyn-item')[${i}].querySelector('.highlight-value').dataset.val=this.value">
+    </div>`).join('');
+  // Set initial data-val from existing values
+  el.querySelectorAll('.dyn-item').forEach((row, i) => {
+    const lbl = row.querySelector('.highlight-label');
+    const val = row.querySelector('.highlight-value');
+    lbl.dataset.val = data[i]?.label || '';
+    val.dataset.val = data[i]?.value || '';
+  });
+}
+
+window.updateHeroPreview = function() {
+  const url = document.getElementById('ep-heroImage').value;
+  const prev = document.getElementById('heroPreview');
+  if(url){prev.src=url;prev.style.display='block';}else prev.style.display='none';
+};
+
+function renderGalleryPreview() {
+  const el = document.getElementById('galleryPreview');
+  el.innerHTML = galleryUrls.map((u,i)=>`
+    <div class="gallery-preview-item">
+      <img src="${u}" onerror="this.src=''">
+      <button class="gallery-preview-del" onclick="removeGalleryImg(${i})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    </div>`).join('');
+}
+
+window.removeGalleryImg = function(i) { galleryUrls.splice(i,1); renderGalleryPreview(); };
+
+window.handleDragOver = function(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); };
+window.handleDrop = function(e, type){ e.preventDefault(); e.currentTarget.classList.remove('drag-over'); const files=e.dataTransfer.files; if(files.length) handleFilesUpload(files,type); };
+window.handleFileSelect = function(e, type){ const files=e.target.files; if(files.length) handleFilesUpload(files,type); };
+
+function toggleSaveButtons() {
+  const btns = [
+    ...document.querySelectorAll('button[onclick*="saveProject("]')
+  ];
+  btns.forEach(b => {
+    if(pendingUploads > 0) {
+      b.disabled = true;
+      b.style.opacity = '0.5';
+      if(!b.dataset.orgText) b.dataset.orgText = b.innerHTML;
+      b.innerHTML = 'Uploading...';
+    } else {
+      b.disabled = false;
+      b.style.opacity = '1';
+      if(b.dataset.orgText) {
+        b.innerHTML = b.dataset.orgText;
+        delete b.dataset.orgText;
+      }
+    }
+  });
+}
+
+function handleFilesUpload(files, type) {
+  Array.from(files).forEach(file => {
+    if(type==='hero') {
+      const reader = new FileReader();
+      reader.onload = async ev => {
+        document.getElementById('ep-heroImage').value=''; // will use base64 temporarily
+        const prev=document.getElementById('heroPreview'); prev.src=ev.target.result; prev.style.display='block';
+        // upload to storage
+        pendingUploads++;
+        toggleSaveButtons();
+        try {
+          const url = await uploadToStorage(file, 'projects/hero/'+Date.now()+'_'+file.name);
+          document.getElementById('ep-heroImage').value=url;
+          toast('Hero image uploaded');
+        } catch(e) {
+          // ignore
+        } finally {
+          pendingUploads--;
+          toggleSaveButtons();
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      const objectUrl = URL.createObjectURL(file);
+      const previewTile = document.createElement('div');
+      previewTile.className = 'gallery-preview-item';
+      previewTile.innerHTML = `<img src="${objectUrl}" style="opacity:0.5"><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;white-space:nowrap">Uploading...</div>`;
+      document.getElementById('galleryPreview').appendChild(previewTile);
+
+      pendingUploads++;
+      toggleSaveButtons();
+
+      uploadToStorage(file, 'projects/gallery/'+Date.now()+'_'+file.name)
+        .then(url => {
+          galleryUrls.push(url);
+          renderGalleryPreview();
+        })
+        .catch(err => {
+          previewTile.remove();
+        })
+        .finally(() => {
+          pendingUploads--;
+          toggleSaveButtons();
+        });
+    }
+  });
+}
+
+function uploadToStorage(file, path) {
+  return new Promise((resolve, reject) => {
+    const reff = ref(storage, path);
+    const task = uploadBytesResumable(reff, file);
+    task.on('state_changed', null, err=>{
+      toast('Upload failed: '+err.message,'error');
+      reject(err);
+    }, async()=>{
+      try {
+        const url = await getDownloadURL(task.snapshot.ref);
+        resolve(url);
+      } catch(e) { reject(e); }
+    });
+  });
+}
+
+// Floor plan editor
+function renderFPEditor() {
+  const el = document.getElementById('fpEditorList');
+  el.innerHTML = fpEditorData.map((fp,i)=>`
+    <div class="fp-editor-item">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <input class="field-input" style="flex:1" placeholder="Tab name (e.g. 3 BHK Units)" value="${fp.tabName||''}" oninput="fpEditorData[${i}].tabName=this.value">
+        <button class="dyn-item-del" onclick="fpEditorData.splice(${i},1);renderFPEditor()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+      </div>
+      <div class="field" style="margin-bottom:10px">
+        <label class="field-label">Floor Plan Image URL</label>
+        <input class="field-input" placeholder="URL or upload..." value="${fp.image||''}" oninput="fpEditorData[${i}].image=this.value">
+      </div>
+      <div class="fp-flats-list" id="fpFlats-${i}"></div>
+      <button class="add-item-btn" style="margin-top:6px" onclick="addFlatEntry(${i})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Add Flat Entry</button>
+    </div>`).join('');
+  fpEditorData.forEach((fp,i) => renderFlatsList(i));
+}
+
+function renderFlatsList(fpi) {
+  const el = document.getElementById('fpFlats-'+fpi);
+  if(!el) return;
+  const flats = fpEditorData[fpi].flats||[];
+  el.innerHTML = flats.map((f,j)=>`
+    <div class="fp-flat-row">
+      <input class="field-input" placeholder="Flat No." value="${f.number||''}" oninput="fpEditorData[${fpi}].flats[${j}].number=this.value" style="font-size:.72rem;padding:7px">
+      <input class="field-input" placeholder="Type" value="${f.type||''}" oninput="fpEditorData[${fpi}].flats[${j}].type=this.value" style="font-size:.72rem;padding:7px">
+      <input class="field-input" placeholder="Floors" value="${f.floors||''}" oninput="fpEditorData[${fpi}].flats[${j}].floors=this.value" style="font-size:.72rem;padding:7px">
+      <input class="field-input" placeholder="Special features" value="${f.special||''}" oninput="fpEditorData[${fpi}].flats[${j}].special=this.value" style="font-size:.72rem;padding:7px">
+      <button class="dyn-item-del" onclick="fpEditorData[${fpi}].flats.splice(${j},1);renderFlatsList(${fpi})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+    </div>`).join('');
+}
+
+window.addFloorPlan = function() { fpEditorData.push({tabName:'',image:'',flats:[]}); renderFPEditor(); };
+window.addFlatEntry = function(i) { if(!fpEditorData[i].flats)fpEditorData[i].flats=[]; fpEditorData[i].flats.push({number:'',type:'',floors:'',special:''}); renderFlatsList(i); };
+
+// Specs / Amenities
+function renderSpecsList(type) {
+  const data = type==='specs' ? specsData : amenitiesData;
+  const el = document.getElementById(type==='specs'?'specsList':'amenitiesList');
+  el.innerHTML = data.map((s,i)=>`
+    <div class="dyn-item">
+      <div class="dyn-item-row">
+        <input class="field-input" placeholder="Icon" value="${s.icon||''}" oninput="${type}Data[${i}].icon=this.value" style="font-size:1.1rem;text-align:center">
+        <input class="field-input" placeholder="Title" value="${s.title||''}" oninput="${type}Data[${i}].title=this.value">
+        <input class="field-input" placeholder="Description" value="${s.desc||''}" oninput="${type}Data[${i}].desc=this.value">
+        <button class="dyn-item-del" onclick="${type}Data.splice(${i},1);renderSpecsList('${type}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+      </div>
+    </div>`).join('');
+}
+
+window.addSpecItem = function(type) {
+  if(type==='specs') specsData.push({icon:'',title:'',desc:''});
+  else amenitiesData.push({icon:'',title:'',desc:''});
+  renderSpecsList(type);
+};
+
+window.saveProject = async function(publish) {
+  const highlights = [];
+  document.querySelectorAll('#highlightBoxes .dyn-item').forEach(row => {
+    const lbl = row.querySelector('.highlight-label');
+    const val = row.querySelector('.highlight-value');
+    highlights.push({
+      label: lbl.value,
+      value: val.value
+    });
+  });
+
+  const docData = {
+    name: document.getElementById('ep-name').value,
+    location: document.getElementById('ep-location').value,
+    status: document.getElementById('ep-status').value,
+    badge: document.getElementById('ep-badge').value,
+    shortDesc: document.getElementById('ep-shortdesc').value,
+    rera: document.getElementById('ep-rera').value,
+    order: parseInt(document.getElementById('ep-order').value)||1,
+    heroImage: document.getElementById('ep-heroImage').value,
+    galleryImages: galleryUrls.filter(u=>!u.startsWith('data:')),
+    overview: {
+      tagline: document.getElementById('ep-tagline').value,
+      description: document.getElementById('ep-description').value,
+      highlights: highlights,
+      architect: document.getElementById('ep-architect').value,
+      engineer: document.getElementById('ep-engineer').value,
+    },
+    floorPlans: fpEditorData,
+    specs: specsData,
+    amenities: amenitiesData,
+    location: {
+      mapsUrl: document.getElementById('ep-mapsUrl').value,
+      siteAddress: document.getElementById('ep-siteAddress').value,
+      officeAddress: document.getElementById('ep-officeAddress').value,
+      landmarks: document.getElementById('ep-landmarks').value,
+    },
+    published: publish,
+    updatedAt: serverTimestamp(),
+  };
+  try {
+    if(currentProjectId) {
+      await updateDoc(doc(db,'projects',currentProjectId), docData);
+      const projIndex = allProjects.findIndex(p => p.id === currentProjectId);
+      if (projIndex > -1) {
+          allProjects[projIndex] = { ...allProjects[projIndex], ...docData, updatedAt: new Date() };
+      }
+      toast('Project updated successfully!');
+    } else {
+      docData.createdAt = serverTimestamp();
+      const r = await addDoc(collection(db,'projects'), docData);
+      currentProjectId = r.id;
+      allProjects.push({ id: currentProjectId, ...docData, createdAt: new Date(), updatedAt: new Date() });
+      toast('Project created!');
+    }
+    document.getElementById('lastSavedTs').textContent = 'Saved at '+new Date().toLocaleTimeString('en-IN');
+    renderProjList();
+  } catch(e) { toast('Save failed: '+e.message, 'error'); }
+};
+
+window.cycleStatus = function(id) {
+  const e = allEnquiries.find(x=>x.id===id);
+  if(!e) return;
+  const flow = { 'New': 'Contacted', 'Contacted': 'Closed', 'Closed': 'New' };
+  const next = flow[e.status || 'New'] || 'New';
+  updateEnqField(id, 'status', next);
+};
+
+window.deleteProject = function(id) {
+  confirm('Delete Project','This will permanently delete this project. Are you sure?', async()=>{
+    try {
+      await deleteDoc(doc(db,'projects',id));
+      allProjects = allProjects.filter(p=>p.id!==id);
+      if(currentProjectId===id){ currentProjectId=null; document.getElementById('projEditorEmpty').style.display=''; document.getElementById('projEditorForm').style.display='none'; }
+      renderProjList(); toast('Project deleted');
+    } catch(e){ toast('Delete failed','error'); }
+  });
+};
+
+window.deleteCurrentProject = function() { if(currentProjectId) deleteProject(currentProjectId); };
+
+window.exportProjectsJSON = function() {
+  const a=document.createElement('a'); a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(allProjects,null,2)); a.download='pukharaj-projects-'+Date.now()+'.json'; a.click();
+  toast('Projects JSON downloaded');
+};
+
+// ========== TEAM ==========
+function renderTeam() {
+  const el = document.getElementById('teamList');
+  if(!allTeam.length){ el.innerHTML='<div class="empty-state"><div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="empty-text">No team members yet</div></div>'; return; }
+  el.innerHTML = allTeam.map((m,i)=>`
+    <div class="team-row">
+      <div class="team-avatar" onclick="document.getElementById('team-file-${m.id}').click()">
+        ${m.photoUrl ? `<img src="${m.photoUrl}">` : (m.initials||initials(m.name))}
+      </div>
+      <input type="file" id="team-file-${m.id}" style="display:none" accept="image/*" onchange="changeTeamPhoto('${m.id}',this.files[0])">
+      <div class="team-info">
+        <input class="team-inline-input" placeholder="Name" value="${m.name||''}" onchange="updateTeamMember('${m.id}','name',this.value);updateTeamMember('${m.id}','initials',initials(this.value))">
+        <input class="team-inline-input" placeholder="Role" value="${m.role||''}" onchange="updateTeamMember('${m.id}','role',this.value)">
+        <input class="team-inline-input" placeholder="Phone" value="${m.phone||''}" onchange="updateTeamMember('${m.id}','phone',this.value)">
+        <input class="team-inline-input" placeholder="Badge" value="${m.badge||''}" onchange="updateTeamMember('${m.id}','badge',this.value)">
+      </div>
+      <div style="display:flex;gap:4px;flex-shrink:0;margin-left:10px">
+        <button class="btn-icon" onclick="moveTeamMember(${i},-1)" title="Move Up"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
+        <button class="btn-icon" onclick="moveTeamMember(${i},1)" title="Move Down"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="m19 12-7 7-7-7"/><path d="M12 5v14"/></svg></button>
+        <button class="btn-icon" onclick="deleteTeamMember('${m.id}')" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
+      </div>
+    </div>`).join('');
+}
+
+window.updateTeamMember = function(id, field, value) {
+  const m = allTeam.find(x=>x.id===id);
+  if(m) m[field]=value;
+  clearTimeout(teamDebounceTimers[id]);
+  teamDebounceTimers[id] = setTimeout(async()=>{
+    try { await updateDoc(doc(db,'team',id),{[field]:value}); toast('Team member updated'); }
+    catch(e){ toast('Save failed','error'); }
+  }, 800);
+};
+
+window.addTeamMember = async function() {
+  const m = {initials:'NM',name:'New Member',role:'Role',phone:'',badge:'',order:allTeam.length+1};
+  try {
+    const r = await addDoc(collection(db,'team'),m);
+    allTeam.push({id:r.id,...m}); renderTeam(); toast('Team member added');
+  } catch(e){ toast('Add failed','error'); }
+};
+
+window.deleteTeamMember = function(id) {
+  confirm('Delete Team Member','Remove this team member?', async()=>{
+    try { await deleteDoc(doc(db,'team',id)); allTeam=allTeam.filter(m=>m.id!==id); renderTeam(); toast('Deleted'); }
+    catch(e){ toast('Delete failed','error'); }
+  });
+};
+
+window.moveTeamMember = async function(i, dir) {
+  const j = i+dir;
+  if(j<0||j>=allTeam.length) return;
+  [allTeam[i],allTeam[j]]=[allTeam[j],allTeam[i]];
+  allTeam.forEach((m,idx)=>m.order=idx+1);
+  renderTeam();
+  try {
+    await Promise.all(allTeam.map((m,idx)=>updateDoc(doc(db,'team',m.id),{order:idx+1})));
+  } catch(e){}
+};
+
+window.changeTeamPhoto = async function(id, file) {
+  if(!file) return;
+  toast('Uploading photo...');
+  
+  const avatarDiv = document.querySelector(`.team-avatar[onclick*="team-file-${id}"]`);
+  if (avatarDiv) {
+    avatarDiv.innerHTML = `<div style="font-size:0.6rem;text-align:center;color:var(--gold);line-height:2">Uploading...</div>`;
+  }
+
+  try {
+    const url = await uploadToStorage(file, `team/${id}/${Date.now()}_${file.name}`);
+    await updateDoc(doc(db,'team',id), {photoUrl:url});
+    
+    const m = allTeam.find(x=>x.id===id);
+    if(m) m.photoUrl = url;
+    
+    renderTeam();
+    toast('Photo updated!');
+  } catch(e) {
+    toast('Update failed','error');
+    renderTeam(); // Reset avatar if failed
+  }
+};
+
+// ========== ANALYTICS ==========
+function loadAnalytics() {
+  // Trend chart - last 30 days
+  const days30 = Array.from({length:30},(_,i)=>{ const d=new Date(); d.setDate(d.getDate()-i); return d; }).reverse();
+  const dayCounts = days30.map(d=>{
+    const s=d.toDateString();
+    return allEnquiries.filter(e=>{const ed=e.timestamp?.toDate?e.timestamp.toDate():new Date(e.timestamp||0);return ed.toDateString()===s;}).length;
+  });
+  const dayLabels = days30.map(d=>d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}));
+  if(trendChartInst) trendChartInst.destroy();
+  const tc = document.getElementById('enqTrendChart');
+  if(tc) trendChartInst = new Chart(tc,{type:'line',data:{labels:dayLabels,datasets:[{data:dayCounts,borderColor:'rgba(200,160,50,.9)',backgroundColor:'rgba(200,160,50,.08)',fill:true,tension:.4,pointRadius:0,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6E8FA8',font:{size:9},maxTicksLimit:8},grid:{color:'rgba(255,255,255,.03)'}},y:{ticks:{color:'#6E8FA8',font:{size:9},stepSize:1},grid:{color:'rgba(255,255,255,.05)'}}}}});
+
+  // Project view chart
+  const projCounts={};
+  allEnquiries.forEach(e=>{const k=e.enquiryAbout||e.subject||'General';projCounts[k]=(projCounts[k]||0)+1;});
+  const plabels=Object.keys(projCounts).slice(0,8);const pdata=plabels.map(l=>projCounts[l]);
+  if(projViewChartInst) projViewChartInst.destroy();
+  const pc=document.getElementById('projectViewChart');
+  if(pc) projViewChartInst=new Chart(pc,{type:'bar',data:{labels:plabels,datasets:[{data:pdata,backgroundColor:'rgba(52,152,219,.6)',borderColor:'rgba(52,152,219,1)',borderWidth:1,borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6E8FA8',font:{size:9},stepSize:1},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'#6E8FA8',font:{size:10}},grid:{color:'rgba(255,255,255,.03)'}}}}});
+
+  // Stats
+  document.getElementById('waClickCount').textContent = '—';
+  const total = allEnquiries.length;
+  const closed = allEnquiries.filter(e=>e.status==='closed').length;
+  document.getElementById('formSubCount').textContent = total;
+  document.getElementById('conversionRate').textContent = total?Math.round(closed/total*100)+'%':'0%';
+
+  // GA embed
+  const gaUrl = siteSettings.gaEmbedUrl||'';
+  document.getElementById('gaEmbedUrl').value = gaUrl;
+  if(gaUrl){ document.getElementById('gaEmbedFrame').src=gaUrl; document.getElementById('gaEmbedWrap').style.display='block'; document.getElementById('gaEmbedPlaceholder').style.display='none'; }
+}
+
+window.saveGAEmbed = async function() {
+  const url=document.getElementById('gaEmbedUrl').value;
+  siteSettings.gaEmbedUrl=url;
+  try { await updateDoc(doc(db,'settings','main'),{gaEmbedUrl:url}); toast('GA embed saved'); loadAnalytics(); } catch(e){ try{ await setDoc(doc(db,'settings','main'),siteSettings); toast('GA embed saved'); loadAnalytics(); }catch(e2){ toast('Save failed','error'); } }
+};
+
+// ========== SETTINGS ==========
+function applySettings() {
+  const s = siteSettings;
+  if(s.ownerName) document.getElementById('s-ownerName').value=s.ownerName;
+  if(s.ownerPhone) document.getElementById('s-ownerPhone').value=s.ownerPhone;
+  if(s.salesName) document.getElementById('s-salesName').value=s.salesName;
+  if(s.salesPhone) document.getElementById('s-salesPhone').value=s.salesPhone;
+  if(s.whatsappNumber) document.getElementById('s-waNumber').value=s.whatsappNumber;
+  if(s.whatsappMessage) document.getElementById('s-waMsg').value=s.whatsappMessage;
+  if(s.officeAddress) document.getElementById('s-officeAddress').value=s.officeAddress;
+  if(s.siteAddress) document.getElementById('s-siteAddress').value=s.siteAddress;
+  if(s.heroTagline) document.getElementById('s-heroTagline').value=s.heroTagline;
+  if(s.gaId) document.getElementById('s-gaId').value=s.gaId;
+  if(s.spotlightProjectId) document.getElementById('s-spotlightProject').value=s.spotlightProjectId;
+  credaiOn = !!s.credaiMember;
+  const toggle = document.getElementById('s-credaiToggle');
+  toggle.classList.toggle('on', credaiOn);
+  document.getElementById('s-credaiLabel').textContent = credaiOn ? 'Enabled' : 'Disabled';
+}
+
+window.toggleCredai = function() {
+  credaiOn = !credaiOn;
+  const toggle = document.getElementById('s-credaiToggle');
+  toggle.classList.toggle('on', credaiOn);
+  document.getElementById('s-credaiLabel').textContent = credaiOn ? 'Enabled' : 'Disabled';
+};
+
+window.saveSettings = async function() {
+  const s = {
+    ownerName: document.getElementById('s-ownerName').value,
+    ownerPhone: document.getElementById('s-ownerPhone').value,
+    salesName: document.getElementById('s-salesName').value,
+    salesPhone: document.getElementById('s-salesPhone').value,
+    whatsappNumber: document.getElementById('s-waNumber').value,
+    whatsappMessage: document.getElementById('s-waMsg').value,
+    officeAddress: document.getElementById('s-officeAddress').value,
+    siteAddress: document.getElementById('s-siteAddress').value,
+    heroTagline: document.getElementById('s-heroTagline').value,
+    credaiMember: credaiOn,
+    gaEmbedUrl: siteSettings.gaEmbedUrl||'',
+    gaId: document.getElementById('s-gaId').value,
+    spotlightProjectId: document.getElementById('s-spotlightProject').value,
+  };
+  try {
+    await setDoc(doc(db,'settings','main'), s);
+    siteSettings = s; toast('Settings saved successfully!');
+  } catch(e){ toast('Save failed: '+e.message,'error'); }
+};
+
+// Firebase Connection Monitor
+try {
+  onSnapshot(doc(db, '.info', 'connected'), (snapshot) => {
+    const statusEl = document.getElementById('fbStatus');
+    const dot = statusEl?.querySelector('.dot');
+    const text = statusEl?.querySelector('span:last-child');
+    if (snapshot.data() === true) {
+      dot?.classList.add('on');
+      if(text) text.textContent = 'Firebase Connected';
+    } else {
+      dot?.classList.remove('on');
+      if(text) text.textContent = 'Offline';
+    }
+  });
+} catch(e) {}
+
+// Expose initials globally for team
+window.initials = initials;
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Diagnostic</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #0D1B2A; color: #fff; }
+        #status { padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .error { background: #5a1a1a; border: 1px solid #ff4d4d; color: #ffcccc; }
+        .success { background: #1a5a1a; border: 1px solid #4dff4d; color: #ccffcc; }
+        ol { line-height: 1.6; }
+        code { background: rgba(255,255,255,0.1); padding: 2px 5px; }
+    </style>
+</head>
+<body>
+    <h2>Firebase Status Diagnostic</h2>
+    <div id="status">Testing connection...</div>
+    <div id="details"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEloivzzDVOQqRmzo1eLRv9ClRT3p4K5Q",
+            authDomain: "pukhraj-builders-3a908.firebaseapp.com",
+            projectId: "pukhraj-builders-3a908",
+            storageBucket: "pukhraj-builders-3a908.firebasestorage.app",
+            messagingSenderId: "55973067998",
+            appId: "1:55973067998:web:d894eb01e6ad084e01964f",
+            measurementId: "G-0TCXD05S78"
+        };
+
+        const statusEl = document.getElementById('status');
+        const detailsEl = document.getElementById('details');
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            
+            statusEl.innerText = "Attempting to write to 'test_connection' collection...";
+            
+            await addDoc(collection(db, "test_connection"), {
+                timestamp: serverTimestamp(),
+                message: "Checking if API is enabled"
+            });
+
+            statusEl.innerText = "SUCCESS: Firebase is functional!";
+            statusEl.className = "success";
+            detailsEl.innerHTML = "<p>The connection to Firestore is working perfectly. You can proceed with using the Admin Portal.</p>";
+
+        } catch (e) {
+            console.error(e);
+            statusEl.innerText = "FAILED: Firebase is not functional.";
+            statusEl.className = "error";
+            
+            if (e.message.includes("Cloud Firestore API has not been used") || e.message.includes("disabled")) {
+                detailsEl.innerHTML = `
+                    <h3>Required Action: Enable Google Cloud API</h3>
+                    <p>The error confirms that the <b>Cloud Firestore API</b> is disabled for this project.</p>
+                    <ol>
+                        <li>Open the <b><a href="https://console.cloud.google.com/apis/library/firestore.googleapis.com?project=pukhraj-builders-3a908" target="_blank" style="color:#gold">Google Cloud Console</a></b>.</li>
+                        <li>Ensure project <code>pukhraj-builders-3a908</code> is selected in the top bar.</li>
+                        <li>Click the <b>ENABLE</b> button.</li>
+                        <li>Wait 2 minutes and then refresh the Admin Portal.</li>
+                    </ol>
+                    <p><i>Technical Error: ${e.message}</i></p>
+                `;
+            } else {
+                detailsEl.innerHTML = `<p>Error occurred: <code>${e.message}</code></p><p>Please check your Firebase console for configuration errors or usage limits.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
